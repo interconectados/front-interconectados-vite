@@ -16,7 +16,7 @@ function Welcome() {
     <div className="welcome">
       <h2 className="mb-0">Interconectados_ok</h2>
       <h4>El juego</h4>
-      <button onClick={startGame}>¡Comenzar!</button>
+      <button onClick={startGame}>Comenzar partida</button>
       <button onClick={chooseCategory}>Elegir categoría</button>
     </div>
   );
