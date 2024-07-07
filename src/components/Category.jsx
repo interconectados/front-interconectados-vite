@@ -11,7 +11,7 @@ function Category() {
 
   return (
     <div className="category">
-      <h1>Elige una categoría</h1>
+      <h2>¿Con quién vas a jugar?</h2>
       {categories.map((category) => (
         <button key={category} onClick={() => selectCategory(category)}>
           {category}
