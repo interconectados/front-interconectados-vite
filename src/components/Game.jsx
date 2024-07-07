@@ -167,8 +167,8 @@ function Game() {
       ) : (
         <div>
           <h2>¿Te gustó?</h2>
-          <button onClick={() => handleFeedback('like')}>Si</button>
           <button onClick={() => handleFeedback('dislike')}>No</button>
+          <button onClick={() => handleFeedback('like')}>Si</button>
         
         </div>
       )}
