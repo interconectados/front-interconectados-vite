@@ -14,8 +14,11 @@ function Welcome() {
 
   return (
     <div className="welcome">
-      <h1>Interconectados</h1>
-      <button onClick={startGame}>Comenzar el juego</button>
+      <h2 className='mb-0'>Interconectados_ok</h2>
+      <h4>El juego</h4>
+      <button onClick={startGame} >¡Comenzar!</button>
+      
+      {/* Hasta que las categorías funcionen, vamos a dejar disponible solo el juego todxs */}
       <button onClick={chooseCategory}>Elegir categoría</button>
     </div>
   );
