@@ -55,7 +55,10 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
+h2.question{
+  width: 90%;
+  margin: 0 auto;
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #342B32;
@@ -69,7 +72,7 @@ button:focus-visible {
     border: solid 1px #B04C22;
     color: white;
   }
-  button.btn.no{
+  button.btn.no, .btn.categoryes{
 background-color: transparent;
 border: solid 1px #B04C22;
 color: #B04C22;

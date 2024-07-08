@@ -160,8 +160,10 @@ function Game() {
     <div className="game">
       {!showFeedback ? (
         <div  onClick={showFeedbackScreen}>
-          <h2>Pregunta</h2>
-          <p>{question.text}</p>
+          <p>Responde:</p>
+          <br />
+          <h2 className='question'>{question.text}</h2>
+          <br />
           <button onClick={showFeedbackScreen} style={{}} >Siguiente</button>
         </div>
       ) : (

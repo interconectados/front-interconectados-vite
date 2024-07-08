@@ -20,7 +20,7 @@ function Welcome() {
       {/* <h2 className="mb-0">Interconectados_ok</h2> */}
       <h4>El juego</h4>
       <button onClick={startGame}>Comenzar partida</button>
-      <button onClick={chooseCategory}>Elegir categoría</button>
+      <button className="btn categoryes" onClick={chooseCategory}>Elegir categoría</button>
     </div>
   );
 }
