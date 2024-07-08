@@ -162,13 +162,13 @@ function Game() {
         <div  onClick={showFeedbackScreen}>
           <h2>Pregunta</h2>
           <p>{question.text}</p>
-          <button onClick={showFeedbackScreen} style={{background: "darkblue"}} >Siguiente</button>
+          <button onClick={showFeedbackScreen} style={{}} >Siguiente</button>
         </div>
       ) : (
         <div>
           <h2>¿Te gustó?</h2>
-          <button className='btn no' style={{background: "red"}} onClick={() => handleFeedback('dislike')}>No</button>
-          <button  className='btn si' style={{background: "green"}}  onClick={() => handleFeedback('like')}>Si</button>
+          <button className='btn no' style={{}} onClick={() => handleFeedback('dislike')}>No</button>
+          <button  className='btn si' style={{}}  onClick={() => handleFeedback('like')}>Si</button>
         
         </div>
       )}
