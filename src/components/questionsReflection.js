@@ -84,47 +84,22 @@ const questions = [
 
         { id: 2331, text: "Si tuvieras que elegir 2 discos/canciones que te vuelen la cabeza, ¿cuáles serían?", category: "amigos", likes: 0, dislikes: 0 },
         { id: 2332, text: "¿Qué te entretiene?", category: "amigos", likes: 0, dislikes: 0 },
-        { id: 2333, text: "¿Qué error del pasado te enseñó la lección más valiosa?", category: "amigos", likes: 0, dislikes: 0 },
-        { id: 2334, text: "¿Quién en tu vida te inspira a ser mejor?", category: "amigos", likes: 0, dislikes: 0 },
-        { id: 2335, text: "¿Qué te sorprende de vos mismo últimamente?", category: "amigos", likes: 0, dislikes: 0 },
-        { id: 2336, text: "Si pudieras vivir durante 1 año en cualquier parte del mundo, ¿dónde sería?", category: "amigos", likes: 0, dislikes: 0 },
-        { id: 2337, text: "¿Cuál fue el evento reciente que hizo que cambies de opinión en algo?", category: "amigos", likes: 0, dislikes: 0 },
         { id: 2338, text: "¿Cuál fue tu mayor desafío el año pasado?", category: "amigos", likes: 0, dislikes: 0 },
-        { id: 2339, text: "¿Cómo te gustaría ser recordado?", category: "amigos", likes: 0, dislikes: 0 },
         { id: 2340, text: "¿Tenes alguna historia divertida con alguien de la ronda? Contala.", category: "amigos", likes: 0, dislikes: 0 },
         { id: 2341, text: "Si pudieras mandar un objeto al espacio, ¿cuál sería?", category: "amigos", likes: 0, dislikes:0},      
-            { id: 2341, text: "Si pudieras mandar un objeto al espacio, ¿cuál sería?", category: "amigos", likes: 0, dislikes: 0 },
             { id: 2342, text: "¿Cuándo es un buen momento para volver a empezar?", category: "amigos", likes: 0, dislikes: 0 },
             { id: 2343, text: "¿Cuál es la diferencia entre estar vivo y vivir?", category: "amigos", likes: 0, dislikes: 0 },
             { id: 2344, text: "¿Qué riesgos valen la pena?", category: "amigos", likes: 0, dislikes: 0 },
-            { id: 2345, text: "¿Qué es lo que nunca te cansas de hacer?", category: "amigos", likes: 0, dislikes: 0 },
           
  
         //categoría FAMILIA
  
         { id: 2232, text: "¿Qué te entretiene?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2233, text: "¿Qué error del pasado te enseñó la lección más valiosa?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2234, text: "¿Quién en tu vida te inspira a ser mejor?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2235, text: "¿Qué te sorprende de vos mismo últimamente?", category: "familia", likes: 0, dislikes: 0 },
     { id: 2236, text: "Si pudieras vivir durante 1 año en cualquier parte del mundo, ¿dónde sería?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2237, text: "¿Cuál fue el evento reciente que hizo que cambies de opinión en algo?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2238, text: "¿Cuál fue tu mayor desafío el año pasado?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2239, text: "¿Cómo te gustaría ser recordado?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2240, text: "¿Tenes alguna historia divertida con alguien de la ronda? Contala.", category: "familia", likes: 0, dislikes: 0 },
     { id: 2241, text: "Si pudieras mandar un objeto al espacio, ¿cuál sería?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2242, text: "¿Cuándo es un buen momento para volver a empezar?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2243, text: "¿Cuál es la diferencia entre estar vivo y vivir?", category: "familia", likes: 0, dislikes: 0 },
-    { id: 2244, text: "¿Qué riesgos valen la pena?", category: "familia", likes: 0, dislikes: 0 },
     { id: 2245, text: "¿Qué es lo que nunca te cansas de hacer?", category: "familia", likes: 0, dislikes: 0 },
 
   //categoría CITA
-  {
-    id: 2600,
-    text: "¿Qué error del pasado te enseñó la lección más valiosa?",
-    category: "cita",
-    likes: 0,
-    dislikes: 0,
-  },
   {
     id: 2601,
     text: "¿Quién en tu vida te inspira a ser mejor?",
@@ -512,6 +487,8 @@ const questions = [
   },
 
   //categoría SOLO
+
+  { id: 2237, text: "¿Cuál fue el evento reciente que hizo que cambies de opinión en algo?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2431, text: "¿Qué es la libertad para vos?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2432, text: "Para vos, ¿cuál es el sentido de la vida?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2433, text: "¿Qué título le pondrías a este momento?", category: "solo", likes: 0, dislikes: 0 },
@@ -538,8 +515,7 @@ const questions = [
     { id: 2454, text: "¿Qué evento reciente hizo que cambies de opinión en algo?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2455, text: "¿Qué no negociás?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2456, text: "¿Qué error del pasado te enseñó la lección más valiosa?", category: "solo", likes: 0, dislikes: 0 },
-    { id: 2457, text: "¿Quién en tu vida te inspira a ser mejor?", category: "solo", likes: 0, dislikes: 0 },
-    { id: 2458, text: "¿Cuál fue tu mayor desafío el año pasado?", category: "solo", likes: 0, dislikes: 0 },
+    { id: 2457, text: "¿Quién te inspira a ser mejor?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2459, text: "¿Cómo te gustaría ser recordado?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2460, text: "¿Qué te sorprende de vos mismo últimamente?", category: "solo", likes: 0, dislikes: 0 },
     { id: 2461, text: "¿Qué actividad te ayuda a encontrar la paz?", category: "solo", likes: 0, dislikes: 0 },  
