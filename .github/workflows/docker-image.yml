@@ -1,0 +1,30 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - master  # Observa los cambios en la rama master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Se ejecutará en una máquina con Ubuntu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # Clona el repositorio actual
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1  # Configura Docker Buildx para builds multi-plataforma
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1  
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }} 
+          password: ${{ secrets.DOCKER_PASSWORD }}  
+
+      - name: Build and push
+        uses: docker/build-push-action@v2  # Acción para construir y empujar la imagen Docker
+        with:
+          context: .  # Contexto de construcción de Docker (directorio actual)
+          push: true  # Sube la imagen a Docker Hub
+          tags: alacorazza/front-interconectados-vite:1.0  # Etiqueta de la imagen
