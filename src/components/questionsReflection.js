@@ -94,7 +94,7 @@ const questions = [
  
         //categoría FAMILIA
  
-        { id: 2232, text: "¿Qué te entretiene?", category: "familia", likes: 0, dislikes: 0 },
+    { id: 2232, text: "¿Qué te entretiene?", category: "familia", likes: 0, dislikes: 0 },
     { id: 2236, text: "Si pudieras vivir durante 1 año en cualquier parte del mundo, ¿dónde sería?", category: "familia", likes: 0, dislikes: 0 },
     { id: 2241, text: "Si pudieras mandar un objeto al espacio, ¿cuál sería?", category: "familia", likes: 0, dislikes: 0 },
     { id: 2245, text: "¿Qué es lo que nunca te cansas de hacer?", category: "familia", likes: 0, dislikes: 0 },
@@ -200,7 +200,7 @@ const questions = [
   },
   {
     id: 2615,
-    text: "¿Qué es lo que más valoras en una amistad?",
+    text: "¿Qué es lo que más valoras en una relación?",
     category: "cita",
     likes: 0,
     dislikes: 0,
@@ -583,13 +583,6 @@ const questions = [
       dislikes: 0,
     },
     {
-      id: 2511,
-      text: "¿Qué te inspira?",
-      category: "solo",
-      likes: 0,
-      dislikes: 0,
-    },
-    {
       id: 2512,
       text: "¿Qué no negociás?",
       category: "solo",
@@ -604,22 +597,8 @@ const questions = [
       dislikes: 0,
     },
     {
-      id: 2514,
-      text: "¿Qué esperas de la persona que te acompaña?",
-      category: "solo",
-      likes: 0,
-      dislikes: 0,
-    },
-    {
       id: 2515,
       text: "¿Qué haces para sentirte bien?",
-      category: "solo",
-      likes: 0,
-      dislikes: 0,
-    },
-    {
-      id: 2516,
-      text: "¿A quién admiras y por qué?",
       category: "solo",
       likes: 0,
       dislikes: 0,
@@ -655,13 +634,6 @@ const questions = [
     {
       id: 2524,
       text: "¿Qué fue lo último que aprendiste?",
-      category: "solo",
-      likes: 0,
-      dislikes: 0,
-    },
-    {
-      id: 2526,
-      text: "¿Cuál fue la situación más extrema que viviste?",
       category: "solo",
       likes: 0,
       dislikes: 0,
