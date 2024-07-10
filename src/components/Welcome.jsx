@@ -16,8 +16,7 @@ function Welcome() {
 
   return (
     <div className="welcome">
-      {/* <img src={logo} alt="logo interconectados" style={{width: "100px"}}/> */}
-      {/* <h2 className="mb-0">Interconectados_ok</h2> */}
+      <img src={logo} alt="logo interconectados" style={{width: "100px"}}/>
       <h4>El juego</h4>
       <button onClick={startGame}>Comenzar partida</button>
       <button className="btn categoryes" onClick={chooseCategory}>Elegir categoría</button>

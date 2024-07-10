@@ -17,9 +17,9 @@ function Category() {
           {category}
         </button>
       ))}
-       <footer>
+       <div>
         <button className='btn out' onClick={() => navigate('/')}>Salir</button>
-      </footer>
+      </div>
     </div>
   );
 }

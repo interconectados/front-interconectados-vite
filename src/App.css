@@ -10,14 +10,6 @@ button {
   cursor: pointer;
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  text-align: center;
-  padding: 10px 0;
-  width: 90%;
-  margin: 0 auto;
-}
 .category,.game,.welcome{
   width: 90%;
   margin: 0 auto;
