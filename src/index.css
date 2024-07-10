@@ -66,9 +66,9 @@ button.btn.out {
   border: solid 1px #687a61;
   color: #687a61;
   position: fixed;
-  right: 5%;
+  right: 15%;
   bottom: 0;
-  width: 80%;
+  width: 70%;
 }
 @media (prefers-color-scheme: light) {
   :root {
