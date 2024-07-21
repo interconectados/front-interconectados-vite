@@ -7,7 +7,7 @@ function Welcome() {
   const navigate = useNavigate();
 
   const startGame = () => {
-    navigate("/game/todxs");
+    navigate("/game/Entretenimiento");
   };
 
   const chooseCategory = () => {
