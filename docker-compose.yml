@@ -2,11 +2,13 @@ version: '3'
 
 services:
   app:
-    image: alacorazza/front-interconectados-vite:latest
+    image: alacorazza/front-interconectados-vite:latest  # Considera usar una etiqueta específica
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    networks:
+      - nginx-proxy
 
   nginx:
     image: nginx:latest
@@ -19,13 +21,17 @@ services:
       - ./certbot/www:/var/www/certbot
     depends_on:
       - app
+    networks:
+      - nginx-proxy
 
   certbot:
     image: certbot/certbot
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot -w /var/www/certbot -d interconectados.duckdns.org; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    networks:
+      - nginx-proxy
 
   watchtower:
     image: containrrr/watchtower
@@ -35,8 +41,12 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL=30
+    networks:
+      - default
 
 networks:
+  nginx-proxy:
+    name: nginx-proxy # Nombre de la red externa
+    external: true     # Indica que es una red externa
   default:
-    external:
-      name: nginx-proxy
+    external: false
