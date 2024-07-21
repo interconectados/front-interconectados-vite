@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Directorio de trabajo (ajusta si es necesario)
+# Directorio de trabajo
 WORKDIR="/opt/interconectados/front-interconectados-vite"
 
 # Nombres de los archivos y directorios
@@ -15,6 +15,7 @@ MSG_CREATED="Creado:"
 MSG_EXISTS="Ya existe:"
 MSG_STARTING="Iniciando Docker Compose..."
 MSG_DONE="¡Listo! Los contenedores están en funcionamiento."
+MSG_FAILED="Error: Algunos contenedores no se iniciaron correctamente. Revisa los logs para más detalles."
 MSG_GOODBYE="Adiós, jefe."
 
 # Función para crear directorios si no existen
@@ -35,16 +36,17 @@ cd "$WORKDIR" || { echo "No se pudo acceder al directorio $WORKDIR"; exit 1; }
 if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
     echo "$MSG_CREATED $DOCKER_COMPOSE_FILE"
     cat <<EOF > "$DOCKER_COMPOSE_FILE"
-# ... (Contenido del archivo docker-compose.yml que te proporcioné anteriormente)
+# ... (Contenido del archivo docker-compose.yml)
 EOF
 else
     echo "$MSG_EXISTS $DOCKER_COMPOSE_FILE"
 fi
 
+# No sobrescribir nginx.conf si ya existe
 if [ ! -f "$NGINX_CONF_FILE" ]; then
     echo "$MSG_CREATED $NGINX_CONF_FILE"
     cat <<EOF > "$NGINX_CONF_FILE"
-# ... (Contenido del archivo nginx.conf que te proporcioné anteriormente)
+# ... (Contenido del archivo nginx.conf)
 EOF
 else
     echo "$MSG_EXISTS $NGINX_CONF_FILE"
@@ -59,11 +61,12 @@ create_dir_if_not_exists "$CERTBOT_WWW_DIR"
 echo "$MSG_STARTING"
 docker-compose up -d
 
-# Verificar si los contenedores están en funcionamiento
-if [ $? -eq 0 ]; then
-    echo "$MSG_DONE"
+# Verificar si todos los contenedores están en funcionamiento
+if docker-compose ps | grep -q "Exit"; then
+    echo "$MSG_FAILED"
+    docker-compose logs  # Mostrar logs de los contenedores que fallaron
 else
-    echo "Error al iniciar Docker Compose. Revisa los logs para más detalles."
+    echo "$MSG_DONE"
 fi
 
 echo "$MSG_GOODBYE"
