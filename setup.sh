@@ -1,4 +1,3 @@
-Bash
 #!/bin/bash
 
 # Directorio de trabajo
@@ -88,4 +87,22 @@ else
     echo "$MSG_EXISTS $NGINX_CONF_FILE"
 fi
 
-# ... (resto del script igual al anterior)
+
+# Crear directorios de Certbot si no existen
+create_dir_if_not_exists "$CERTBOT_DIR"
+create_dir_if_not_exists "$CERTBOT_CONF_DIR"
+create_dir_if_not_exists "$CERTBOT_WWW_DIR"
+
+# Iniciar Docker Compose
+echo "$MSG_STARTING"
+docker-compose up -d
+
+# Verificar si todos los contenedores están en funcionamiento
+if docker-compose ps | grep -q "Exit"; then
+    echo "$MSG_FAILED"
+    docker-compose logs  # Mostrar logs de los contenedores que fallaron
+else
+    echo "$MSG_DONE"
+fi
+
+echo "$MSG_GOODBYE"
