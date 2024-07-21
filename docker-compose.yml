@@ -2,7 +2,10 @@ version: '3'
 
 services:
   app:
-    image: alacorazza/front-interconectados-vite:latest  # Considera usar una etiqueta específica
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: front-interconectados-vite:latest
     ports:
       - "3000:3000"
     environment:
@@ -46,7 +49,7 @@ services:
 
 networks:
   nginx-proxy:
-    name: nginx-proxy # Nombre de la red externa
-    external: true     # Indica que es una red externa
+    name: nginx-proxy
+    external: true
   default:
     external: false
