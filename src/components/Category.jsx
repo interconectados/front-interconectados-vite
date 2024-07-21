@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Category() {
   const navigate = useNavigate();
-  const categories = ['todxs', 'familia', 'amigos', 'pareja', 'solo'];
+  const categories = ['todxs', 'familia', 'amigos', 'cita', 'solo'];
 
   const selectCategory = (category) => {
     navigate(`/game/${category}`);
@@ -17,9 +17,9 @@ function Category() {
           {category}
         </button>
       ))}
-       <footer>
+       <div className=''>
         <button className='btn out' onClick={() => navigate('/')}>Salir</button>
-      </footer>
+      </div>
     </div>
   );
 }

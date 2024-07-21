@@ -49,9 +49,9 @@ function Game() {
     return (
       <div>
         Cargando pregunta...
-        <footer>
+        <div>
           <button onClick={() => navigate("/")}>Salir</button>
-        </footer>
+        </div>
       </div>
     );
   }
@@ -87,11 +87,11 @@ function Game() {
           </button>
         </div>
       )}
-      <footer>
+      <div>
         <button className="btn out" onClick={() => navigate("/")}>
           Salir
         </button>
-      </footer>
+      </div>
     </div>
   );
 }
