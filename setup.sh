@@ -207,4 +207,40 @@ else
 fi
 
 # Crear directorios de Certbot si no existen
-create_dir_if_not_exists "$CERTBOT_DIR
+create_dir_if_not_exists "$CERTBOT_DIR"
+create_dir_if_not_exists "$CERTBOT_CONF_DIR"
+create_dir_if_not_exists "$CERTBOT_WWW_DIR"
+
+# Crear estructura de directorios para el desafío de Certbot
+mkdir -p "$CERTBOT_WWW_DIR/.well-known/acme-challenge"
+echo "test" > "$CERTBOT_WWW_DIR/.well-known/acme-challenge/test"
+
+# Verificar y crear la red Docker si es necesario
+check_and_create_network
+
+# Iniciar Docker Compose con configuración temporal de Nginx
+echo "$MSG_STARTING"
+docker-compose up -d certbot nginx
+
+# Esperar 6 segundos con barra de progreso
+echo "$MSG_WAITING"
+progress_bar 6
+
+# Detener Nginx y Certbot
+docker-compose down
+
+# Cambiar la configuración de Nginx a la definitiva
+mv ./nginx.temp.conf ./nginx.conf
+
+# Iniciar todos los servicios de Docker Compose con la configuración definitiva
+docker-compose up -d
+
+# Verificar si todos los contenedores están en funcionamiento
+si docker-compose ps | grep -q "Exit"; entonces
+    echo "$MSG_FAILED"
+    docker-compose logs  # Mostrar logs de los contenedores que fallaron
+else
+    echo "$MSG_DONE"
+fi
+
+echo "$MSG_GOODBYE"
