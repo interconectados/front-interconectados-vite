@@ -98,7 +98,7 @@ services:
     volumes:
       - certbot_conf:/etc/letsencrypt
       - certbot_www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while ! curl -s http://nginx/.well-known/acme-challenge/; do sleep 1; done; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email --staging -d interconectados.duckdns.org --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while ! curl -s http://nginx/.well-known/acme-challenge/; do sleep 1; done; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --staging --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - nginx-proxy
 
