@@ -24,7 +24,7 @@ MSG_GOODBYE="Adiós, jefe."
 # Función para crear directorios si no existen
 create_dir_if_not_exists() {
     local dir="$1"
-    if [ ! -d "$dir" ]; then
+    if [ ! -d "$dir" ]; entonces
         echo "$MSG_CREATED $dir"
         mkdir -p "$dir"
     else
@@ -34,7 +34,7 @@ create_dir_if_not_exists() {
 
 # Función para verificar y crear la red de Docker si no existe
 check_and_create_network() {
-    if ! docker network ls | grep -q $NETWORK_NAME; then
+    if ! docker network ls | grep -q $NETWORK_NAME; entonces
         echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
         docker network create $NETWORK_NAME
     else
@@ -49,13 +49,13 @@ progress_bar() {
     local count=0
 
     echo -ne '0% [--------------------] 100%\r'
-    while [ $count -lt 20 ]; do
+    mientras que [ $count -lt 20 ]; do
         sleep $increment
         count=$((count + 1))
         progress=$((count * 5))
         bar=$(printf "%-${count}s" "=")
         echo -ne "${progress}% [${bar// /=}>] $(($count * 5))%\r"
-    done
+    hecho
     echo -ne '\n'
 }
 
@@ -63,7 +63,7 @@ progress_bar() {
 cd "$WORKDIR" || { echo "No se pudo acceder al directorio $WORKDIR"; exit 1; }
 
 # Crear archivos de configuración si no existen
-if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+si [ ! -f "$DOCKER_COMPOSE_FILE" ]; entonces
     echo "$MSG_CREATED $DOCKER_COMPOSE_FILE"
     cat <<EOF > "$DOCKER_COMPOSE_FILE"
 version: '3'
@@ -98,7 +98,7 @@ services:
     volumes:
       - certbot_conf:/etc/letsencrypt
       - certbot_www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while ! curl -s http://nginx/.well-known/acme-challenge/; do sleep 1; done; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; while ! curl -s http://nginx/.well-known/acme-challenge/; do sleep 1; done; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email --staging -d interconectados.duckdns.org --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - nginx-proxy
 
@@ -129,7 +129,7 @@ else
 fi
 
 # No sobrescribir nginx.conf si ya existe
-if [ ! -f "$NGINX_CONF_FILE" ]; then
+si [ ! -f "$NGINX_CONF_FILE" ]; entonces
     echo "$MSG_CREATED $NGINX_CONF_FILE"
     cat <<EOF > "$NGINX_CONF_FILE"
 events {
@@ -180,7 +180,7 @@ else
 fi
 
 # Crear archivos de configuración temporales para Nginx
-if [ ! -f "$NGINX_TEMP_CONF_FILE" ]; then
+si [ ! -f "$NGINX_TEMP_CONF_FILE" ]; entonces
     echo "$MSG_CREATED $NGINX_TEMP_CONF_FILE"
     cat <<EOF > "$NGINX_TEMP_CONF_FILE"
 events {
@@ -207,40 +207,4 @@ else
 fi
 
 # Crear directorios de Certbot si no existen
-create_dir_if_not_exists "$CERTBOT_DIR"
-create_dir_if_not_exists "$CERTBOT_CONF_DIR"
-create_dir_if_not_exists "$CERTBOT_WWW_DIR"
-
-# Crear estructura de directorios para el desafío de Certbot
-mkdir -p "$CERTBOT_WWW_DIR/.well-known/acme-challenge"
-echo "test" > "$CERTBOT_WWW_DIR/.well-known/acme-challenge/test"
-
-# Verificar y crear la red Docker si es necesario
-check_and_create_network
-
-# Iniciar Docker Compose con configuración temporal de Nginx
-echo "$MSG_STARTING"
-docker-compose up -d certbot nginx
-
-# Esperar 6 segundos con barra de progreso
-echo "$MSG_WAITING"
-progress_bar 6
-
-# Detener Nginx y Certbot
-docker-compose down
-
-# Cambiar la configuración de Nginx a la definitiva
-mv ./nginx.temp.conf ./nginx.conf
-
-# Iniciar todos los servicios de Docker Compose con la configuración definitiva
-docker-compose up -d
-
-# Verificar si todos los contenedores están en funcionamiento
-if docker-compose ps | grep -q "Exit"; then
-    echo "$MSG_FAILED"
-    docker-compose logs  # Mostrar logs de los contenedores que fallaron
-else
-    echo "$MSG_DONE"
-fi
-
-echo "$MSG_GOODBYE"
+create_dir_if_not_exists "$CERTBOT_DIR
