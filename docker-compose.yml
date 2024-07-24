@@ -24,6 +24,7 @@ services:
       - ./certbot/www:/var/www/certbot
     depends_on:
       - app
+      - certbot
     networks:
       - nginx-proxy
 
@@ -32,7 +33,7 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot -w /var/www/certbot -d interconectados.duckdns.org; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - nginx-proxy
 
