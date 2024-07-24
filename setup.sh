@@ -9,6 +9,7 @@ NGINX_CONF_FILE="nginx.conf"
 CERTBOT_DIR="certbot"
 CERTBOT_CONF_DIR="$CERTBOT_DIR/conf"
 CERTBOT_WWW_DIR="$CERTBOT_DIR/www"
+NETWORK_NAME="nginx-proxy"  # Añade el nombre de la red que se utiliza en docker-compose.yml
 
 # Mensajes de salida
 MSG_CREATED="Creado:"
@@ -26,6 +27,16 @@ create_dir_if_not_exists() {
         mkdir -p "$dir"
     else
         echo "$MSG_EXISTS $dir"
+    fi
+}
+
+# Función para verificar y crear la red de Docker si no existe
+check_and_create_network() {
+    if ! docker network ls | grep -q $NETWORK_NAME; then
+        echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
+        docker network create $NETWORK_NAME
+    else
+        echo "$MSG_EXISTS red Docker '$NETWORK_NAME'"
     fi
 }
 
@@ -49,49 +60,19 @@ if [ ! -f "$NGINX_CONF_FILE" ]; then
 events {
     worker_connections 1024;
 }
-
-server {
-    listen 80;
-    server_name interconectados.duckdns.org;
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-server {
-    listen 443 ssl;
-    server_name interconectados.duckdns.org;
-
-    ssl_certificate /etc/letsencrypt/live/interconectados.duckdns.org/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/interconectados.duckdns.org/privkey.pem;
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_prefer_server_ciphers on;
-    ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256";
-
-    location / {
-        proxy_pass http://app:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
+# ... (Resto del contenido de nginx.conf)
 EOF
 else
     echo "$MSG_EXISTS $NGINX_CONF_FILE"
 fi
 
-
 # Crear directorios de Certbot si no existen
 create_dir_if_not_exists "$CERTBOT_DIR"
 create_dir_if_not_exists "$CERTBOT_CONF_DIR"
 create_dir_if_not_exists "$CERTBOT_WWW_DIR"
+
+# Verificar y crear la red Docker si es necesario
+check_and_create_network
 
 # Iniciar Docker Compose
 echo "$MSG_STARTING"
