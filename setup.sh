@@ -69,8 +69,8 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
     depends_on:
       - app
       - certbot
@@ -80,8 +80,8 @@ services:
   certbot:
     image: certbot/certbot
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     networks:
       - nginx-proxy
@@ -96,6 +96,10 @@ services:
       - WATCHTOWER_POLL_INTERVAL=30
     networks:
       - default
+
+volumes:
+  certbot_conf:
+  certbot_www:
 
 networks:
   nginx-proxy:
@@ -163,6 +167,9 @@ fi
 create_dir_if_not_exists "$CERTBOT_DIR"
 create_dir_if_not_exists "$CERTBOT_CONF_DIR"
 create_dir_if_not_exists "$CERTBOT_WWW_DIR"
+
+# Crear archivo de prueba en el directorio de Certbot
+echo "test" > "$CERTBOT_WWW_DIR/.well-known/acme-challenge/test"
 
 # Verificar y crear la red Docker si es necesario
 check_and_create_network
