@@ -168,7 +168,8 @@ create_dir_if_not_exists "$CERTBOT_DIR"
 create_dir_if_not_exists "$CERTBOT_CONF_DIR"
 create_dir_if_not_exists "$CERTBOT_WWW_DIR"
 
-# Crear archivo de prueba en el directorio de Certbot
+# Crear estructura de directorios para el desafío de Certbot
+mkdir -p "$CERTBOT_WWW_DIR/.well-known/acme-challenge"
 echo "test" > "$CERTBOT_WWW_DIR/.well-known/acme-challenge/test"
 
 # Verificar y crear la red Docker si es necesario
