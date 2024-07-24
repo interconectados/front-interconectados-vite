@@ -24,7 +24,7 @@ MSG_GOODBYE="Adiós, jefe."
 # Función para crear directorios si no existen
 create_dir_if_not_exists() {
     local dir="$1"
-    if [ ! -d "$dir" ]; entonces
+    if [ ! -d "$dir" ]; then
         echo "$MSG_CREATED $dir"
         mkdir -p "$dir"
     else
@@ -34,7 +34,7 @@ create_dir_if_not_exists() {
 
 # Función para verificar y crear la red de Docker si no existe
 check_and_create_network() {
-    if ! docker network ls | grep -q $NETWORK_NAME; entonces
+    if ! docker network ls | grep -q $NETWORK_NAME; then
         echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
         docker network create $NETWORK_NAME
     else
@@ -49,13 +49,13 @@ progress_bar() {
     local count=0
 
     echo -ne '0% [--------------------] 100%\r'
-    mientras que [ $count -lt 20 ]; do
+    while [ $count -lt 20 ]; do
         sleep $increment
         count=$((count + 1))
         progress=$((count * 5))
         bar=$(printf "%-${count}s" "=")
         echo -ne "${progress}% [${bar// /=}>] $(($count * 5))%\r"
-    hecho
+    done
     echo -ne '\n'
 }
 
@@ -63,7 +63,7 @@ progress_bar() {
 cd "$WORKDIR" || { echo "No se pudo acceder al directorio $WORKDIR"; exit 1; }
 
 # Crear archivos de configuración si no existen
-si [ ! -f "$DOCKER_COMPOSE_FILE" ]; entonces
+if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
     echo "$MSG_CREATED $DOCKER_COMPOSE_FILE"
     cat <<EOF > "$DOCKER_COMPOSE_FILE"
 version: '3'
@@ -129,7 +129,7 @@ else
 fi
 
 # No sobrescribir nginx.conf si ya existe
-si [ ! -f "$NGINX_CONF_FILE" ]; entonces
+if [ ! -f "$NGINX_CONF_FILE" ]; then
     echo "$MSG_CREATED $NGINX_CONF_FILE"
     cat <<EOF > "$NGINX_CONF_FILE"
 events {
@@ -180,7 +180,7 @@ else
 fi
 
 # Crear archivos de configuración temporales para Nginx
-si [ ! -f "$NGINX_TEMP_CONF_FILE" ]; entonces
+if [ ! -f "$NGINX_TEMP_CONF_FILE" ]; then
     echo "$MSG_CREATED $NGINX_TEMP_CONF_FILE"
     cat <<EOF > "$NGINX_TEMP_CONF_FILE"
 events {
@@ -236,7 +236,7 @@ mv ./nginx.temp.conf ./nginx.conf
 docker-compose up -d
 
 # Verificar si todos los contenedores están en funcionamiento
-si docker-compose ps | grep -q "Exit"; entonces
+if docker-compose ps | grep -q "Exit"; then
     echo "$MSG_FAILED"
     docker-compose logs  # Mostrar logs de los contenedores que fallaron
 else
