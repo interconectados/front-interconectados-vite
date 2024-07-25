@@ -124,29 +124,4 @@ create_dir_if_not_exists "$CERTBOT_WWW_DIR"
 # Verificar y crear la red Docker si es necesario
 check_and_create_network
 
-# Iniciar Docker Compose con la configuración temporal de Nginx
-docker-compose up -d
-
-# Esperar a que los servicios se inicien
-echo "$MSG_WAITING"
-show_progress 10
-
-# Detener todos los contenedores
-docker-compose down
-
-# Cambiar la configuración de Nginx a la definitiva
-mv "$NGINX_TEMP_CONF_FILE" "$NGINX_CONF_FILE"
-
-# Reiniciar Docker Compose con la configuración definitiva de Nginx
-echo "$MSG_RESTARTING"
-docker-compose up -d
-
-# Verificar si todos los contenedores están en funcionamiento
-if docker-compose ps | grep -q "Exit"; then
-    echo "$MSG_FAILED"
-    docker-compose logs  # Mostrar logs de los contenedores que fallaron
-else
-    echo "$MSG_DONE"
-fi
-
-echo "$MSG_GOODBYE"
+# Iniciar Docker Compose con la configuración temporal de Ngin
