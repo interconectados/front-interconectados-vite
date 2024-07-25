@@ -10,6 +10,7 @@ NGINX_TEMP_CONF_FILE="nginx.temp.conf"
 CERTBOT_DIR="certbot"
 CERTBOT_CONF_DIR="$CERTBOT_DIR/conf"
 CERTBOT_WWW_DIR="$CERTBOT_DIR/www"
+CHALLENGE_DIR="$CERTBOT_WWW_DIR/.well-known/acme-challenge"
 NETWORK_NAME="nginx-proxy"  # Añade el nombre de la red que se utiliza en docker-compose.yml
 
 # Mensajes de salida
@@ -120,9 +121,16 @@ fi
 create_dir_if_not_exists "$CERTBOT_DIR"
 create_dir_if_not_exists "$CERTBOT_CONF_DIR"
 create_dir_if_not_exists "$CERTBOT_WWW_DIR"
+create_dir_if_not_exists "$CHALLENGE_DIR"
+
+# Crear un archivo de prueba para la validación de Certbot
+echo "test" > "$CHALLENGE_DIR/test.txt"
 
 # Verificar y crear la red Docker si es necesario
 check_and_create_network
+
+# Construir la imagen de certbot con curl
+docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
 
 # Iniciar Docker Compose con la configuración temporal de Nginx
 docker-compose up -d
