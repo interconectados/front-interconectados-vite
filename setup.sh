@@ -105,6 +105,7 @@ http {
 
         location /.well-known/acme-challenge/ {
             root /var/www/certbot;
+            autoindex on;  # Agregado para permitir el listado del directorio
         }
 
         location / {
