@@ -16,7 +16,7 @@ NETWORK_NAME="nginx-proxy"
 MSG_CREATED="Creado:"
 MSG_EXISTS="Ya existe:"
 MSG_STARTING="Iniciando Docker Compose..."
-MSG_WAITING="Esperando 6 segundos para que los servicios se inicien..."
+MSG_WAITING="Esperando 10 segundos para que los servicios se inicien..."
 MSG_DONE="¡Listo! Los contenedores están en funcionamiento."
 MSG_FAILED="Error: Algunos contenedores no se iniciaron correctamente. Revisa los logs para más detalles."
 MSG_GOODBYE="Adiós, jefe."
@@ -222,9 +222,9 @@ check_and_create_network
 echo "$MSG_STARTING"
 docker-compose up -d certbot nginx
 
-# Esperar 6 segundos con barra de progreso
+# Esperar 10 segundos con barra de progreso
 echo "$MSG_WAITING"
-progress_bar 6
+progress_bar 10
 
 # Detener Nginx y Certbot
 docker-compose down
