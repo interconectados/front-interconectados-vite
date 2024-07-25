@@ -19,7 +19,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx.temp.conf:/etc/nginx/nginx.conf  # Cambia a nginx.temp.conf inicialmente
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Cambia a nginx.temp.conf inicialmente
       - certbot_conf:/etc/letsencrypt
       - certbot_www:/var/www/certbot
     networks:
