@@ -2,58 +2,52 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: front-interconectados-vite:latest
+    container_name: front-interconectados-vite-app-1
+    restart: always
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
     networks:
-      - nginx-proxy
+      - default
 
   nginx:
     image: nginx:latest
+    container_name: front-interconectados-vite-nginx-1
+    restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf  # Cambia a nginx.temp.conf inicialmente
-      - certbot_conf:/etc/letsencrypt
-      - certbot_www:/var/www/certbot
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - nginx-proxy
+      - default
 
   certbot:
-    build:
-      context: .
-      dockerfile: Dockerfile.certbot
+    image: front-interconectados-vite_certbot
+    container_name: front-interconectados-vite-certbot-1
     volumes:
-      - certbot_conf:/etc/letsencrypt
-      - certbot_www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while ! curl -s http://nginx/.well-known/acme-challenge/; do sleep 1; done; certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --staging --force-renewal; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - nginx-proxy
+      - default
 
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
+    restart: always
+    command: --interval 300 --cleanup
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=30
     networks:
       - default
 
-volumes:
-  certbot_conf:
-  certbot_www:
-
 networks:
-  nginx-proxy:
-    name: nginx-proxy
-    external: true
   default:
-    external: false
+    external:
+      name: nginx-proxy
+
+volumes:
+  front-interconectados-vite_certbot_www:
+  front-interconectados-vite_certbot_conf:

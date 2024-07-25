@@ -74,7 +74,59 @@ cd "$WORKDIR" || { echo "No se pudo acceder al directorio $WORKDIR"; exit 1; }
 if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
     echo "$MSG_CREATED $DOCKER_COMPOSE_FILE"
     cat <<EOF > "$DOCKER_COMPOSE_FILE"
-# Contenido del archivo docker-compose.yml
+version: '3'
+
+services:
+  app:
+    image: front-interconectados-vite:latest
+    container_name: front-interconectados-vite-app-1
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - default
+
+  nginx:
+    image: nginx:latest
+    container_name: front-interconectados-vite-nginx-1
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
+    networks:
+      - default
+
+  certbot:
+    image: front-interconectados-vite_certbot
+    container_name: front-interconectados-vite-certbot-1
+    volumes:
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
+    networks:
+      - default
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: always
+    command: --interval 300 --cleanup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+
+volumes:
+  front-interconectados-vite_certbot_www:
+  front-interconectados-vite_certbot_conf:
 EOF
 else
     echo "$MSG_EXISTS $DOCKER_COMPOSE_FILE"
@@ -84,7 +136,45 @@ fi
 if [ ! -f "$NGINX_CONF_FILE" ]; then
     echo "$MSG_CREATED $NGINX_CONF_FILE"
     cat <<EOF > "$NGINX_CONF_FILE"
-# Contenido del archivo nginx.conf
+events {
+    worker_connections 1024;
+}
+
+http {
+    server {
+        listen 80;
+        server_name interconectados.duckdns.org;
+
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+            autoindex on;  # Agregado para permitir el listado del directorio
+        }
+
+        location / {
+            return 301 https://\$host\$request_uri;
+        }
+    }
+
+    server {
+        listen 443 ssl;
+        server_name interconectados.duckdns.org;
+
+        ssl_certificate /etc/letsencrypt/live/interconectados.duckdns.org/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/interconectados.duckdns.org/privkey.pem;
+
+        location / {
+            proxy_pass http://front-interconectados-vite-app-1:3000;
+            proxy_set_header Host \$host;
+            proxy_set_header X-Real-IP \$remote_addr;
+            proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto \$scheme;
+        }
+
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+    }
+}
 EOF
 else
     echo "$MSG_EXISTS $NGINX_CONF_FILE"
@@ -146,6 +236,9 @@ docker exec front-interconectados-vite-nginx-1 sh -c 'ls -la /var/www/certbot/.w
 # Copiar archivos de desafío manualmente si no están presentes
 docker exec front-interconectados-vite-nginx-1 sh -c 'mkdir -p /var/www/certbot/.well-known/acme-challenge'
 docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
+
+# Generar el certificado SSL en producción
+docker exec front-interconectados-vite-certbot-1 certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
 # Detener todos los contenedores
 docker-compose down
