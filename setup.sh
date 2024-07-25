@@ -11,7 +11,7 @@ CERTBOT_DIR="certbot"
 CERTBOT_CONF_DIR="$CERTBOT_DIR/conf"
 CERTBOT_WWW_DIR="$CERTBOT_DIR/www"
 CHALLENGE_DIR="$CERTBOT_WWW_DIR/.well-known/acme-challenge"
-NETWORK_NAME="nginx-proxy"  # Añade el nombre de la red que se utiliza en docker-compose.yml
+NETWORK_NAME="nginx-proxy"
 
 # Mensajes de salida
 MSG_CREATED="Creado:"
@@ -138,6 +138,13 @@ docker-compose up -d
 # Esperar a que los servicios se inicien
 echo "$MSG_WAITING"
 show_progress 10
+
+# Verificar archivos de desafío dentro del contenedor Nginx
+docker exec front-interconectados-vite-nginx-1 sh -c 'ls -la /var/www/certbot/.well-known/acme-challenge/'
+
+# Copiar archivos de desafío manualmente si no están presentes
+docker exec front-interconectados-vite-nginx-1 sh -c 'mkdir -p /var/www/certbot/.well-known/acme-challenge'
+docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
 
 # Detener todos los contenedores
 docker-compose down
