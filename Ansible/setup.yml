@@ -188,6 +188,10 @@
       retries: 30
       delay: 10
 
+    - name: Debug Certbot Result
+      debug:
+        var: certbot_result
+
     - name: Stop all Docker containers
       command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml down
 
