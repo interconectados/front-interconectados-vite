@@ -231,9 +231,6 @@ echo "$MSG_WAITING"
 show_progress 10
 
 # Verificar archivos de desafío dentro del contenedor Nginx
-docker exec front-interconectados-vite-nginx-1 sh -c 'ls -la /var/www/certbot/.well-known/acme-challenge/'
-
-# Copiar archivos de desafío manualmente si no están presentes
 docker exec front-interconectados-vite-nginx-1 sh -c 'mkdir -p /var/www/certbot/.well-known/acme-challenge'
 docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
 
