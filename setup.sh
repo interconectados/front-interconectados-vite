@@ -56,7 +56,7 @@ show_progress() {
         for ((i = 0; i < progress; i++)); do
             echo -ne "="
         done
-        for ((i = progress; i < 100); i++)); do
+        for ((i = progress; i < 100; i++)); do
             echo -ne " "
         done
         echo -ne "] $progress%"
