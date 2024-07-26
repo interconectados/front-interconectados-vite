@@ -4,6 +4,7 @@ echo "Iniciando el script setup.sh..."
 
 # Directorio de trabajo
 WORKDIR="/opt/interconectados/front-interconectados-vite"
+echo "WORKDIR set to $WORKDIR"
 
 # Nombres de los archivos y directorios
 DOCKER_COMPOSE_FILE="docker-compose.yml"
@@ -134,6 +135,12 @@ volumes:
 EOF
 else
     echo "$MSG_EXISTS $DOCKER_COMPOSE_FILE"
+fi
+
+# Eliminar el directorio nginx.conf si existe
+if [ -d "$NGINX_CONF_FILE" ]; then
+    echo "Eliminando el directorio $NGINX_CONF_FILE para evitar conflictos..."
+    rm -rf "$NGINX_CONF_FILE"
 fi
 
 # No sobrescribir nginx.conf si ya existe
