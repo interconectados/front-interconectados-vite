@@ -61,7 +61,7 @@ show_progress() {
         for ((i = 0; i < progress; i++)); do
             echo -ne "="
         done
-        for ((i = progress; i < 100; i++)); do
+        for ((i = progress; i < 100)); i++)); do
             echo -ne " "
         done
         echo -ne "] $progress%"
@@ -258,10 +258,6 @@ docker-compose down
 # Cambiar la configuración de Nginx a la definitiva
 echo "Actualizando nginx.conf"
 mv "$NGINX_TEMP_CONF_FILE" "$NGINX_CONF_FILE"
-
-# Verificar si la actualización se ha realizado correctamente
-echo "Verificando la actualización de nginx.conf"
-cat "$NGINX_CONF_FILE"
 
 # Reiniciar Docker Compose con la configuración definitiva de Nginx
 echo "$MSG_RESTARTING"
