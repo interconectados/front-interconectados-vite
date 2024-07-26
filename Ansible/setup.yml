@@ -77,6 +77,17 @@
             front-interconectados-vite_certbot_conf:
       when: not docker_compose_file.stat.exists
 
+    - name: Check if nginx.conf is a directory
+      stat:
+        path: /opt/interconectados/front-interconectados-vite/nginx.conf
+      register: nginx_conf_stat
+
+    - name: Remove nginx.conf directory if it exists
+      file:
+        path: /opt/interconectados/front-interconectados-vite/nginx.conf
+        state: absent
+      when: nginx_conf_stat.stat.isdir
+
     - name: Create nginx.conf if not exists
       copy:
         dest: /opt/interconectados/front-interconectados-vite/nginx.conf
