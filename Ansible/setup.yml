@@ -32,7 +32,7 @@
               ports:
                 - "3000:3000"
               networks:
-                - default
+                - nginx-proxy
 
             nginx:
               image: nginx:latest
@@ -46,7 +46,7 @@
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
-                - default
+                - nginx-proxy
 
             certbot:
               image: front-interconectados-vite_certbot
@@ -56,7 +56,7 @@
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
-                - default
+                - nginx-proxy
 
             watchtower:
               image: containrrr/watchtower
@@ -66,16 +66,27 @@
               volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
               networks:
-                - default
+                - nginx-proxy
 
           networks:
-            default:
-              name: nginx-proxy
+            nginx-proxy:
+              external: true
 
           volumes:
             front-interconectados-vite_certbot_www:
             front-interconectados-vite_certbot_conf:
       when: not docker_compose_file.stat.exists
+
+    - name: Check if nginx.conf is a file
+      stat:
+        path: /opt/interconectados/front-interconectados-vite/nginx.conf
+      register: nginx_conf_file
+
+    - name: Remove nginx.conf if it is a directory
+      file:
+        path: /opt/interconectados/front-interconectados-vite/nginx.conf
+        state: absent
+      when: nginx_conf_file.stat.isdir is defined and nginx_conf_file.stat.isdir
 
     - name: Create nginx.conf if not exists
       copy:
@@ -120,7 +131,6 @@
                   }
               }
           }
-      when: not docker_compose_file.stat.exists
 
     - name: Create nginx.temp.conf
       copy:
