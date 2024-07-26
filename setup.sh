@@ -79,7 +79,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - default
+      - nginx-proxy
 
   nginx:
     image: nginx:latest
@@ -93,7 +93,7 @@ services:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - default
+      - nginx-proxy
 
   certbot:
     image: front-interconectados-vite_certbot
@@ -103,7 +103,7 @@ services:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - default
+      - nginx-proxy
 
   watchtower:
     image: containrrr/watchtower
@@ -113,11 +113,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - default
+      - nginx-proxy
 
 networks:
-  default:
-    name: nginx-proxy
+  nginx-proxy:
+    external: true
 
 volumes:
   front-interconectados-vite_certbot_www:
@@ -222,6 +222,14 @@ create_dir_if_not_exists "$CHALLENGE_DIR"
 echo "test" > "$CHALLENGE_DIR/test.txt"
 chmod 644 "$CHALLENGE_DIR/test.txt"
 
+# Crear la red Docker si no existe
+if ! docker network ls | grep -q $NETWORK_NAME; then
+    echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
+    docker network create $NETWORK_NAME
+else
+    echo "$MSG_EXISTS red Docker '$NETWORK_NAME'"
+fi
+
 # Construir la imagen de certbot con curl
 echo "Construyendo la imagen de certbot"
 docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
@@ -242,7 +250,7 @@ docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/
 echo "Generando el certificado SSL"
 docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
-# Esperar 30 segundos para que Certbot complete la generación del certificado
+# Añadir tiempo de espera para asegurarse de que el certificado se genera correctamente
 echo "Esperando 30 segundos para que Certbot complete la generación del certificado..."
 show_progress 30
 
