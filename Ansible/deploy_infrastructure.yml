@@ -140,7 +140,9 @@
       ignore_errors: yes
 
     - name: Stop any service using port 80
-      command: fuser -k 80/tcp
+      shell: |
+        fuser -k 80/tcp || true
+        docker ps -q --filter "publish=80" | xargs -r docker stop
       ignore_errors: yes
 
     - name: Start Docker Compose
