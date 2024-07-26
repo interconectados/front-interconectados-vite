@@ -4,7 +4,6 @@ echo "Iniciando el script setup.sh..."
 
 # Directorio de trabajo
 WORKDIR="/opt/interconectados/front-interconectados-vite"
-echo "WORKDIR set to $WORKDIR"
 
 # Nombres de los archivos y directorios
 DOCKER_COMPOSE_FILE="docker-compose.yml"
@@ -25,8 +24,6 @@ MSG_RESTARTING="Reiniciando los servicios con configuración SSL..."
 MSG_DONE="¡Listo! Los contenedores están en funcionamiento."
 MSG_FAILED="Error: Algunos contenedores no se iniciaron correctamente. Revisa los logs para más detalles."
 MSG_GOODBYE="Adiós, jefe."
-
-echo "Variables de configuración inicializadas..."
 
 # Función para crear directorios si no existen
 create_dir_if_not_exists() {
@@ -61,7 +58,7 @@ show_progress() {
         for ((i = 0; i < progress; i++)); do
             echo -ne "="
         done
-        for ((i = progress; i < 100)); i++)); do
+        for ((i = progress; i < 100; i++)); do
             echo -ne " "
         done
         echo -ne "] $progress%"
