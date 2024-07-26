@@ -36,6 +36,7 @@
         dest: "{{ docker_compose_path }}"
         content: |
           version: '3'
+
           services:
             app:
               image: front-interconectados-vite:latest
@@ -55,16 +56,6 @@
                 - "443:443"
               volumes:
                 - ./nginx.conf:/etc/nginx/nginx.conf
-                - front-interconectados-vite_certbot_www:/var/www/certbot
-                - front-interconectados-vite_certbot_conf:/etc/letsencrypt
-              networks:
-                - default
-
-            certbot:
-              image: front-interconectados-vite_certbot
-              container_name: front-interconectados-vite-certbot-1
-              entrypoint: /bin/sh -c "trap exit TERM; while :; do sleep 6h & wait \$${!}; certbot renew; done"
-              volumes:
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
@@ -121,14 +112,43 @@
                       proxy_set_header X-Forwarded-Proto $scheme;
                   }
               }
+
+              server {
+                  listen 443 ssl;
+                  server_name interconectados.duckdns.org;
+
+                  ssl_certificate /etc/letsencrypt/live/interconectados.duckdns.org/fullchain.pem;
+                  ssl_certificate_key /etc/letsencrypt/live/interconectados.duckdns.org/privkey.pem;
+
+                  location / {
+                      proxy_pass http://front-interconectados-vite-app-1:5173;
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Real-IP $remote_addr;
+                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                      proxy_set_header X-Forwarded-Proto $scheme;
+                  }
+
+                  location /.well-known/acme-challenge/ {
+                      root /var/www/certbot;
+                  }
+              }
           }
       when: not nginx_conf_file.stat.exists
 
     - name: Ensure Docker network nginx-proxy exists
-      shell: docker network create nginx-proxy
+      docker_network:
+        name: nginx-proxy
+        state: present
+
+    - name: Stop any service using port 80
+      command: "fuser -k 80/tcp"
       ignore_errors: yes
 
     - name: Start Docker Compose
-      command:
-        cmd: docker-compose up -d
+      command: docker-compose up -d
+      args:
         chdir: /opt/interconectados/front-interconectados-vite
+
+    - name: Wait for services to start
+      pause:
+        seconds: 10
