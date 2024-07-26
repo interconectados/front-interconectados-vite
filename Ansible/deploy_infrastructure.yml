@@ -7,13 +7,10 @@
       apt:
         name: python3-pip
         state: present
-      become: yes
 
     - name: Install requests module
       pip:
         name: requests
-        state: present
-      become: yes
 
     - name: Ensure directories exist
       file:
@@ -30,16 +27,15 @@
         dest: /opt/interconectados/front-interconectados-vite/docker-compose.yml
         content: |
           version: '3'
-
           services:
             app:
               image: front-interconectados-vite:latest
               container_name: front-interconectados-vite-app-1
               restart: always
               ports:
-                - "80:5173"
+                - "5173:5173"
               networks:
-                - nginx-proxy
+                - default
 
             nginx:
               image: nginx:latest
@@ -47,12 +43,23 @@
               restart: always
               ports:
                 - "80:80"
+                - "443:443"
               volumes:
                 - ./nginx.conf:/etc/nginx/nginx.conf
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
-                - nginx-proxy
+                - default
+
+            certbot:
+              image: front-interconectados-vite_certbot
+              container_name: front-interconectados-vite-certbot-1
+              entrypoint: /bin/sh -c "trap exit TERM; while :; do sleep 6h & wait \$${!}; certbot renew; done"
+              volumes:
+                - front-interconectados-vite_certbot_www:/var/www/certbot
+                - front-interconectados-vite_certbot_conf:/etc/letsencrypt
+              networks:
+                - default
 
             watchtower:
               image: containrrr/watchtower
@@ -62,15 +69,17 @@
               volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
               networks:
-                - nginx-proxy
+                - default
 
           networks:
-            nginx-proxy:
-              external: true
+            default:
+              external:
+                name: nginx-proxy
 
           volumes:
             front-interconectados-vite_certbot_www:
             front-interconectados-vite_certbot_conf:
+      when: not docker_compose_file.stat.exists
 
     - name: Create nginx.conf with basic configuration
       copy:
@@ -99,13 +108,14 @@
                   }
               }
           }
+      when: not nginx_conf_file.stat.exists
 
     - name: Ensure Docker network nginx-proxy exists
-      docker_network:
+      community.docker.docker_network:
         name: nginx-proxy
-        driver: bridge
+        state: present
 
     - name: Start Docker Compose
-      command: docker-compose up -d
-      args:
+      command:
+        cmd: docker-compose up -d
         chdir: /opt/interconectados/front-interconectados-vite
