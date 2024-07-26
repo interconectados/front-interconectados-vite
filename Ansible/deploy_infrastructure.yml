@@ -125,9 +125,8 @@
       when: not nginx_conf_file.stat.exists
 
     - name: Ensure Docker network nginx-proxy exists
-      community.docker.docker_network:
-        name: nginx-proxy
-        state: present
+      shell: docker network create nginx-proxy
+      ignore_errors: yes
 
     - name: Start Docker Compose
       command:
