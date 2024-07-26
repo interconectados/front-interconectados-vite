@@ -11,6 +11,7 @@
     certbot_conf_dir: "{{ certbot_dir }}/conf"
     certbot_www_dir: "{{ certbot_dir }}/www"
     challenge_dir: "{{ certbot_www_dir }}/.well-known/acme-challenge"
+    dockerfile_certbot: "{{ workdir }}/Dockerfile.certbot"
 
   tasks:
     - name: Ensure directories exist
@@ -80,8 +81,7 @@
 
           networks:
             default:
-              external:
-                name: nginx-proxy
+              name: nginx-proxy
 
           volumes:
             front-interconectados-vite_certbot_www:
@@ -173,8 +173,21 @@
         dest: "{{ challenge_dir }}/test.txt"
         content: "test"
 
+    - name: Check if Dockerfile.certbot exists
+      stat:
+        path: "{{ dockerfile_certbot }}"
+      register: dockerfile_certbot_stat
+
+    - name: Move Dockerfile.certbot to correct location if not found
+      copy:
+        src: /opt/interconectados/front-interconectados-vite/Dockerfile.certbot
+        dest: "{{ dockerfile_certbot }}"
+      when: not dockerfile_certbot_stat.stat.exists
+
     - name: Build Certbot Docker image
       command: docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
+      args:
+        chdir: "{{ workdir }}"
 
     - name: Start Docker Compose with temporary Nginx configuration
       command: docker-compose -f "{{ docker_compose_file }}" up -d
