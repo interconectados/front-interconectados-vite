@@ -56,7 +56,7 @@ show_progress() {
         for ((i = 0; i < progress; i++)); do
             echo -ne "="
         done
-        for ((i = progress; i < 100; i++)); do
+        for ((i = progress; i < 100); i++)); do
             echo -ne " "
         done
         echo -ne "] $progress%"
@@ -237,6 +237,10 @@ docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/
 
 # Generar el certificado SSL en producción
 docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
+
+# Añadir tiempo de espera para asegurarse de que el certificado se genera correctamente
+echo "Esperando 15 segundos para que Certbot complete la generación del certificado..."
+sleep 15
 
 # Detener todos los contenedores
 docker-compose down
