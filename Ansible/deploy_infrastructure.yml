@@ -2,6 +2,10 @@
 - name: Despliegue de infraestructura base y servidor web
   hosts: localhost
   become: yes
+  vars:
+    docker_compose_path: /opt/interconectados/front-interconectados-vite/docker-compose.yml
+    nginx_conf_path: /opt/interconectados/front-interconectados-vite/nginx.conf
+
   tasks:
     - name: Ensure pip is installed
       apt:
@@ -22,9 +26,14 @@
         - /opt/interconectados/front-interconectados-vite/certbot/www
         - /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge
 
+    - name: Check if docker-compose.yml exists
+      stat:
+        path: "{{ docker_compose_path }}"
+      register: docker_compose_file
+
     - name: Create docker-compose.yml if not exists
       copy:
-        dest: /opt/interconectados/front-interconectados-vite/docker-compose.yml
+        dest: "{{ docker_compose_path }}"
         content: |
           version: '3'
           services:
@@ -81,9 +90,14 @@
             front-interconectados-vite_certbot_conf:
       when: not docker_compose_file.stat.exists
 
+    - name: Check if nginx.conf exists
+      stat:
+        path: "{{ nginx_conf_path }}"
+      register: nginx_conf_file
+
     - name: Create nginx.conf with basic configuration
       copy:
-        dest: /opt/interconectados/front-interconectados-vite/nginx.conf
+        dest: "{{ nginx_conf_path }}"
         content: |
           events {
               worker_connections 1024;
