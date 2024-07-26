@@ -45,7 +45,7 @@
               ports:
                 - "5173:5173"
               networks:
-                - default
+                - frontend
 
             nginx:
               image: nginx:latest
@@ -59,7 +59,7 @@
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
-                - default
+                - frontend
 
             watchtower:
               image: containrrr/watchtower
@@ -69,12 +69,11 @@
               volumes:
                 - /var/run/docker.sock:/var/run/docker.sock
               networks:
-                - default
+                - frontend
 
           networks:
-            default:
-              external:
-                name: nginx-proxy
+            frontend:
+              external: true
 
           volumes:
             front-interconectados-vite_certbot_www:
@@ -135,8 +134,8 @@
           }
       when: not nginx_conf_file.stat.exists
 
-    - name: Ensure Docker network nginx-proxy exists
-      command: docker network create nginx-proxy
+    - name: Ensure Docker network frontend exists
+      command: docker network create frontend
       ignore_errors: yes
 
     - name: Stop any service using port 80

@@ -6,9 +6,9 @@ services:
     container_name: front-interconectados-vite-app-1
     restart: always
     ports:
-      - "3000:3000"
+      - "5173:5173"
     networks:
-      - default
+      - frontend
 
   nginx:
     image: nginx:latest
@@ -22,17 +22,7 @@ services:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - default
-
-  certbot:
-    image: front-interconectados-vite_certbot
-    container_name: front-interconectados-vite-certbot-1
-    entrypoint: /bin/sh -c "trap exit TERM; while :; do sleep 6h & wait \$${!}; certbot renew; done"
-    volumes:
-      - front-interconectados-vite_certbot_www:/var/www/certbot
-      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
-    networks:
-      - default
+      - frontend
 
   watchtower:
     image: containrrr/watchtower
@@ -42,12 +32,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - default
+      - frontend
 
 networks:
-  default:
-    external:
-      name: nginx-proxy
+  frontend:
+    external: true
 
 volumes:
   front-interconectados-vite_certbot_www:
