@@ -2,36 +2,36 @@
 - name: Despliegue de Certbot y solicitud de certificados
   hosts: localhost
   become: yes
+
   tasks:
     - name: Build Certbot Docker image
-      command: docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
+      command: docker-compose build certbot
       args:
         chdir: /opt/interconectados/front-interconectados-vite
 
     - name: Create test file for Certbot validation
       copy:
         dest: /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge/test.txt
-        content: "test"
+        content: "This is a test file for Certbot validation."
 
     - name: Run Certbot to obtain SSL certificates
       command: docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
       args:
         chdir: /opt/interconectados/front-interconectados-vite
-      register: certbot_result
 
     - name: Debug Certbot result
       debug:
-        var: certbot_result
+        msg: "{{ certbot_result.stdout }}"
 
     - name: Wait for Certbot to complete
-      command: docker ps -a | grep certbot | grep Exit
-      register: certbot_status
-      until: certbot_status.stdout != ""
-      retries: 3
-      delay: 10
-      ignore_errors: true
+      retry:
+        name: "Checking Certbot output"
+        times: 3
+        delay: 10
+      until:
+        - "Certbot process completed successfully"
+        - "certbot_result.rc == 0"
 
-    - name: Stop Docker Compose
-      command: docker-compose down
-      args:
-        chdir: /opt/interconectados/front-interconectados-vite
+    - name: Display Certbot run result
+      debug:
+        msg: "{{ certbot_result }}"

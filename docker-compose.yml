@@ -24,6 +24,15 @@ services:
     networks:
       - frontend
 
+  certbot:
+    image: certbot/certbot
+    container_name: front-interconectados-vite-certbot
+    volumes:
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
+    networks:
+      - frontend
+
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
