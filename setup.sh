@@ -249,11 +249,14 @@ docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/
 
 # Generar el certificado SSL en producción
 echo "Generando el certificado SSL"
-docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
+docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal &
 
-# Añadir tiempo de espera para asegurarse de que el certificado se genera correctamente
-echo "Esperando 15 segundos para que Certbot complete la generación del certificado..."
-sleep 15
+# Añadir barra de progreso mientras se genera el certificado
+echo "Esperando 30 segundos para que Certbot complete la generación del certificado..."
+show_progress 30
+
+# Esperar a que Certbot termine
+wait
 
 # Detener todos los contenedores
 echo "Deteniendo todos los contenedores"
