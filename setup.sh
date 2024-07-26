@@ -1,7 +1,10 @@
 #!/bin/bash
 
+echo "Iniciando el script setup.sh..."
+
 # Directorio de trabajo
 WORKDIR="/opt/interconectados/front-interconectados-vite"
+echo "WORKDIR set to $WORKDIR"
 
 # Nombres de los archivos y directorios
 DOCKER_COMPOSE_FILE="docker-compose.yml"
@@ -23,10 +26,12 @@ MSG_DONE="¡Listo! Los contenedores están en funcionamiento."
 MSG_FAILED="Error: Algunos contenedores no se iniciaron correctamente. Revisa los logs para más detalles."
 MSG_GOODBYE="Adiós, jefe."
 
+echo "Variables de configuración inicializadas..."
+
 # Función para crear directorios si no existen
 create_dir_if_not_exists() {
     local dir="$1"
-    if [ ! -d "$dir" ]; then
+    if [ ! -d "$dir" ]; entonces
         echo "$MSG_CREATED $dir"
         mkdir -p "$dir"
     else
@@ -36,7 +41,7 @@ create_dir_if_not_exists() {
 
 # Función para verificar y crear la red de Docker si no existe
 check_and_create_network() {
-    if ! docker network ls | grep -q $NETWORK_NAME; then
+    if ! docker network ls | grep -q $NETWORK_NAME; entonces
         echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
         docker network create $NETWORK_NAME
     else
@@ -50,13 +55,13 @@ show_progress() {
     local increment=$((duration / 100))
     local progress=0
 
-    while [ $progress -le 100 ]; do
+    while [ $progress -le 100 ]; entonces
         echo -ne "Esperando ${duration} segundos para que los servicios se inicien...\r"
         echo -ne "["
-        for ((i = 0; i < progress; i++)); do
+        for ((i = 0; i < progress; i++)); entonces
             echo -ne "="
         done
-        for ((i = progress; i < 100); i++)); do
+        for ((i = progress; i < 100); i++)); entonces
             echo -ne " "
         done
         echo -ne "] $progress%"
@@ -72,7 +77,7 @@ echo "Cambiando al directorio de trabajo $WORKDIR"
 cd "$WORKDIR" || { echo "No se pudo acceder al directorio $WORKDIR"; exit 1; }
 
 # Crear archivos de configuración si no existen
-if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+if [ ! -f "$DOCKER_COMPOSE_FILE" ]; entonces
     echo "$MSG_CREATED $DOCKER_COMPOSE_FILE"
     cat <<EOF > "$DOCKER_COMPOSE_FILE"
 version: '3'
@@ -135,7 +140,7 @@ else
 fi
 
 # No sobrescribir nginx.conf si ya existe
-if [ ! -f "$NGINX_CONF_FILE" ]; then
+if [ ! -f "$NGINX_CONF_FILE" ]; entonces
     echo "$MSG_CREATED $NGINX_CONF_FILE"
     cat <<EOF > "$NGINX_CONF_FILE"
 events {
@@ -183,7 +188,7 @@ else
 fi
 
 # Crear nginx.temp.conf
-if [ ! -f "$NGINX_TEMP_CONF_FILE" ]; then
+if [ ! -f "$NGINX_TEMP_CONF_FILE" ]; entonces
     echo "$MSG_CREATED $NGINX_TEMP_CONF_FILE"
     cat <<EOF > "$NGINX_TEMP_CONF_FILE"
 events {
@@ -254,12 +259,16 @@ docker-compose down
 echo "Actualizando nginx.conf"
 mv "$NGINX_TEMP_CONF_FILE" "$NGINX_CONF_FILE"
 
+# Verificar si la actualización se ha realizado correctamente
+echo "Verificando la actualización de nginx.conf"
+cat "$NGINX_CONF_FILE"
+
 # Reiniciar Docker Compose con la configuración definitiva de Nginx
 echo "$MSG_RESTARTING"
 docker-compose up -d
 
 # Verificar si todos los contenedores están en funcionamiento
-if docker-compose ps | grep -q "Exit"; then
+if docker-compose ps | grep -q "Exit"; entonces
     echo "$MSG_FAILED"
     docker-compose logs  # Mostrar logs de los contenedores que fallaron
 else
