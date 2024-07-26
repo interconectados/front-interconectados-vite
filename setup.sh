@@ -14,7 +14,6 @@ CERTBOT_DIR="certbot"
 CERTBOT_CONF_DIR="$CERTBOT_DIR/conf"
 CERTBOT_WWW_DIR="$CERTBOT_DIR/www"
 CHALLENGE_DIR="$CERTBOT_WWW_DIR/.well-known/acme-challenge"
-NETWORK_NAME="nginx-proxy"
 
 # Mensajes de salida
 MSG_CREATED="Creado:"
@@ -79,7 +78,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - nginx-proxy
+      - interconectados_network
 
   nginx:
     image: nginx:latest
@@ -93,7 +92,7 @@ services:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - nginx-proxy
+      - interconectados_network
 
   certbot:
     image: front-interconectados-vite_certbot
@@ -103,7 +102,7 @@ services:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - nginx-proxy
+      - interconectados_network
 
   watchtower:
     image: containrrr/watchtower
@@ -113,11 +112,11 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - nginx-proxy
+      - interconectados_network
 
 networks:
-  nginx-proxy:
-    external: true
+  interconectados_network:
+    driver: bridge
 
 volumes:
   front-interconectados-vite_certbot_www:
@@ -221,14 +220,6 @@ create_dir_if_not_exists "$CHALLENGE_DIR"
 # Crear un archivo de prueba para la validación de Certbot
 echo "test" > "$CHALLENGE_DIR/test.txt"
 chmod 644 "$CHALLENGE_DIR/test.txt"
-
-# Crear la red Docker si no existe
-if ! docker network ls | grep -q $NETWORK_NAME; then
-    echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
-    docker network create $NETWORK_NAME
-else
-    echo "$MSG_EXISTS red Docker '$NETWORK_NAME'"
-fi
 
 # Construir la imagen de certbot con curl
 echo "Construyendo la imagen de certbot"
