@@ -176,10 +176,17 @@
 
     - name: Run Certbot to obtain SSL certificates
       command: docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
+      async: 1800
+      poll: 0
+      register: certbot_run
 
     - name: Wait for Certbot to complete
-      pause:
-        seconds: 30
+      async_status:
+        jid: "{{ certbot_run.ansible_job_id }}"
+      register: certbot_result
+      until: certbot_result.finished
+      retries: 30
+      delay: 10
 
     - name: Stop all Docker containers
       command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml down
