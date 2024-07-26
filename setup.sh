@@ -32,6 +32,7 @@ create_dir_if_not_exists() {
     if [ ! -d "$dir" ]; then
         echo "$MSG_CREATED $dir"
         mkdir -p "$dir"
+        chmod -R 755 "$dir"
     else
         echo "$MSG_EXISTS $dir"
     fi
@@ -133,6 +134,7 @@ volumes:
   front-interconectados-vite_certbot_www:
   front-interconectados-vite_certbot_conf:
 EOF
+    chmod 644 "$DOCKER_COMPOSE_FILE"
 else
     echo "$MSG_EXISTS $DOCKER_COMPOSE_FILE"
 fi
@@ -187,6 +189,7 @@ http {
     }
 }
 EOF
+    chmod 644 "$NGINX_CONF_FILE"
 else
     echo "$MSG_EXISTS $NGINX_CONF_FILE"
 fi
@@ -215,6 +218,7 @@ http {
     }
 }
 EOF
+    chmod 644 "$NGINX_TEMP_CONF_FILE"
 else
     echo "$MSG_EXISTS $NGINX_TEMP_CONF_FILE"
 fi
@@ -227,6 +231,7 @@ create_dir_if_not_exists "$CHALLENGE_DIR"
 
 # Crear un archivo de prueba para la validación de Certbot
 echo "test" > "$CHALLENGE_DIR/test.txt"
+chmod 644 "$CHALLENGE_DIR/test.txt"
 
 # Verificar y crear la red Docker si es necesario
 check_and_create_network
@@ -249,14 +254,11 @@ docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/
 
 # Generar el certificado SSL en producción
 echo "Generando el certificado SSL"
-docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal &
+docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
-# Añadir barra de progreso mientras se genera el certificado
+# Esperar 30 segundos para que Certbot complete la generación del certificado
 echo "Esperando 30 segundos para que Certbot complete la generación del certificado..."
 show_progress 30
-
-# Esperar a que Certbot termine
-wait
 
 # Detener todos los contenedores
 echo "Deteniendo todos los contenedores"
