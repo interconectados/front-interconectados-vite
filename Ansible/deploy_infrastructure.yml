@@ -136,12 +136,11 @@
       when: not nginx_conf_file.stat.exists
 
     - name: Ensure Docker network nginx-proxy exists
-      docker_network:
-        name: nginx-proxy
-        state: present
+      command: docker network create nginx-proxy
+      ignore_errors: yes
 
     - name: Stop any service using port 80
-      command: "fuser -k 80/tcp"
+      command: fuser -k 80/tcp
       ignore_errors: yes
 
     - name: Start Docker Compose
