@@ -103,6 +103,7 @@ services:
   certbot:
     image: front-interconectados-vite_certbot
     container_name: front-interconectados-vite-certbot-1
+    command: certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
     volumes:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
@@ -113,7 +114,7 @@ services:
     image: containrrr/watchtower
     container_name: watchtower
     restart: always
-    command: --interval 300 --cleanup
+    command: --interval 300 --cleanup --label-enable --include-restarting
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
@@ -235,7 +236,7 @@ docker exec front-interconectados-vite-nginx-1 sh -c 'mkdir -p /var/www/certbot/
 docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
 
 # Generar el certificado SSL en producción
-docker exec front-interconectados-vite-certbot-1 certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
+docker-compose run certbot
 
 # Detener todos los contenedores
 docker-compose down

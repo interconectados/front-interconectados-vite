@@ -27,6 +27,7 @@ services:
   certbot:
     image: front-interconectados-vite_certbot
     container_name: front-interconectados-vite-certbot-1
+    command: certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
     volumes:
       - front-interconectados-vite_certbot_www:/var/www/certbot
       - front-interconectados-vite_certbot_conf:/etc/letsencrypt
