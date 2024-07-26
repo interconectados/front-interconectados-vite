@@ -1,17 +1,12 @@
 ---
 - name: Setup Front Interconectados
   hosts: localhost
-  become: true
+  become: yes
   vars:
     workdir: /opt/interconectados/front-interconectados-vite
-    docker_compose_file: "{{ workdir }}/docker-compose.yml"
-    nginx_conf_file: "{{ workdir }}/nginx.conf"
-    nginx_temp_conf_file: "{{ workdir }}/nginx.temp.conf"
-    certbot_dir: "{{ workdir }}/certbot"
-    certbot_conf_dir: "{{ certbot_dir }}/conf"
-    certbot_www_dir: "{{ certbot_dir }}/www"
-    challenge_dir: "{{ certbot_www_dir }}/.well-known/acme-challenge"
-    dockerfile_certbot: "{{ workdir }}/Dockerfile.certbot"
+    docker_compose_file: /opt/interconectados/front-interconectados-vite/docker-compose.yml
+    nginx_conf_file: /opt/interconectados/front-interconectados-vite/nginx.conf
+    nginx_temp_conf_file: /opt/interconectados/front-interconectados-vite/nginx.temp.conf
 
   tasks:
     - name: Ensure directories exist
@@ -19,15 +14,15 @@
         path: "{{ item }}"
         state: directory
       loop:
-        - "{{ certbot_dir }}"
-        - "{{ certbot_conf_dir }}"
-        - "{{ certbot_www_dir }}"
-        - "{{ challenge_dir }}"
+        - "{{ workdir }}/certbot"
+        - "{{ workdir }}/certbot/conf"
+        - "{{ workdir }}/certbot/www"
+        - "{{ workdir }}/certbot/www/.well-known/acme-challenge"
 
     - name: Check if docker-compose.yml exists
       stat:
         path: "{{ docker_compose_file }}"
-      register: docker_compose_file
+      register: docker_compose_file_stat
 
     - name: Create docker-compose.yml if not exists
       copy:
@@ -81,12 +76,13 @@
 
           networks:
             default:
-              name: nginx-proxy
+              external:
+                name: nginx-proxy
 
           volumes:
             front-interconectados-vite_certbot_www:
             front-interconectados-vite_certbot_conf:
-      when: not docker_compose_file.stat.exists
+      when: not docker_compose_file_stat.stat.exists
 
     - name: Check if nginx.conf is a file
       stat:
@@ -97,7 +93,7 @@
       file:
         path: "{{ nginx_conf_file }}"
         state: absent
-      when: nginx_conf_stat.stat.isdir is defined and nginx_conf_stat.stat.isdir
+      when: nginx_conf_stat.stat.isdir
 
     - name: Create nginx.conf if not exists
       copy:
@@ -118,7 +114,7 @@
                   }
 
                   location / {
-                      return 301 https://$host$request_uri;
+                      return 301 https://\$host\$request_uri;
                   }
               }
 
@@ -131,10 +127,10 @@
 
                   location / {
                       proxy_pass http://front-interconectados-vite-app-1:3000;
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Real-IP $remote_addr;
-                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                      proxy_set_header X-Forwarded-Proto $scheme;
+                      proxy_set_header Host \$host;
+                      proxy_set_header X-Real-IP \$remote_addr;
+                      proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                      proxy_set_header X-Forwarded-Proto \$scheme;
                   }
 
                   location /.well-known/acme-challenge/ {
@@ -170,27 +166,14 @@
 
     - name: Create test file for Certbot validation
       copy:
-        dest: "{{ challenge_dir }}/test.txt"
+        dest: "{{ workdir }}/certbot/www/.well-known/acme-challenge/test.txt"
         content: "test"
 
-    - name: Check if Dockerfile.certbot exists
-      stat:
-        path: "{{ dockerfile_certbot }}"
-      register: dockerfile_certbot_stat
-
-    - name: Move Dockerfile.certbot to correct location if not found
-      copy:
-        src: /opt/interconectados/front-interconectados-vite/Dockerfile.certbot
-        dest: "{{ dockerfile_certbot }}"
-      when: not dockerfile_certbot_stat.stat.exists
-
     - name: Build Certbot Docker image
-      command: docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
-      args:
-        chdir: "{{ workdir }}"
+      command: docker build -f {{ workdir }}/Dockerfile.certbot -t front-interconectados-vite_certbot {{ workdir }}
 
     - name: Start Docker Compose with temporary Nginx configuration
-      command: docker-compose -f "{{ docker_compose_file }}" up -d
+      command: docker-compose -f {{ docker_compose_file }} up -d
 
     - name: Wait for services to start
       pause:
@@ -198,35 +181,41 @@
 
     - name: Verify test file in Nginx container
       command: docker exec front-interconectados-vite-nginx-1 ls /var/www/certbot/.well-known/acme-challenge/test.txt
-
-    - name: Run Certbot to obtain SSL certificates
-      command: docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
-      async: 180
-      poll: 0
-      register: certbot_result
-
-    - name: Debug Certbot Result
-      debug:
-        var: certbot_result
-
-    - name: Wait for Certbot to complete
-      async_status:
-        jid: "{{ certbot_result.ansible_job_id }}"
-      register: job_result
-      until: job_result.finished
+      register: test_file_verification
       retries: 3
       delay: 10
+      until: test_file_verification.rc == 0
 
-    - name: Stop all Docker containers
-      command: docker-compose down
-      when: job_result.finished
+    - name: Run Certbot to obtain SSL certificates
+      command: docker-compose -f {{ docker_compose_file }} run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
-    - name: Update nginx.conf
+    - name: Wait for Certbot to complete
+      pause:
+        seconds: 10
+
+    - name: Stop Docker Compose
+      command: docker-compose -f {{ docker_compose_file }} down
+
+    - name: Replace temporary Nginx configuration with final configuration
       copy:
         src: "{{ nginx_temp_conf_file }}"
         dest: "{{ nginx_conf_file }}"
-      when: job_result.finished
+        remote_src: yes
 
-    - name: Restart Docker Compose with final Nginx configuration
-      command: docker-compose up -d
-      when: job_result.finished
+    - name: Start Docker Compose with final Nginx configuration
+      command: docker-compose -f {{ docker_compose_file }} up -d
+
+    - name: Wait for services to start
+      pause:
+        seconds: 10
+
+    - name: Verify Nginx service
+      command: docker exec front-interconectados-vite-nginx-1 nginx -t
+      register: nginx_verification
+      retries: 3
+      delay: 10
+      until: nginx_verification.rc == 0
+
+    - name: Display Nginx verification result
+      debug:
+        msg: "{{ nginx_verification }}"
