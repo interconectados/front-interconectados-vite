@@ -68,6 +68,7 @@ show_progress() {
 }
 
 # Cambiar al directorio de trabajo
+echo "Cambiando al directorio de trabajo $WORKDIR"
 cd "$WORKDIR" || { echo "No se pudo acceder al directorio $WORKDIR"; exit 1; }
 
 # Crear archivos de configuración si no existen
@@ -222,9 +223,11 @@ echo "test" > "$CHALLENGE_DIR/test.txt"
 check_and_create_network
 
 # Construir la imagen de certbot con curl
+echo "Construyendo la imagen de certbot"
 docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
 
 # Iniciar Docker Compose con la configuración temporal de Nginx
+echo "$MSG_STARTING"
 docker-compose up -d
 
 # Esperar a que los servicios se inicien
@@ -236,6 +239,7 @@ docker exec front-interconectados-vite-nginx-1 sh -c 'mkdir -p /var/www/certbot/
 docker cp "$CHALLENGE_DIR/test.txt" front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
 
 # Generar el certificado SSL en producción
+echo "Generando el certificado SSL"
 docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
 # Añadir tiempo de espera para asegurarse de que el certificado se genera correctamente
@@ -243,9 +247,11 @@ echo "Esperando 15 segundos para que Certbot complete la generación del certifi
 sleep 15
 
 # Detener todos los contenedores
+echo "Deteniendo todos los contenedores"
 docker-compose down
 
 # Cambiar la configuración de Nginx a la definitiva
+echo "Actualizando nginx.conf"
 mv "$NGINX_TEMP_CONF_FILE" "$NGINX_CONF_FILE"
 
 # Reiniciar Docker Compose con la configuración definitiva de Nginx
