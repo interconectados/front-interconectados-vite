@@ -27,7 +27,7 @@
               ports:
                 - "80:5173"
               networks:
-                - default
+                - nginx-proxy
 
             nginx:
               image: nginx:latest
@@ -40,12 +40,21 @@
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
-                - default
+                - nginx-proxy
+
+            watchtower:
+              image: containrrr/watchtower
+              container_name: watchtower
+              restart: always
+              command: --interval 300 --cleanup --label-enable --include-restarting
+              volumes:
+                - /var/run/docker.sock:/var/run/docker.sock
+              networks:
+                - nginx-proxy
 
           networks:
-            default:
-              external:
-                name: nginx-proxy
+            nginx-proxy:
+              external: true
 
           volumes:
             front-interconectados-vite_certbot_www:
@@ -64,6 +73,11 @@
                   listen 80;
                   server_name interconectados.duckdns.org;
 
+                  location /.well-known/acme-challenge/ {
+                      root /var/www/certbot;
+                      autoindex on;  # Agregado para permitir el listado del directorio
+                  }
+
                   location / {
                       proxy_pass http://front-interconectados-vite-app-1:5173;
                       proxy_set_header Host $host;
@@ -71,19 +85,15 @@
                       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                       proxy_set_header X-Forwarded-Proto $scheme;
                   }
-
-                  location /.well-known/acme-challenge/ {
-                      root /var/www/certbot;
-                      autoindex on;  # Agregado para permitir el listado del directorio
-                  }
               }
           }
+
+    - name: Ensure Docker network nginx-proxy exists
+      docker_network:
+        name: nginx-proxy
+        driver: bridge
 
     - name: Start Docker Compose
       command: docker-compose up -d
       args:
         chdir: /opt/interconectados/front-interconectados-vite
-
-    - name: Wait for services to start
-      pause:
-        seconds: 10
