@@ -38,16 +38,6 @@ create_dir_if_not_exists() {
     fi
 }
 
-# Función para verificar y crear la red de Docker si no existe
-check_and_create_network() {
-    if ! docker network ls | grep -q $NETWORK_NAME; then
-        echo "$MSG_CREATED red Docker '$NETWORK_NAME'"
-        docker network create $NETWORK_NAME
-    else
-        echo "$MSG_EXISTS red Docker '$NETWORK_NAME'"
-    fi
-}
-
 # Función para mostrar barra de progreso
 show_progress() {
     local duration=$1
@@ -127,8 +117,7 @@ services:
 
 networks:
   default:
-    external:
-      name: nginx-proxy
+    name: nginx-proxy
 
 volumes:
   front-interconectados-vite_certbot_www:
@@ -232,9 +221,6 @@ create_dir_if_not_exists "$CHALLENGE_DIR"
 # Crear un archivo de prueba para la validación de Certbot
 echo "test" > "$CHALLENGE_DIR/test.txt"
 chmod 644 "$CHALLENGE_DIR/test.txt"
-
-# Verificar y crear la red Docker si es necesario
-check_and_create_network
 
 # Construir la imagen de certbot con curl
 echo "Construyendo la imagen de certbot"
