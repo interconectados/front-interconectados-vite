@@ -1,29 +1,23 @@
 ---
 - name: Setup Front Interconectados
   hosts: localhost
-  become: true
+  become: yes
   tasks:
     - name: Ensure directories exist
       file:
         path: "{{ item }}"
         state: directory
-      with_items:
+      loop:
         - /opt/interconectados/front-interconectados-vite/certbot
         - /opt/interconectados/front-interconectados-vite/certbot/conf
         - /opt/interconectados/front-interconectados-vite/certbot/www
         - /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge
-
-    - name: Check if docker-compose.yml exists
-      stat:
-        path: /opt/interconectados/front-interconectados-vite/docker-compose.yml
-      register: docker_compose_file
 
     - name: Create docker-compose.yml if not exists
       copy:
         dest: /opt/interconectados/front-interconectados-vite/docker-compose.yml
         content: |
           version: '3'
-
           services:
             app:
               image: front-interconectados-vite:latest
@@ -33,7 +27,6 @@
                 - "3000:3000"
               networks:
                 - default
-
             nginx:
               image: nginx:latest
               container_name: front-interconectados-vite-nginx-1
@@ -47,17 +40,15 @@
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
                 - default
-
             certbot:
               image: front-interconectados-vite_certbot
               container_name: front-interconectados-vite-certbot-1
-              entrypoint: /bin/sh -c "trap exit TERM; while :; do sleep 6h & wait \$${!}; certbot renew; done"
+              entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 6h & wait \$${!}; certbot renew; done'"
               volumes:
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
               networks:
                 - default
-
             watchtower:
               image: containrrr/watchtower
               container_name: watchtower
@@ -67,96 +58,57 @@
                 - /var/run/docker.sock:/var/run/docker.sock
               networks:
                 - default
-
           networks:
             default:
               name: nginx-proxy
-
           volumes:
             front-interconectados-vite_certbot_www:
             front-interconectados-vite_certbot_conf:
       when: not docker_compose_file.stat.exists
 
-    - name: Check if nginx.conf is a directory
-      stat:
-        path: /opt/interconectados/front-interconectados-vite/nginx.conf
-      register: nginx_conf_stat
-
-    - name: Remove nginx.conf directory if it exists
-      file:
-        path: /opt/interconectados/front-interconectados-vite/nginx.conf
-        state: absent
-      when: nginx_conf_stat.stat.isdir
-
-    - name: Create nginx.conf if not exists
+    - name: Ensure nginx.conf file exists
       copy:
         dest: /opt/interconectados/front-interconectados-vite/nginx.conf
         content: |
           events {
               worker_connections 1024;
           }
-
           http {
               server {
                   listen 80;
                   server_name interconectados.duckdns.org;
-
                   location /.well-known/acme-challenge/ {
                       root /var/www/certbot;
                       autoindex on;  # Agregado para permitir el listado del directorio
                   }
-
                   location / {
-                      return 301 https://$host$request_uri;
-                  }
-              }
-
-              server {
-                  listen 443 ssl;
-                  server_name interconectados.duckdns.org;
-
-                  ssl_certificate /etc/letsencrypt/live/interconectados.duckdns.org/fullchain.pem;
-                  ssl_certificate_key /etc/letsencrypt/live/interconectados.duckdns.org/privkey.pem;
-
-                  location / {
-                      proxy_pass http://front-interconectados-vite-app-1:3000;
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Real-IP $remote_addr;
-                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                      proxy_set_header X-Forwarded-Proto $scheme;
-                  }
-
-                  location /.well-known/acme-challenge/ {
-                      root /var/www/certbot;
+                      return 200 'Temporary Nginx Server';
                   }
               }
           }
-      when: not docker_compose_file.stat.exists
+      when: not nginx_conf_file.stat.exists
 
-    - name: Create nginx.temp.conf if not exists
+    - name: Ensure nginx.temp.conf file exists
       copy:
         dest: /opt/interconectados/front-interconectados-vite/nginx.temp.conf
         content: |
           events {
               worker_connections 1024;
           }
-
           http {
               server {
                   listen 80;
                   server_name interconectados.duckdns.org;
-
                   location /.well-known/acme-challenge/ {
                       root /var/www/certbot;
                       autoindex on;  # Agregado para permitir el listado del directorio
                   }
-
                   location / {
                       return 200 'Temporary Nginx Server';
                   }
               }
           }
-      when: not docker_compose_file.stat.exists
+      when: not nginx_temp_conf_file.stat.exists
 
     - name: Create test file for Certbot validation
       copy:
@@ -168,15 +120,17 @@
 
     - name: Start Docker Compose with temporary Nginx configuration
       command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml up -d
+      environment:
+        DOCKER_NET_NAME: "nginx-proxy"
 
     - name: Wait for services to start
       pause:
         seconds: 10
 
-    - name: Copy test file to Nginx container
+    - name: Verify challenge file in Nginx container
       command: docker cp /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge/test.txt front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
 
-    - name: Run Certbot to obtain SSL certificate
+    - name: Run Certbot to generate SSL certificates
       command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
     - name: Wait for Certbot to complete
@@ -186,20 +140,17 @@
     - name: Stop all Docker containers
       command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml down
 
-    - name: Update Nginx configuration
-      copy:
-        src: /opt/interconectados/front-interconectados-vite/nginx.temp.conf
-        dest: /opt/interconectados/front-interconectados-vite/nginx.conf
-        remote_src: true
+    - name: Move temporary Nginx configuration to final configuration
+      command: mv /opt/interconectados/front-interconectados-vite/nginx.temp.conf /opt/interconectados/front-interconectados-vite/nginx.conf
 
-    - name: Restart Docker Compose with final Nginx configuration
+    - name: Start Docker Compose with final Nginx configuration
       command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml up -d
+      environment:
+        DOCKER_NET_NAME: "nginx-proxy"
 
-    - name: Verify all containers are running
-      shell: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml ps
-      register: docker_compose_ps
+    - name: Wait for services to start
+      pause:
+        seconds: 10
 
-    - name: Show Docker Compose logs if any container failed
-      debug:
-        msg: "{{ docker_compose_ps.stdout }}"
-      when: "'Exit' in docker_compose_ps.stdout"
+    - name: Check Docker container status
+      command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml ps
