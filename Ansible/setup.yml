@@ -1,16 +1,22 @@
+---
 - name: Setup Front Interconectados
   hosts: localhost
-  become: yes
+  become: true
   tasks:
     - name: Ensure directories exist
       file:
         path: "{{ item }}"
         state: directory
-      loop:
+      with_items:
         - /opt/interconectados/front-interconectados-vite/certbot
         - /opt/interconectados/front-interconectados-vite/certbot/conf
         - /opt/interconectados/front-interconectados-vite/certbot/www
         - /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge
+
+    - name: Check if docker-compose.yml exists
+      stat:
+        path: /opt/interconectados/front-interconectados-vite/docker-compose.yml
+      register: docker_compose_file
 
     - name: Create docker-compose.yml if not exists
       copy:
@@ -45,7 +51,7 @@
             certbot:
               image: front-interconectados-vite_certbot
               container_name: front-interconectados-vite-certbot-1
-              entrypoint: /bin/sh -c "trap exit TERM; while :; do sleep 6h & wait \${!}; certbot renew; done"
+              entrypoint: /bin/sh -c "trap exit TERM; while :; do sleep 6h & wait \$${!}; certbot renew; done"
               volumes:
                 - front-interconectados-vite_certbot_www:/var/www/certbot
                 - front-interconectados-vite_certbot_conf:/etc/letsencrypt
@@ -64,8 +70,7 @@
 
           networks:
             default:
-              external:
-                name: nginx-proxy
+              name: nginx-proxy
 
           volumes:
             front-interconectados-vite_certbot_www:
@@ -115,9 +120,9 @@
                   }
               }
           }
-      when: not nginx_conf_file.stat.exists
+      when: not docker_compose_file.stat.exists
 
-    - name: Create nginx.temp.conf
+    - name: Create nginx.temp.conf if not exists
       copy:
         dest: /opt/interconectados/front-interconectados-vite/nginx.temp.conf
         content: |
@@ -140,61 +145,50 @@
                   }
               }
           }
+      when: not docker_compose_file.stat.exists
 
-    - name: Create a test file for Certbot validation
+    - name: Create test file for Certbot validation
       copy:
         dest: /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge/test.txt
         content: "test"
 
-    - name: Build the certbot image
-      command: docker build -f Dockerfile.certbot -t front-interconectados-vite_certbot .
+    - name: Build Certbot Docker image
+      command: docker build -f /opt/interconectados/front-interconectados-vite/Dockerfile.certbot -t front-interconectados-vite_certbot .
 
     - name: Start Docker Compose with temporary Nginx configuration
-      command: docker-compose up -d
-      args:
-        chdir: /opt/interconectados/front-interconectados-vite
+      command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml up -d
 
     - name: Wait for services to start
       pause:
         seconds: 10
 
-    - name: Copy the test file to the Nginx container
+    - name: Copy test file to Nginx container
       command: docker cp /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge/test.txt front-interconectados-vite-nginx-1:/var/www/certbot/.well-known/acme-challenge/test.txt
 
-    - name: Generate SSL certificate
-      command: docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
-      args:
-        chdir: /opt/interconectados/front-interconectados-vite
+    - name: Run Certbot to obtain SSL certificate
+      command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
 
     - name: Wait for Certbot to complete
       pause:
         seconds: 30
 
-    - name: Stop all containers
-      command: docker-compose down
-      args:
-        chdir: /opt/interconectados/front-interconectados-vite
+    - name: Stop all Docker containers
+      command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml down
 
-    - name: Move nginx.temp.conf to nginx.conf
-      command: mv /opt/interconectados/front-interconectados-vite/nginx.temp.conf /opt/interconectados/front-interconectados-vite/nginx.conf
+    - name: Update Nginx configuration
+      copy:
+        src: /opt/interconectados/front-interconectados-vite/nginx.temp.conf
+        dest: /opt/interconectados/front-interconectados-vite/nginx.conf
+        remote_src: true
 
-    - name: Start Docker Compose with final Nginx configuration
-      command: docker-compose up -d
-      args:
-        chdir: /opt/interconectados/front-interconectados-vite
+    - name: Restart Docker Compose with final Nginx configuration
+      command: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml up -d
 
-    - name: Check if all containers are running
-      command: docker-compose ps
-      args:
-        chdir: /opt/interconectados/front-interconectados-vite
-      register: result
+    - name: Verify all containers are running
+      shell: docker-compose -f /opt/interconectados/front-interconectados-vite/docker-compose.yml ps
+      register: docker_compose_ps
 
-    - name: Display Docker Compose logs if any container failed
+    - name: Show Docker Compose logs if any container failed
       debug:
-        msg: "Some containers failed to start, check logs."
-      when: "'Exit' in result.stdout"
-
-    - name: Display success message
-      debug:
-        msg: "¡Listo! Los contenedores están en funcionamiento."
-      when: "'Exit' not in result.stdout"
+        msg: "{{ docker_compose_ps.stdout }}"
+      when: "'Exit' in docker_compose_ps.stdout"
