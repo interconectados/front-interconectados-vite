@@ -131,7 +131,7 @@ const questions = [
       { id: 2612, text: "¿Cuál fue la mejor pregunta que te hicieron?", category: "Conexión", likes: 0, dislikes: 0 },
       { id: 2614, text: "¿Qué te apasiona en la vida?", category: "Conexión", likes: 0, dislikes: 0 },
       { id: 2615, text: "¿Qué es lo que más valoras en una relación?", category: "Conexión", likes: 0, dislikes: 0 },
-      { id: 2616, text: "¿Cuál fue tu mayor desafío?", category: "Conexión", likes: 0, dislikes: 0 },
+      { id: 2616, text: "¿Cuál es tu mayor desafío?", category: "Conexión", likes: 0, dislikes: 0 },
       { id: 2618, text: "¿Qué creés que es más importante, la intención o el resultado?", category: "Conexión", likes: 0, dislikes: 0 },
       { id: 2619, text: "¿Qué te hace sentir conectado con alguien?", category: "Conexión", likes: 0, dislikes: 0 },
       { id: 2620, text: "¿Qué significa (para vos) espiritualidad?", category: "Conexión", likes: 0, dislikes: 0 },
