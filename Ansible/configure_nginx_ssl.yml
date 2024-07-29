@@ -1,0 +1,52 @@
+---
+- name: Configuración final de Nginx con SSL
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Update nginx.conf with the final configuration
+      copy:
+        dest: /opt/interconectados/front-interconectados-vite/nginx.conf
+        content: |
+          events {
+              worker_connections 1024;
+          }
+
+          http {
+              server {
+                  listen 80;
+                  server_name interconectados.duckdns.org;
+
+                  location /.well-known/acme-challenge/ {
+                      root /var/www/certbot;
+                  }
+
+                  location / {
+                      return 301 https://$host$request_uri;
+                  }
+              }
+
+              server {
+                  listen 443 ssl;
+                  server_name interconectados.duckdns.org;
+
+                  ssl_certificate /etc/letsencrypt/live/interconectados.duckdns.org/fullchain.pem;
+                  ssl_certificate_key /etc/letsencrypt/live/interconectados.duckdns.org/privkey.pem;
+
+                  location / {
+                      proxy_pass http://front-interconectados-vite-app-1:5173;
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Real-IP $remote_addr;
+                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                      proxy_set_header X-Forwarded-Proto $scheme;
+                  }
+
+                  location /.well-known/acme-challenge/ {
+                      root /var/www/certbot;
+                  }
+              }
+          }
+
+    - name: Start Docker Compose with final Nginx configuration
+      command: docker-compose up -d
+      args:
+        chdir: /opt/interconectados/front-interconectados-vite

@@ -2,54 +2,51 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: front-interconectados-vite:latest
+    container_name: front-interconectados-vite-app-1
+    restart: always
     ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
+      - "5173:5173"
     networks:
-      - nginx-proxy
+      - frontend
 
   nginx:
     image: nginx:latest
+    container_name: front-interconectados-vite-nginx-1
+    restart: always
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    depends_on:
-      - app
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - nginx-proxy
+      - frontend
 
   certbot:
     image: certbot/certbot
+    container_name: front-interconectados-vite-certbot
     volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; certbot certonly --webroot -w /var/www/certbot -d interconectados.duckdns.org; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+      - front-interconectados-vite_certbot_www:/var/www/certbot
+      - front-interconectados-vite_certbot_conf:/etc/letsencrypt
     networks:
-      - nginx-proxy
+      - frontend
 
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower
+    restart: always
+    command: --interval 300 --cleanup --label-enable --include-restarting
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_POLL_INTERVAL=30
     networks:
-      - default
+      - frontend
 
 networks:
-  nginx-proxy:
-    name: nginx-proxy
+  frontend:
     external: true
-  default:
-    external: false
+
+volumes:
+  front-interconectados-vite_certbot_www:
+  front-interconectados-vite_certbot_conf:

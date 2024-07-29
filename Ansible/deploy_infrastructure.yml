@@ -1,0 +1,154 @@
+---
+- name: Despliegue de infraestructura base y servidor web
+  hosts: localhost
+  become: yes
+  vars:
+    docker_compose_path: /opt/interconectados/front-interconectados-vite/docker-compose.yml
+    nginx_conf_path: /opt/interconectados/front-interconectados-vite/nginx.conf
+
+  tasks:
+    - name: Ensure pip is installed
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Install requests module
+      pip:
+        name: requests
+
+    - name: Ensure directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /opt/interconectados/front-interconectados-vite/certbot
+        - /opt/interconectados/front-interconectados-vite/certbot/conf
+        - /opt/interconectados/front-interconectados-vite/certbot/www
+        - /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge
+
+    - name: Check if docker-compose.yml exists
+      stat:
+        path: "{{ docker_compose_path }}"
+      register: docker_compose_file
+
+    - name: Create docker-compose.yml if not exists
+      copy:
+        dest: "{{ docker_compose_path }}"
+        content: |
+          version: '3'
+
+          services:
+            app:
+              image: front-interconectados-vite:latest
+              container_name: front-interconectados-vite-app-1
+              restart: always
+              ports:
+                - "5173:5173"
+              networks:
+                - frontend
+
+            nginx:
+              image: nginx:latest
+              container_name: front-interconectados-vite-nginx-1
+              restart: always
+              ports:
+                - "80:80"
+                - "443:443"
+              volumes:
+                - ./nginx.conf:/etc/nginx/nginx.conf
+                - front-interconectados-vite_certbot_www:/var/www/certbot
+                - front-interconectados-vite_certbot_conf:/etc/letsencrypt
+              networks:
+                - frontend
+
+            watchtower:
+              image: containrrr/watchtower
+              container_name: watchtower
+              restart: always
+              command: --interval 300 --cleanup --label-enable --include-restarting
+              volumes:
+                - /var/run/docker.sock:/var/run/docker.sock
+              networks:
+                - frontend
+
+          networks:
+            frontend:
+              external: true
+
+          volumes:
+            front-interconectados-vite_certbot_www:
+            front-interconectados-vite_certbot_conf:
+      when: not docker_compose_file.stat.exists
+
+    - name: Check if nginx.conf exists
+      stat:
+        path: "{{ nginx_conf_path }}"
+      register: nginx_conf_file
+
+    - name: Create nginx.conf with basic configuration
+      copy:
+        dest: "{{ nginx_conf_path }}"
+        content: |
+          events {
+              worker_connections 1024;
+          }
+
+          http {
+              server {
+                  listen 80;
+                  server_name interconectados.duckdns.org;
+
+                  location /.well-known/acme-challenge/ {
+                      root /var/www/certbot;
+                      autoindex on;  # Agregado para permitir el listado del directorio
+                  }
+
+                  location / {
+                      proxy_pass http://front-interconectados-vite-app-1:5173;
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Real-IP $remote_addr;
+                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                      proxy_set_header X-Forwarded-Proto $scheme;
+                  }
+              }
+
+              server {
+                  listen 443 ssl;
+                  server_name interconectados.duckdns.org;
+
+                  ssl_certificate /etc/letsencrypt/live/interconectados.duckdns.org/fullchain.pem;
+                  ssl_certificate_key /etc/letsencrypt/live/interconectados.duckdns.org/privkey.pem;
+
+                  location / {
+                      proxy_pass http://front-interconectados-vite-app-1:5173;
+                      proxy_set_header Host $host;
+                      proxy_set_header X-Real-IP $remote_addr;
+                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                      proxy_set_header X-Forwarded-Proto $scheme;
+                  }
+
+                  location /.well-known/acme-challenge/ {
+                      root /var/www/certbot;
+                  }
+              }
+          }
+      when: not nginx_conf_file.stat.exists
+
+    - name: Ensure Docker network frontend exists
+      command: docker network create frontend
+      ignore_errors: yes
+
+    - name: Stop any service using port 80
+      shell: |
+        fuser -k 80/tcp || true
+        docker ps -q --filter "publish=80" | xargs -r docker stop
+      ignore_errors: yes
+
+    - name: Start Docker Compose
+      command: docker-compose up -d
+      args:
+        chdir: /opt/interconectados/front-interconectados-vite
+
+    - name: Wait for services to start
+      pause:
+        seconds: 10

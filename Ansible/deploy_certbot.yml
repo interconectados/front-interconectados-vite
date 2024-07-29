@@ -1,0 +1,28 @@
+---
+- name: Despliegue de Certbot y solicitud de certificados
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Build Certbot Docker image
+      command: docker-compose build certbot
+      args:
+        chdir: /opt/interconectados/front-interconectados-vite
+
+    - name: Create test file for Certbot validation
+      copy:
+        dest: /opt/interconectados/front-interconectados-vite/certbot/www/.well-known/acme-challenge/test.txt
+        content: "This is a test file for Certbot validation."
+
+    - name: Run Certbot to obtain SSL certificates
+      shell: docker-compose run certbot certonly --webroot -w /var/www/certbot -m interconectados.sa@gmail.com --agree-tos --no-eff-email -d interconectados.duckdns.org --force-renewal
+      args:
+        chdir: /opt/interconectados/front-interconectados-vite
+      register: certbot_result
+      retries: 3
+      delay: 10
+      until: certbot_result.rc == 0
+
+    - name: Display Certbot run result
+      debug:
+        var: certbot_result
