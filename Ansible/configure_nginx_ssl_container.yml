@@ -8,6 +8,10 @@
       shell: "docker ps --filter 'name=front-interconectados-vite-nginx-1' --format '{{ '{{' }}.ID{{ '}}' }}'"
       register: nginx_container_id
 
+    - name: Mostrar el ID del contenedor de Nginx
+      debug:
+        msg: "ID del contenedor de Nginx: {{ nginx_container_id.stdout }}"
+
     - name: Asegurarse de que el ID del contenedor fue encontrado
       fail:
         msg: "No se encontró el contenedor de Nginx"
