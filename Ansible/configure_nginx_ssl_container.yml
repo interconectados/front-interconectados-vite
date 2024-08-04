@@ -8,6 +8,11 @@
       shell: "docker ps --filter 'name=front-interconectados-vite-nginx-1' --format '{{ '{{' }}.ID{{ '}}' }}'"
       register: nginx_container_id
 
+    - name: Asegurarse de que el ID del contenedor fue encontrado
+      fail:
+        msg: "No se encontró el contenedor de Nginx"
+      when: nginx_container_id.stdout == ""
+
     - name: Crear directorio para certbot en el contenedor
       shell: "docker exec {{ nginx_container_id.stdout }} mkdir -p /var/www/certbot"
       ignore_errors: yes
