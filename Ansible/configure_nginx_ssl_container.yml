@@ -1,14 +1,15 @@
-- name: Configurar Nginx con SSL
+---
+- name: Configurar Nginx con SSL en el contenedor
   hosts: localhost
   become: yes
 
   tasks:
     - name: Verificar el contenedor de Nginx está en ejecución
-      command: "docker ps --filter 'name=front-interconectados-vite-nginx-1' --format '{{'{{.ID}}'}}'"
+      shell: docker ps --filter "name=front-interconectados-vite-nginx-1" --format "{{.ID}}"
       register: nginx_container_id
 
     - name: Crear directorio para certbot en el contenedor
-      command: "docker exec {{ nginx_container_id.stdout }} mkdir -p /var/www/certbot"
+      shell: docker exec {{ nginx_container_id.stdout }} mkdir -p /var/www/certbot
 
     - name: Crear archivo de configuración de Nginx para SSL en el contenedor
       copy:
@@ -24,15 +25,10 @@
 
                   location /.well-known/acme-challenge/ {
                       root /var/www/certbot;
-                      autoindex on;  # Permitir el listado del directorio
                   }
 
                   location / {
-                      proxy_pass http://front-interconectados-vite-app-1:5173;
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Real-IP $remote_addr;
-                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                      proxy_set_header X-Forwarded-Proto $scheme;
+                      return 301 https://$host$request_uri;
                   }
               }
 
@@ -62,14 +58,17 @@
               }
           }
         dest: /etc/nginx/nginx.conf
+        remote_src: no
+        mode: '0644'
       delegate_to: localhost
       become: false
       run_once: true
-      register: nginx_conf
 
     - name: Copiar archivo de configuración de Nginx al contenedor
-      command: "docker cp /etc/nginx/nginx.conf {{ nginx_container_id.stdout }}:/etc/nginx/nginx.conf"
-      when: nginx_conf.changed
+      command: docker cp /etc/nginx/nginx.conf {{ nginx_container_id.stdout }}:/etc/nginx/nginx.conf
+
+    - name: Probar configuración de Nginx en el contenedor
+      shell: docker exec {{ nginx_container_id.stdout }} nginx -t
 
     - name: Recargar Nginx dentro del contenedor
-      command: "docker exec {{ nginx_container_id.stdout }} nginx -s reload"
+      shell: docker exec {{ nginx_container_id.stdout }} nginx -s reload
