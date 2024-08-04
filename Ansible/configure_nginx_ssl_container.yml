@@ -5,11 +5,11 @@
 
   tasks:
     - name: Verificar el contenedor de Nginx está en ejecución
-      shell: docker ps --filter "name=front-interconectados-vite-nginx-1" --format "{{.ID}}"
+      shell: "docker ps --filter 'name=front-interconectados-vite-nginx-1' --format '{{'{{.ID}}'}}'"
       register: nginx_container_id
 
     - name: Crear directorio para certbot en el contenedor
-      shell: docker exec {{ nginx_container_id.stdout }} mkdir -p /var/www/certbot
+      shell: "docker exec {{ nginx_container_id.stdout }} mkdir -p /var/www/certbot"
 
     - name: Crear archivo de configuración de Nginx para SSL en el contenedor
       copy:
@@ -65,10 +65,10 @@
       run_once: true
 
     - name: Copiar archivo de configuración de Nginx al contenedor
-      command: docker cp /etc/nginx/nginx.conf {{ nginx_container_id.stdout }}:/etc/nginx/nginx.conf
+      command: "docker cp /etc/nginx/nginx.conf {{ nginx_container_id.stdout }}:/etc/nginx/nginx.conf"
 
     - name: Probar configuración de Nginx en el contenedor
-      shell: docker exec {{ nginx_container_id.stdout }} nginx -t
+      shell: "docker exec {{ nginx_container_id.stdout }} nginx -t"
 
     - name: Recargar Nginx dentro del contenedor
-      shell: docker exec {{ nginx_container_id.stdout }} nginx -s reload
+      shell: "docker exec {{ nginx_container_id.stdout }} nginx -s reload"
