@@ -5,7 +5,7 @@
 
   tasks:
     - name: Verificar el contenedor de Nginx está en ejecución
-      shell: "docker ps --filter 'name=front-interconectados-vite-nginx-1' --format '{{ '{{' }}.ID{{ '}}' }}'"
+      shell: docker ps --filter 'name=front-interconectados-vite-nginx-1' --format '{{ "{{" }}.ID{{ "}}" }}'
       register: nginx_container_id
 
     - name: Mostrar el ID del contenedor de Nginx
