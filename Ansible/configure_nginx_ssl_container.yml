@@ -73,6 +73,10 @@
       shell: "docker stop {{ nginx_container_id.stdout }}"
       ignore_errors: yes
 
+    - name: Eliminar archivo de configuración de Nginx en el contenedor
+      shell: "docker exec {{ nginx_container_id.stdout }} rm /etc/nginx/nginx.conf"
+      ignore_errors: yes
+
     - name: Copiar archivo de configuración de Nginx al contenedor
       shell: "docker cp /tmp/nginx.conf {{ nginx_container_id.stdout }}:/etc/nginx/nginx.conf"
 
