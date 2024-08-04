@@ -1,21 +1,17 @@
 - name: Configurar Nginx con SSL
-  hosts: webservers
+  hosts: localhost
   become: yes
 
   tasks:
-    - name: Instalar Nginx
-      apt:
-        name: nginx
-        state: present
+    - name: Verificar el contenedor de Nginx está en ejecución
+      command: docker ps --filter "name=front-interconectados-vite-nginx-1" --format "{{.ID}}"
+      register: nginx_container_id
 
-    - name: Crear directorio para certbot
-      file:
-        path: /var/www/certbot
-        state: directory
+    - name: Crear directorio para certbot en el contenedor
+      command: docker exec {{ nginx_container_id.stdout }} mkdir -p /var/www/certbot
 
-    - name: Crear archivo de configuración de Nginx para SSL
+    - name: Crear archivo de configuración de Nginx para SSL en el contenedor
       copy:
-        dest: /etc/nginx/nginx.conf
         content: |
           events {
               worker_connections 1024;
@@ -65,9 +61,15 @@
                   }
               }
           }
+        dest: /etc/nginx/nginx.conf
+      delegate_to: localhost
+      become: false
+      run_once: true
+      register: nginx_conf
 
-    - name: Recargar Nginx para aplicar cambios
-      systemd:
-        name: nginx
-        state: reloaded
-        daemon_reload: yes
+    - name: Copiar archivo de configuración de Nginx al contenedor
+      command: docker cp /etc/nginx/nginx.conf {{ nginx_container_id.stdout }}:/etc/nginx/nginx.conf
+      when: nginx_conf.changed
+
+    - name: Recargar Nginx dentro del contenedor
+      command: docker exec {{ nginx_container_id.stdout }} nginx -s reload
