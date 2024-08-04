@@ -70,3 +70,4 @@
       systemd:
         name: nginx
         state: reloaded
+        daemon_reload: yes
