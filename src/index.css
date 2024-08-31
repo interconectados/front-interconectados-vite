@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: #b04c22;
+  color: #09ff00;
   background-color: #242424;
 
   font-synthesis: none;
@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
   width: 100vw;
   justify-content: center;
-  background-color: rgb(8, 235, 76);
+  background-color: rgb(103, 0, 151);
 }
 
 h1 {

@@ -14,6 +14,9 @@ COPY package.json package-lock.json ./
 # Instalar las dependencias
 RUN npm install
 
+# Añadir un archivo temporal para forzar un cambio en la imagen
+RUN echo $BUILD_DATE > /app/build_date.txt
+
 # Copiar el resto de los archivos de la aplicación
 COPY . .
 
