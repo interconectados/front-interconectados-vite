@@ -29,5 +29,5 @@ jobs:
           file: ./Dockerfile
           push: true
           build-args: |
-            BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)  # Usa el timestamp como argumento
+            BUILD_DATE=${{ github.run_id }}  # Usa un ID único por cada ejecución
           tags: alacorazza/front-interconectados-vite:latest
