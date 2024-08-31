@@ -1,9 +1,20 @@
-- name: Build and push Docker image
-  uses: docker/build-push-action@v2
-  with:
-    context: ./path-to-dockerfile-directory
-    file: ./path-to-dockerfile-directory/Dockerfile
-    push: true
-    tags: alacorazza/front-interconectados-vite:latest
+# Etapa 1: Construcción y Servir con Vite
+FROM node:18-alpine
 
+# Establecer el directorio de trabajo en la imagen de Docker
+WORKDIR /app
 
+# Copiar los archivos package.json y package-lock.json para instalar dependencias
+COPY package.json package-lock.json ./
+
+# Instalar las dependencias
+RUN npm install
+
+# Copiar el resto de los archivos de la aplicación
+COPY . .
+
+# Exponer el puerto que usa Vite (por defecto es el 5173)
+EXPOSE 5173
+
+# Comando por defecto para iniciar la aplicación con Vite en modo de desarrollo o producción
+CMD ["npm", "run", "dev"]  # o ["npm", "run", "build"] seguido de ["npm", "run", "preview"] para producción
