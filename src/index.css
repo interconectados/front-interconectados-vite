@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
   width: 100vw;
   justify-content: center;
-  background-color: #fff9ef;
+  background-color: darkgrey;
 }
 
 h1 {
@@ -73,7 +73,7 @@ button.btn.out {
 @media (prefers-color-scheme: light) {
   :root {
     color: #342b32;
-    background-color: #fff9ef;
+    background-color: darkgray;
   }
   a:hover {
     color: #747bff;
@@ -81,7 +81,7 @@ button.btn.out {
   button {
     background-color: #b04c22;
     border: solid 1px #b04c22;
-    color: grey;
+    color: white;
   }
   button.btn.no,
   .btn.categoryes {
