@@ -1,6 +1,10 @@
 # Etapa 1: Construcción y Servir con Vite
 FROM node:18-alpine
 
+# Añadir un argumento de construcción para el timestamp
+ARG BUILD_DATE
+LABEL build_date=$BUILD_DATE
+
 # Establecer el directorio de trabajo en la imagen de Docker
 WORKDIR /app
 
