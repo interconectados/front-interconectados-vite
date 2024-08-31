@@ -81,7 +81,7 @@ button.btn.out {
   button {
     background-color: #b04c22;
     border: solid 1px #b04c22;
-    color: white;
+    color: grey;
   }
   button.btn.no,
   .btn.categoryes {
