@@ -29,6 +29,13 @@ const questions = [
     { id: 252, text: "¿Qué cosas pequeñas te hacen feliz en el día a día?", category: "Vida", likes: 0, dislikes: 0 },
     { id: 1232, text: "¿Qué tipo de persona sos?", category: "Vida", likes: 0, dislikes: 0 },
     { id: 1233, text: "¿Qué esperas obtener con lo que haces?", category: "Vida", likes: 0, dislikes: 0 },
+    { id: 2447, text: "¿Qué es lo que más disfrutas del día a día?", category: "Vida", likes: 0, dislikes: 0 },
+    { id: 1236, text: "¿Cuál fue la peor comida que probaste? ¿Dónde la comiste?", category: "Vida", likes: 0, dislikes: 0 },
+    { id: 1238, text: "¿Qué define 'hogar' para ti?", category: "Vida", likes: 0, dislikes: 0 },
+    { id: 2448, text: "¿Qué es lo primero que haces cuando te levantas?", category: "Vida", likes: 0, dislikes: 0 },
+    { id: 24418, text: "¿Cuál es el fenómeno más extraño que presenciaste?", category: "Vida", likes: 0, dislikes: 0 },
+
+
   
     // categoría Crecimiento
     { id: 22, text: "¿Cuál es tu lunar favorito?", category: "Crecimiento", likes: 0, dislikes: 0 },
@@ -57,7 +64,11 @@ const questions = [
     { id: 1222, text: "¿Qué haces cuando estás muy contento?", category: "Crecimiento", likes: 0, dislikes: 0 },
     { id: 1225, text: "¿Cuál fue el último cambio que hiciste en tu vida?", category: "Crecimiento", likes: 0, dislikes: 0 },
     { id: 1226, text: "¿Cuál fue la mejor decisión que tomaste en la vida?", category: "Crecimiento", likes: 0, dislikes: 0 },
+    { id: 2452, text: "¿Qué decisión te cambió la vida?", category: "Crecimiento", likes: 0, dislikes: 0 },
+    { id: 2236, text: "Si pudieras vivir durante 1 año en cualquier parte del mundo, ¿dónde sería?", category: "Crecimiento", likes: 0, dislikes: 0 },
   
+
+
     // categoría Entretenimiento
     { id: 2434, text: "¿Cómo ves el mundo/planeta/civilización en mil años?", category: "Entretenimiento", likes: 0, dislikes: 0 },
     { id: 2436, text: "¿Qué significa para ti el vacío/la nada?", category: "Entretenimiento", likes: 0, dislikes: 0 },
@@ -80,17 +91,10 @@ const questions = [
     { id: 1239, text: "¿Qué ves cuando miras hacia atrás?", category: "Entretenimiento", likes: 0, dislikes: 0 },
     { id: 1235, text: "¿Qué fue lo último que aprendiste?", category: "Entretenimiento", likes: 0, dislikes: 0 },
     { id: 1237, text: "¿Cuál fue la situación más extrema que viviste?", category: "Entretenimiento", likes: 0, dislikes: 0 },
-  
-    // Otras preguntas de "familia" en categorías correspondientes
-    { id: 2447, text: "¿Qué es lo que más disfrutas del día a día?", category: "Vida", likes: 0, dislikes: 0 },
-    { id: 2232, text: "¿Qué te entretiene?", category: "Entretenimiento", likes: 0, dislikes: 0 },
-    { id: 2236, text: "Si pudieras vivir durante 1 año en cualquier parte del mundo, ¿dónde sería?", category: "Crecimiento", likes: 0, dislikes: 0 },
     { id: 2241, text: "Si pudieras mandar un objeto al espacio, ¿cuál sería?", category: "Entretenimiento", likes: 0, dislikes: 0 },
     { id: 2245, text: "¿Qué es lo que nunca te cansas de hacer?", category: "Entretenimiento", likes: 0, dislikes: 0 },
-    { id: 1236, text: "¿Cuál fue la peor comida que probaste? ¿Dónde la comiste?", category: "Vida", likes: 0, dislikes: 0 },
-    { id: 1238, text: "¿Qué define 'hogar' para ti?", category: "Vida", likes: 0, dislikes: 0 },
-    { id: 2452, text: "¿Qué decisión te cambió la vida?", category: "Crecimiento", likes: 0, dislikes: 0 },
-    { id: 2448, text: "¿Qué es lo primero que haces cuando te levantas?", category: "Vida", likes: 0, dislikes: 0 },
+    { id: 2232, text: "¿Qué te entretiene?", category: "Entretenimiento", likes: 0, dislikes: 0 },
+
 
 
 
