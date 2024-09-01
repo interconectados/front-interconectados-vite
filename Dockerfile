@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:16-bullseye-slim AS build
+FROM node:18-bullseye-slim AS build
 
 # Set working directory
 WORKDIR /app
@@ -9,13 +9,13 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the rest of the application code
-COPY . . # <-- Asegúrate de que esto esté correctamente configurado
+COPY . .
 
 # Build the application
 RUN npm run build
 
 # Stage 2: Create a minimal image to serve the app
-FROM node:16-bullseye-slim
+FROM node:18-bullseye-slim
 
 # Set working directory
 WORKDIR /app
