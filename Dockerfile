@@ -21,7 +21,8 @@ FROM node:18-bullseye-slim
 WORKDIR /app
 
 # Copy the package.json and node_modules from the build stage
-COPY --from=build /app/package*.json ./
+COPY --from=build /app/package.json ./
+COPY --from=build /app/package-lock.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 
