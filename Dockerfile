@@ -4,15 +4,12 @@ FROM node:16-bullseye-slim AS build
 # Set working directory
 WORKDIR /app
 
-# Install necessary build dependencies
-RUN apt-get update && apt-get install -y libstdc++6
-
 # Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
 # Copy the rest of the application code
-COPY . .
+COPY . . # <-- Asegúrate de que esto esté correctamente configurado
 
 # Build the application
 RUN npm run build
