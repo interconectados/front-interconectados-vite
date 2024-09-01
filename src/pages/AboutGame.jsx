@@ -11,38 +11,21 @@ function AboutGame() {
     <div style={
         { padding: "10%"}
     } className="about-game">
-      <h1>Interconectados El Juego</h1>
-      <h2>¿De qué se trata?</h2>
-      
+    
       <section className="section">
-        <h3>Objetivo del Juego</h3>
-        <p>
-          El objetivo de "Interconectados: El Juego" es ser un catalizador para crear conversaciones significativas que profundicen las conexiones humanas.
-        </p>
-        <p>
-          A través de preguntas diseñadas para explorar emociones, experiencias y valores, el juego fomenta la empatía, la comprensión y el aprendizaje mutuo entre los jugadores. Además, "Interconectados" ofrece la posibilidad de jugar en solitario, permitiendo a los jugadores reflexionar y conocerse a sí mismos en momentos de introspección.
-        </p>
-        <p>
-          Más allá del simple entretenimiento, la intención es abrir espacios de diálogo, tanto internos como con los demás, donde cada participante pueda descubrir nuevas perspectivas, fortalecer lazos y promover un crecimiento personal y colectivo.
-        </p>
-        <br />
-        <button className="btn link" onClick={startGame}>Jugar</button>
-      </section>
-
-      <section className="section">
+      <h1>Interconectados - El Juego</h1>
         <h2>¿Cómo se juega?</h2>
         <p>
           Existen diversas formas de disfrutar este juego, y a continuación te presentamos algunas sugerencias. Sin embargo, cada jugador tiene la libertad de elegir cómo quiere vivir la experiencia.
         </p>
       </section>
-
       <section className="section">
         <h3>Preparación</h3>
         <p>
-          Reúne a los participantes en un círculo o una disposición cómoda para todos. ¡Lo importante es que todos se sientan a gusto!
+          Reúne a los participantes en una disposición cómoda para todos.
         </p>
         <p>
-          Asegúrate de que todos tengan acceso a las preguntas, ya sea en formato digital o impreso.
+          Asegúrate de que todos tengan acceso a las preguntas.
         </p>
         <p>
           Si estás jugando con vos mismo, intentá estar en un espacio tranquilo donde puedas reflexionar sobre tus respuestas.
@@ -52,20 +35,27 @@ function AboutGame() {
       <section className="section">
         <h3>Inicio del Juego</h3>
         <p>
-          Vamos a decidir quién empieza. Puede ser la persona más joven, la que sugirió el juego o simplemente alguien elegido al azar.
+          Puede iniciar la ronda la persona más joven, la que sugirió el juego o simplemente alguien elegido al azar.
         </p>
         <p>
-          El primer jugador responde la primer pregunta del carrusel.
+          Al primer jugador le toca la primer pregunta del carrusel y responde según el modo de juego elegido.
         </p>
       </section>
 
       <section className="section">
         <h3>Modo de Juego</h3>
+       
         <p>
-          <strong>Modo Libre:</strong> El jugador puede responder la pregunta él mismo o elegir a otra persona para que la responda.
+          <strong>Respondo Yo:</strong> El jugador de turno responde.
         </p>
         <p>
-          <strong>Modo Ronda:</strong> Todos los jugadores responden la misma pregunta por turnos. Esto permite conocer diferentes perspectivas sobre el mismo tema.
+          <strong>Respondo Otro:</strong> El jugador de turno elige quién responde.
+        </p>
+        <p>
+          <strong>Modo Libre:</strong> El jugador de turno puede responder la pregunta él mismo o elegir a otra persona para que la responda.
+        </p>
+        <p>
+          <strong>Modo Ronda:</strong> Todos los jugadores responden la pregunta por turnos.
         </p>
       </section>
 
@@ -96,7 +86,9 @@ function AboutGame() {
           </li>
         </ul>
         <br />
-        <button className="btn link" onClick={startGame}>Jugar</button>
+        <button className="btn link" onClick={startGame}>
+            <a href="/">Jugar</a>
+        </button>
       </section>
     </div>
   );

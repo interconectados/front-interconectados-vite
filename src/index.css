@@ -48,6 +48,9 @@ button {
   transition: border-color 0.25s;
   width: 90%;
 }
+h1{
+  font-size: 2em;
+}
 button:hover {
   border-color: #646cff;
 }

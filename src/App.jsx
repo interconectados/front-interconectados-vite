@@ -5,6 +5,8 @@ import Game from './components/Game';
 import Category from './components/Category';
 import './App.css';
 import AboutGame from './pages/AboutGame';
+import WelcomeGame from './pages/WelcomeGame';
+import AboutCompany from './pages/AboutCompany';
 
 function App() {
   return (
@@ -12,9 +14,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/game/:category" element={<Game />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/acerca-de-interconectados/el-juego" element={<AboutGame />} />
-        <Route path="/acerca-de-interconectados/visión" element={<Category />} />
+        <Route path="/el-juego" element={<WelcomeGame />} />
+        <Route path="/el-juego/category" element={<Category />} />
+        <Route path="/el-juego/acerca-de-interconectados/juego" element={<AboutGame />} />
+        <Route path="/acerca-de-interconectados" element={<AboutCompany />} />
       </Routes>
     </Router>
   );
