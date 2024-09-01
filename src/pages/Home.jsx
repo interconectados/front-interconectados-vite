@@ -27,7 +27,8 @@ function Home() {
         </div>
         <nav className="nav">
         </nav>
-        <button className="cta-button">Únete</button>
+        <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
+
       </header>
       <Carousel/>
       <CardCarousel/>
