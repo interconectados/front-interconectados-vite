@@ -1,11 +1,11 @@
 # Stage 1: Build the application
-FROM arm64v8/node:22.3.0-alpine AS build
+FROM arm64v8/node:22.3.0-alpine3.17 AS build
 
 # Set working directory
 WORKDIR /app
 
 # Install additional dependencies for ARM
-RUN apk add --no-cache libstdc++6
+RUN apk add --no-cache libstdc++
 
 # Copy package files and install dependencies
 COPY package*.json ./
@@ -18,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a minimal image to serve the app
-FROM arm64v8/node:22.3.0-alpine
+FROM arm64v8/node:22.3.0-alpine3.17
 
 # Set working directory
 WORKDIR /app
