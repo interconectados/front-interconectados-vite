@@ -2,6 +2,8 @@
 import React from 'react';
 import "./Home.css"
 import { useNavigate } from "react-router-dom";
+import Carousel from '../components/Carousel/Carousel';
+import CardCarousel from '../components/CardCarousel/CardCarousel';
 
 function Home() {
     
@@ -14,6 +16,7 @@ function Home() {
   return (
     <div className="home">
       {/* Header */}
+
       <header className="header">
         <div className="logo">
             <img src="/logo.png" alt="logo interconectados" />
@@ -22,7 +25,8 @@ function Home() {
         </nav>
         <button className="cta-button">Únete</button>
       </header>
-
+      <Carousel/>
+      <CardCarousel/>
       {/* Hero Section */}
       <section className="hero">
         <h1>Expande tus horizontes con Interconectados</h1>

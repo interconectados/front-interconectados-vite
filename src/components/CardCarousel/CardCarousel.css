@@ -1,0 +1,80 @@
+.card-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+  
+  .card-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .card {
+    min-width: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .icon {
+    font-size: 2.5em;
+  }
+  
+  .prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #6200ea;
+  }
+  
+  .prev {
+    left: 10px;
+  }
+  
+  .next {
+    right: 10px;
+  }
+  .card {
+    margin: 10px;
+}
+  /* Media Queries para Desktop */
+  @media (min-width: 600px) {
+    .card-container {
+      justify-content: space-between;
+    }
+  
+    .card {
+      min-width: 25%; /* Se muestran 4 cards por pantalla */
+      flex-shrink: 1;
+      transform: none !important;
+    }
+  
+    .prev, .next {
+      display: none; /* Ocultar los botones de navegación en pantallas más grandes */
+    }
+  }
+  
