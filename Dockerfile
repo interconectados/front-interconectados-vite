@@ -1,15 +1,12 @@
 # Stage 1: Build the application
-FROM arm64v8/node:22.3.0-alpine3.17 AS build
+FROM arm64v8/node:22.3.0-buster-slim AS build
 
 # Set working directory
 WORKDIR /app
 
-# Install additional dependencies for ARM
-RUN apk add --no-cache libstdc++
-
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN npm install
+RUN apt-get update && apt-get install -y libstdc++6 && npm install
 
 # Copy the rest of the application code
 COPY . .
@@ -18,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a minimal image to serve the app
-FROM arm64v8/node:22.3.0-alpine3.17
+FROM arm64v8/node:22.3.0-buster-slim
 
 # Set working directory
 WORKDIR /app
