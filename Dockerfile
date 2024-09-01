@@ -1,29 +1,30 @@
-# Usar una imagen base de Node.js con la versión 22.3.0 específica para ARM64
-FROM --platform=linux/arm64 node:22.3.0-alpine
+# Stage 1: Build the application
+FROM node:22.3.0-alpine as build
 
-# Instalar manualmente las dependencias para ARM64
-RUN apk add --no-cache libc6-compat
-
-# Establecer el directorio de trabajo en la imagen de Docker
+# Set working directory
 WORKDIR /app
 
-# Copiar el package.json y el package-lock.json para instalar las dependencias
+# Copy package files and install dependencies
 COPY package*.json ./
+RUN npm install
 
-# Instalar las dependencias necesarias
-RUN npm install --arch=arm64 --platform=linux --ignore-scripts
-
-# Instalar esbuild manualmente para ARM64
-RUN npm install esbuild-linux-arm64 --save-dev
-
-# Copiar el resto de los archivos de la aplicación
+# Copy the rest of the application code
 COPY . .
 
-# Construir la aplicación
+# Build the application
 RUN npm run build
 
-# Exponer el puerto que usa Vite
+# Stage 2: Create a minimal image to serve the app
+FROM node:22.3.0-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built files from the build stage
+COPY --from=build /app .
+
+# Expose the port that your application will run on
 EXPOSE 5173
 
-# Comando por defecto para iniciar la aplicación
+# Command to run the application
 CMD ["npm", "run", "preview"]
