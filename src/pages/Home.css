@@ -1,0 +1,137 @@
+/* Home.css */
+
+.home {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  button.cta-button{
+    max-width: 200px;
+  }
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
+  .logo img {
+    max-height: 50px;
+    width: 50px;
+}
+  .nav-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+  
+  .nav-menu a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  /* Banner Promocional */
+  section.hero {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+section.hero h1,
+section.hero p{
+    text-align: center;
+}
+  .promo-banner {
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .promo-button {
+    padding: 10px 20px;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  /* Sección de Productos */
+  .products {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .product {
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 15px 0;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .product img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+  
+  .product-button {
+    padding: 10px 20px;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  /* Sección de Impacto Visual */
+  .impact {
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .impact img {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Sección de Testimonios */
+  .testimonials {
+    background-color: #f4f4f4;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  
+  .testimonial-slider {
+    display: flex;
+    overflow-x: scroll;
+  }
+  
+  .testimonial {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    min-width: 250px;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .footer-links a, .footer-social a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
