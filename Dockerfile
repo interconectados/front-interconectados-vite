@@ -30,4 +30,4 @@ COPY --from=build /app/dist ./dist
 EXPOSE 5173
 
 # Command to run the application
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "preview", "--", "--host"]
