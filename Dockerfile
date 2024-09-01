@@ -1,12 +1,15 @@
 # Stage 1: Build the application
-FROM arm64v8/node:22.3.0-buster-slim AS build
+FROM node:16-bullseye-slim AS build
 
 # Set working directory
 WORKDIR /app
 
+# Install necessary build dependencies
+RUN apt-get update && apt-get install -y libstdc++6
+
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN apt-get update && apt-get install -y libstdc++6 && npm install
+RUN npm install
 
 # Copy the rest of the application code
 COPY . .
@@ -15,7 +18,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a minimal image to serve the app
-FROM arm64v8/node:22.3.0-buster-slim
+FROM node:16-bullseye-slim
 
 # Set working directory
 WORKDIR /app
