@@ -13,23 +13,20 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
         with:
-          node-version: '22.3.0'
+          platforms: linux/arm64
 
-      - name: Clean up node_modules and package-lock.json
+      - name: Install dependencies for ARM emulation
         run: |
-          rm -rf node_modules package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build the application
-        run: npm run build
+          sudo apt-get update
+          sudo apt-get install -y libstdc++6 qemu-user-static
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+        with:
+          driver-opts: image=moby/buildkit:latest
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -42,7 +39,9 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          platforms: linux/arm64
           push: true
+          no-cache: true 
           build-args: |
             BUILD_DATE=${{ github.run_id }}
           tags: alacorazza/front-interconectados-vite:latest

@@ -1,27 +1,30 @@
-# Etapa 1: Construcción y Servir con Vite
-FROM node:18-alpine
+# Stage 1: Build the application
+FROM node:18-bullseye-slim AS build
 
-# Añadir un argumento de construcción para el timestamp
-ARG BUILD_DATE
-LABEL build_date=$BUILD_DATE
-
-# Establecer el directorio de trabajo en la imagen de Docker
+# Set working directory
 WORKDIR /app
 
-# Copiar los archivos package.json y package-lock.json para instalar dependencias
-COPY package.json package-lock.json ./
-
-# Instalar las dependencias
+# Copy package files and install dependencies
+COPY package*.json ./
 RUN npm install
 
-# Añadir un archivo temporal para forzar un cambio en la imagen
-RUN echo $BUILD_DATE > /app/build_date.txt
-
-# Copiar el resto de los archivos de la aplicación
+# Copy the rest of the application code
 COPY . .
 
-# Exponer el puerto que usa Vite (por defecto es el 5173)
+# Build the application
+RUN npm run build
+
+# Stage 2: Create a minimal image to serve the app
+FROM node:18-bullseye-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built files from the build stage
+COPY --from=build /app/dist /app
+
+# Expose the port that your application will run on
 EXPOSE 5173
 
-# Comando por defecto para iniciar la aplicación con Vite en modo de desarrollo o producción
-CMD ["npm", "run", "dev"]  # o ["npm", "run", "build"] seguido de ["npm", "run", "preview"] para producción
+# Command to run the application
+CMD ["npm", "run", "preview"]
