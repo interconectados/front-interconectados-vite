@@ -7,8 +7,8 @@ WORKDIR /app
 # Copiar el package.json y el package-lock.json para instalar las dependencias
 COPY package*.json ./
 
-# Instalar las dependencias sin intentar compilar manualmente esbuild
-RUN npm install
+# Instalar las dependencias con esbuild específico para ARM64
+RUN npm install --platform=linux/arm64
 
 # Copiar el resto de los archivos de la aplicación
 COPY . .
