@@ -1,6 +1,9 @@
 # Usar una imagen base de Node.js con la versión 22.3.0 específica para ARM64
 FROM --platform=linux/arm64 node:22.3.0-alpine
 
+# Instalar manualmente las dependencias para ARM64
+RUN apk add --no-cache libc6-compat
+
 # Establecer el directorio de trabajo en la imagen de Docker
 WORKDIR /app
 
