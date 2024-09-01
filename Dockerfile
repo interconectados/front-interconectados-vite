@@ -20,8 +20,10 @@ FROM node:18-bullseye-slim
 # Set working directory
 WORKDIR /app
 
-# Copy the built files from the build stage
-COPY --from=build /app/dist /app
+# Copy the package.json and node_modules from the build stage
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
 
 # Expose the port that your application will run on
 EXPOSE 5173
