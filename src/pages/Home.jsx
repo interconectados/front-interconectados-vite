@@ -9,7 +9,7 @@ function Home() {
 
 
     const startGame = () => {
-        navigate("/game/Entretenimiento");
+        navigate("/el-juego");
       };
   return (
     <div className="home">
