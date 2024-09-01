@@ -69,7 +69,7 @@ button.btn.out {
 @media (prefers-color-scheme: light) {
   :root {
     color: #342b32;
-    background-color: white;
+    background-color: violet;
   }
   a:hover {
     color: #747bff;
