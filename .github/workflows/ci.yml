@@ -36,4 +36,4 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm64
           push: true
-          tags: yourdockerhubusername/yourappname:latest
+          tags: alacorazza/front-interconectados-vite:latest
