@@ -5,11 +5,14 @@ import './Carousel.css';
 import slide1 from '/logo.png';
 import slide2 from '/logo.png';
 import slide3 from '/logo.png';
-
+import { useNavigate } from "react-router-dom";
 function Carousel() {
+  const navigate = useNavigate();
   const slides = [slide1, slide2, slide3];
   const [currentSlide, setCurrentSlide] = useState(0);
-
+  const startGame = () => {
+    navigate("/el-juego");
+  };
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
@@ -32,7 +35,8 @@ function Carousel() {
                   <h2>Sentí la conexión</h2>
                   <p>
              Profundizá en tus relaciones con nuestro juego online               </p>
-                  <button className="cta-button">Jugar Ahora</button>
+             <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
+
                 </>
               )}
               {index === 1 && (
@@ -41,7 +45,7 @@ function Carousel() {
                   <p>
                  Saber que tenemos opciones es siempre mejor. 
                    </p>
-                  <button className="cta-button">Ver más</button>
+                   <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
                 </>
               )}
               {index === 2 && (
@@ -50,7 +54,8 @@ function Carousel() {
                   <p>
                  Desarrollá tu potencial y cumplí tus sueños.
                   </p>
-                  <button className="cta-button">Conocer más</button>
+                  <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
+
                 </>
               )}
             </div>
