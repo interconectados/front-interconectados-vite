@@ -1,5 +1,5 @@
 # Etapa 1: Construcción en x86_64
-FROM node:22.3.0-alpine as builder
+FROM node:22.3.0-alpine AS builder
 
 WORKDIR /app
 
