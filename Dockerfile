@@ -5,7 +5,7 @@ FROM node:18-bullseye-slim AS build
 WORKDIR /app
 
 # Copy package files and install dependencies
-COPY package*.json ./
+COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy the rest of the application code
