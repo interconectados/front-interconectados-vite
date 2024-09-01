@@ -1,5 +1,5 @@
 # Usar una imagen base de Node.js con la versión 22.3.0 sin especificar la plataforma
-FROM node:22.3.0-alpine
+FROM --platform=linux/arm64 node:22.3.0-alpine
 
 # Establecer el directorio de trabajo en la imagen de Docker
 WORKDIR /app
@@ -7,7 +7,10 @@ WORKDIR /app
 # Copiar el package.json y el package-lock.json para instalar las dependencias
 COPY package*.json ./
 
-# Instalar las dependencias, sin forzar la instalación de esbuild
+# Instalar las dependencias
+RUN npm install --arch=arm64 esbuild
+
+# Instalar las demás dependencias (omitidas las de desarrollo)
 RUN npm install
 
 # Copiar el resto de los archivos de la aplicación
