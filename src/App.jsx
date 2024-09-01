@@ -12,6 +12,8 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/game/:category" element={<Game />} />
         <Route path="/category" element={<Category />} />
+        <Route path="/acerca-de-interconectados/el-juego" element={<Category />} />
+        <Route path="/acerca-de-interconectados/visión" element={<Category />} />
       </Routes>
     </Router>
   );
