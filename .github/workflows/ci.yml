@@ -19,7 +19,10 @@ jobs:
           node-version: '22.3.0'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --arch=arm64 --platform=linux --ignore-scripts
+
+      - name: Install esbuild for ARM64
+        run: npm install esbuild-linux-arm64
 
       - name: Build the application
         run: npm run build --verbose
@@ -33,7 +36,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker Image for Raspberry Pi 4
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
         with:
           context: .
