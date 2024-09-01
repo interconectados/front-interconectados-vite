@@ -36,4 +36,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm64
           push: true
+          build-args: |
+            BUILD_DATE=${{ github.run_id }}
           tags: alacorazza/front-interconectados-vite:latest

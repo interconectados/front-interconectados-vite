@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:22.3.0-alpine as build
+FROM node:22.3.0-alpine AS build
 
 # Set working directory
 WORKDIR /app
@@ -21,7 +21,7 @@ FROM node:22.3.0-alpine
 WORKDIR /app
 
 # Copy the built files from the build stage
-COPY --from=build /app .
+COPY --from=build /app/dist /app
 
 # Expose the port that your application will run on
 EXPOSE 5173
