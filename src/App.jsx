@@ -4,6 +4,7 @@ import Welcome from './components/Welcome';
 import Game from './components/Game';
 import Category from './components/Category';
 import './App.css';
+import AboutGame from './pages/AboutGame';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="/game/:category" element={<Game />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/acerca-de-interconectados/el-juego" element={<Category />} />
+        <Route path="/acerca-de-interconectados/el-juego" element={<AboutGame />} />
         <Route path="/acerca-de-interconectados/visión" element={<Category />} />
       </Routes>
     </Router>
