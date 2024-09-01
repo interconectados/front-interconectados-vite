@@ -1,5 +1,5 @@
-# Usar una imagen base de Node.js con la versión 22.3.0 sin especificar la plataforma
-FROM --platform=linux/arm64 node:22.3.0-alpine
+# Usar una imagen base de Node.js optimizada para ARM64
+FROM node:22.3.0-alpine
 
 # Establecer el directorio de trabajo en la imagen de Docker
 WORKDIR /app
@@ -7,20 +7,17 @@ WORKDIR /app
 # Copiar el package.json y el package-lock.json para instalar las dependencias
 COPY package*.json ./
 
-# Instalar las dependencias
-RUN npm install --arch=arm64 esbuild
-
-# Instalar las demás dependencias (omitidas las de desarrollo)
+# Instalar las dependencias sin intentar compilar manualmente esbuild
 RUN npm install
 
 # Copiar el resto de los archivos de la aplicación
 COPY . .
 
-# Construir la aplicación
+# Construir la aplicación para producción
 RUN npm run build
 
-# Exponer el puerto que usa Vite
+# Exponer el puerto que usa Vite (por defecto 5173)
 EXPOSE 5173
 
-# Comando por defecto para iniciar la aplicación
+# Comando por defecto para iniciar la aplicación en modo producción
 CMD ["npm", "run", "preview"]
