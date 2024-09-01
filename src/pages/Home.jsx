@@ -45,7 +45,9 @@ function Home() {
           <img src="/path-to-image" alt="Servicios de Coaching" />
           <h2>Servicios de Coaching</h2>
           <p>Transforma tu vida con sesiones personalizadas de coaching.</p>
-          <button className="product-button">Conoce Más</button>
+          <button className="product-button">
+            <a href="https://sites.google.com/view/interconectados-coaching/inicio">  Conoce Más</a>
+          </button>
         </div>
       </section>
 
