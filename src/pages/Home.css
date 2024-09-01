@@ -64,9 +64,11 @@ section.hero p{
   /* Sección de Productos */
   .products {
     display: flex;
-    flex-direction: column;
-    padding: 20px;
-  }
+    padding: 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+}
   
   .product {
     background-color: #fff;
@@ -106,7 +108,9 @@ section.hero p{
     background-color: #f4f4f4;
     padding: 30px 20px;
     text-align: center;
-  }
+    max-width: 1200px;
+    margin: 0 auto;
+}
   
   .testimonial-slider {
     display: flex;
@@ -135,3 +139,153 @@ section.hero p{
     text-decoration: none;
   }
   
+  .feature-section {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .feature-content {
+    max-width: 500px;
+  }
+  
+  .feature-content h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .feature-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .cta-button {
+    padding: 10px 20px;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  
+  .feature-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .section-cta-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f8f8fc; /* Fondo suave */
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .cta-content {
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+  
+  .cta-content h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .cta-button {
+    padding: 10px 20px;
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #4b00b4; /* Oscurecer el color del botón al pasar el mouse */
+  }
+  
+  .cta-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  /* Estilos específicos para pantallas más grandes */
+  @media (min-width: 768px) {
+    .section-cta-game {
+      flex-direction: row;
+      text-align: left;
+    }
+  
+    .cta-content {
+      max-width: 50%;
+      margin-bottom: 0;
+    }
+  
+    .cta-image {
+      max-width: 50%;
+      text-align: right;
+    }
+  
+    .cta-image img {
+      margin-left: 20px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .feature-section {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  
+    .feature-content {
+      max-width: 600px;
+    }
+  
+    .feature-content h2 {
+      font-size: 2.5em;
+    }
+  
+    .feature-content p {
+      font-size: 1.4em;
+    }
+  
+    .feature-image {
+      max-width: 50%;
+    }
+  
+    .feature-image img {
+      margin-bottom: 0;
+    }
+  }
+  
+  @media(max-width: 768px){
+    .products{
+        flex-direction: column;
+    }
+
+  }
+  @media(min-width: 768px){
+    .products{
+        justify-content: space-between;
+        padding: 30px 0;
+    }
+
+  }
+

@@ -29,30 +29,26 @@ function Carousel() {
             <div className="text-container">
               {index === 0 && (
                 <>
-                  <h2>¡Hacé rendir tu plata con Paquete rinda!</h2>
+                  <h2>Sentí la conexión</h2>
                   <p>
-                    Conocé los beneficios en súper, combustibles, cines y locales de comida rápida.
-                    Además, préstamos en el acto y una cuenta gratis con un rendimiento imperdible.
-                  </p>
-                  <button className="cta-button">Quiero saber más</button>
+             Profundizá en tus relaciones con nuestro juego online               </p>
+                  <button className="cta-button">Jugar Ahora</button>
                 </>
               )}
               {index === 1 && (
                 <>
-                  <h2>Qué lindo es poder</h2>
+                  <h2>Qué lindo es poder elegir</h2>
                   <p>
-                    Con Naranja X accedés a una cuenta gratis en una app para poder hacer lo que
-                    quieras con tu plata. Explorá todos los productos que tenemos para vos.
-                  </p>
-                  <button className="cta-button">Descargar app</button>
+                 Saber que tenemos opciones es siempre mejor. 
+                   </p>
+                  <button className="cta-button">Ver más</button>
                 </>
               )}
               {index === 2 && (
                 <>
                   <h2>Tu futuro comienza aquí</h2>
                   <p>
-                    Descubre nuestras soluciones de coaching para transformar tu vida y alcanzar tus
-                    metas.
+                 Desarrollá tu potencial y cumplí tus sueños.
                   </p>
                   <button className="cta-button">Conocer más</button>
                 </>
