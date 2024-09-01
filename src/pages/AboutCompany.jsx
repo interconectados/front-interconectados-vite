@@ -50,7 +50,7 @@ function AboutCompany() {
 
       <footer>
         <p>La visión de "Interconectados" es inspirar un cambio positivo, fomentar relaciones más significativas y contribuir a la construcción de una sociedad más consciente y conectada.</p>
-        <p>&copy; 2024 @interconectados_ok</p>
+        <a href="https://linktr.ee/interconectados.sa">&copy; 2024 @interconectados_ok</a>
       </footer>
     </div>
   );
