@@ -2,8 +2,8 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #342b32;
-  background-color: violet;
+  color: rgba(35,80,99,1);
+  background-color: rgba(233,237,239,1);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -42,7 +42,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #b04c22;
+  background-color: rgba(35,80,99,1);
   color: white;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -68,31 +68,7 @@ button.btn.out {
   bottom: 0;
   width: 10%;
 }
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #342b32;
-    background-color: violet;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #b04c22;
-    border: solid 1px #b04c22;
-    color: white;
-  }
-  button.btn.no,
-  .btn.categoryes {
-    background-color: transparent;
-    border: solid 1px #b04c22;
-    color: #b04c22;
-  }
-  button.btn.out {
-    background-color: transparent;
-    border: solid 1px #687a61;
-    color: #687a61;
-  }
-}
+
 @media (max-width: 500px){
   button.btn.out {
     width: 100px;
