@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import './Carousel.css';
+import React, { useState, useEffect } from "react";
+import "./Carousel.css";
 
 // Imágenes de ejemplo
-import slide1 from '/logo.png';
-import slide2 from '/logo.png';
-import slide3 from '/logo.png';
+import slide1 from "/logo.png";
+import slide2 from "/logo.png";
+import slide3 from "/logo.png";
 import { useNavigate } from "react-router-dom";
 function Carousel() {
   const navigate = useNavigate();
@@ -34,28 +34,32 @@ function Carousel() {
                 <>
                   <h2>Sentí la conexión</h2>
                   <p>
-             Profundizá en tus relaciones con nuestro juego online               </p>
-             <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
-
+                    Creá momentos de conexión profunda en reuniones o momentos
+                    de reflexión personal con el <strong>Interconectados Juego</strong>{" "}
+                  </p>
+                  <button className="cta-button " onClick={startGame}>
+                    Jugar ahora
+                  </button>
                 </>
               )}
               {index === 1 && (
                 <>
-                  <h2>Qué lindo es poder elegir</h2>
-                  <p>
-                 Saber que tenemos opciones es siempre mejor. 
-                   </p>
-                   <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
+                  <h2>¿Quién querés ser?</h2>
+                  <p>Descrubrite, transformate y construí la realidad que querés  a través de conversaciones donde vos sos el protagonista.</p>
+                  <button className="cta-button " 
+                  // onClick={startGame}
+                  >
+                   <a href="https://drive.google.com/file/d/14yQUA4NFIc9aAXNYnusVDHqvZcNSrgp0/view?usp=sharing"> Más info</a>
+                  </button>
                 </>
               )}
               {index === 2 && (
                 <>
                   <h2>Tu futuro comienza aquí</h2>
-                  <p>
-                 Desarrollá tu potencial y cumplí tus sueños.
-                  </p>
-                  <button  className = "cta-button "onClick={startGame}>Jugar ahora</button>
-
+                  <p>Desarrollá tu potencial y cumplí tus sueños.</p>
+                  <button className="cta-button " onClick={startGame}>
+                    Jugar ahora
+                  </button>
                 </>
               )}
             </div>
@@ -66,7 +70,7 @@ function Carousel() {
         {slides.map((_, index) => (
           <span
             key={index}
-            className={`dot ${currentSlide === index ? 'active' : ''}`}
+            className={`dot ${currentSlide === index ? "active" : ""}`}
             onClick={() => setCurrentSlide(index)}
           ></span>
         ))}

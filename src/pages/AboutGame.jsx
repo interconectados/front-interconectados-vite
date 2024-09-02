@@ -87,7 +87,7 @@ function AboutGame() {
         </ul>
         <br />
         <button className="btn link" onClick={startGame}>
-            <a href="/">Jugar</a>
+            <a href="/el-juego">Jugar</a>
         </button>
       </section>
     </div>

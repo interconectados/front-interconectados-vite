@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/game/:category" element={<Game />} />
+        <Route path="/el-juego/:categoria" element={<Game />} />
         <Route path="/el-juego" element={<WelcomeGame />} />
         <Route path="/el-juego/categorias" element={<Category />} />
         <Route path="/el-juego/acerca-de-interconectados/juego" element={<AboutGame />} />

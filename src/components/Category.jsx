@@ -6,19 +6,19 @@ function Category() {
   const categories = ['Vida', 'Conexión', 'Crecimiento', 'Hábitos', 'Entretenimiento', 'Vínculos'];
 
   const selectCategory = (category) => {
-    navigate(`/game/${category}`);
+    navigate(`/el-juego/${category}`);
   };
 
   return (
     <div className="category">
-      <h2>Temáticas</h2>
+      <h2>Temáticas:</h2>
       {categories.map((category) => (
         <button key={category} onClick={() => selectCategory(category)}>
           {category}
         </button>
       ))}
        <div className=''>
-        <button className='btn out' onClick={() => navigate('/')}>Salir</button>
+        <button className='btn out' onClick={() => navigate('/el-juego')}>Inicio</button>
       </div>
     </div>
   );

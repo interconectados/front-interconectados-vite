@@ -10,7 +10,27 @@ button {
   cursor: pointer;
 }
 
-.category,.game,.welcome{
+.category {
   width: 90%;
-  margin: 0 auto;
+  margin: auto auto;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media(min-width: 1024px){
+  .category {
+    width: 90%;
+    margin: auto auto;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+}
+  
 }

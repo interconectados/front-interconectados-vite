@@ -36,7 +36,7 @@ function Game() {
       <div>
         Cargando pregunta...
         <div>
-          <button onClick={() => navigate("/")}>Salir</button>
+          <button onClick={() => navigate("/el-juego")}>Inicio</button>
         </div>
       </div>
     );
@@ -45,7 +45,7 @@ function Game() {
   return (
     <div className="game">
       <div>
-        <p>Responde:</p>
+        <p>Responde la pregunta en voz alta:</p>
         <br />
         <h2 className="question">{question.text}</h2>
         <br />
@@ -56,8 +56,8 @@ function Game() {
         )}
       </div>
       <div>
-        <button className="btn out" onClick={() => navigate("/")}>
-          Salir
+        <button className="btn out" onClick={() => navigate("/el-juego")}>
+          Inicio
         </button>
       </div>
     </div>
