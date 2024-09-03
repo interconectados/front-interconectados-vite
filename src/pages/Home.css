@@ -126,7 +126,7 @@ section.hero p{
   
   /* Footer */
   .footer {
-    background-color: #b66750;
+    background-color: rgba(35,80,99,1);
     color: white;
     text-align: center;
     padding: 20px;
