@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Carousel.css";
 
 // Imágenes de ejemplo
-import slide1 from "/logo.png";
-import slide2 from "/logo.png";
-import slide3 from "/logo.png";
+import slide1 from "/1.png";
+import slide2 from "/2.png";
+import slide3 from "/3.png";
+import slide4 from "/4.png";
+
 import { useNavigate } from "react-router-dom";
 function Carousel() {
   const navigate = useNavigate();
-  const slides = [slide1, slide2, slide3];
+  const slides = [slide1, slide2, slide3,slide4];
   const [currentSlide, setCurrentSlide] = useState(0);
   const startGame = () => {
     navigate("/el-juego");
@@ -54,6 +56,15 @@ function Carousel() {
                 </>
               )}
               {index === 2 && (
+                <>
+                  <h2>Tu futuro comienza aquí</h2>
+                  <p>Desarrollá tu potencial y cumplí tus sueños.</p>
+                  <button className="cta-button " onClick={startGame}>
+                    Jugar ahora
+                  </button>
+                </>
+              )}
+               {index === 3 && (
                 <>
                   <h2>Tu futuro comienza aquí</h2>
                   <p>Desarrollá tu potencial y cumplí tus sueños.</p>

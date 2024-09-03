@@ -3,7 +3,7 @@ import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel/Carousel";
 import CardCarousel from "../components/CardCarousel/CardCarousel";
-import featureImage from "/logo.png"; // Ajusta la ruta de la imagen
+import featureImage from "/objt-1.png"; // Ajusta la ruta de la imagen
 import ctaImage from "/logo.png"; // Ajusta la ruta de la imagen
 
 function Home() {
@@ -57,8 +57,8 @@ function Home() {
         </div>
         <div className="product">
           <img src="/path-to-image" alt="Sesiones de Coaching" />
-          <h2>Coaching de Vida</h2>
-          <p>Transforma tu vida con sesiones personalizadas de coaching.</p>
+          <h2>Coaching y Mentoring</h2>
+          <p>Sesiones y programas completos donde vos sos el protagonista.</p>
           <button className="product-button">
             <a href="https://sites.google.com/view/interconectados-coaching/inicio">
               {" "}
