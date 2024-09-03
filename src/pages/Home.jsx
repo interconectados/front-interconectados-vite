@@ -9,7 +9,8 @@ import ctaImage from "/objt-2.png"; // Ajusta la ruta de la imagen
 function Home() {
   const navigate = useNavigate();
 
-  const startGame = () => {ß
+  const startGame = () => {
+    ß;
     navigate("/el-juego");
   };
   return (
@@ -33,12 +34,13 @@ function Home() {
         <div className="feature-content">
           <h2>¿Cuál es tu próximo objetivo?</h2>
           <p>
-            Si ya lo sabes, te podemos guiar hacia ello. Si aún no lo sabes, te
-            podemos ayudar a descubrirlo.
+            Te guiamos en el proceso de planificación y obtención de metas
+            profesionales y personales.
           </p>
           <button className="cta-button">
             <a href=""></a>
-            Más info</button>
+            Más info
+          </button>
         </div>
         <div className="feature-image">
           <img src={featureImage} alt="Feature" />
@@ -50,7 +52,11 @@ function Home() {
         <div className="product">
           <img src="/images/5.svg" alt="Juego Interconectados" />
           <h2>Interconectados: El Juego</h2>
-          <p>Crea conexiones significativas mientras te diviertes.</p>
+          <p>
+            Un juego de preguntas que te ayudarán conocer a lo demás y a vos
+            mismo a traves de conversaciones.
+            {/* Si sos un curioso por el ser, el comportamiento humano y las relaciones, te va a encantar */}
+          </p>
           <button className="product-button " onClick={startGame}>
             Jugar Ahora
           </button>
@@ -87,18 +93,25 @@ function Home() {
         </div>
       </section>
 
+
       {/* Sección de Testimonios */}
       <section className="testimonials">
         <h2>Nuestra Misión</h2>
         <div className="testimonial">
-          <p>
+          <h3>
             Inspirar un cambio positivo y conectar a las personas en un nivel
             más profundo.
-          </p>
-          <a href="https://linktr.ee/interconectados.sa">
-            {" "}
-            <span>Todo sobre Interconectados</span>
-          </a>
+          </h3>
+          <button className="cta-button">
+            <a href="https://drive.google.com/file/d/1r6lqhXaneRY1_04bKEtfutxLRU57sKgE/view">
+              Conocer más
+            </a>
+          </button>
+          <button className="cta-button">
+            <a href="https://drive.google.com/file/d/1r6lqhXaneRY1_04bKEtfutxLRU57sKgE/view">
+              Conocer más
+            </a>
+          </button>
         </div>
       </section>
     </div>

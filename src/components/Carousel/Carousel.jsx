@@ -18,7 +18,7 @@ function Carousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 3000); // Cambia cada 3 segundos
+    }, 5000); // Cambia cada 3 segundos
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -34,7 +34,7 @@ function Carousel() {
             <div className="text-container">
               {index === 0 && (
                 <>
-                  <h2>Sentí la conexión</h2>
+                  <h2>Agua</h2>
                   <p>
                     Creá momentos de conexión profunda en reuniones o momentos
                     de reflexión personal con el <strong>Interconectados Juego</strong>{" "}
@@ -46,7 +46,7 @@ function Carousel() {
               )}
               {index === 1 && (
                 <>
-                  <h2>¿Quién querés ser?</h2>
+                  <h2>Fuego</h2>
                   <p>Descrubrite, transformate y construí la realidad que querés  a través de conversaciones donde vos sos el protagonista.</p>
                   <button className="cta-button " 
                   // onClick={startGame}
@@ -57,7 +57,7 @@ function Carousel() {
               )}
               {index === 2 && (
                 <>
-                  <h2>Tu futuro comienza aquí</h2>
+                  <h2>Tierra</h2>
                   <p>Desarrollá tu potencial y cumplí tus sueños.</p>
                   <button className="cta-button " onClick={startGame}>
                     Jugar ahora
@@ -66,7 +66,7 @@ function Carousel() {
               )}
                {index === 3 && (
                 <>
-                  <h2>Tu futuro comienza aquí</h2>
+                  <h2>Aire</h2>
                   <p>Desarrollá tu potencial y cumplí tus sueños.</p>
                   <button className="cta-button " onClick={startGame}>
                     Jugar ahora

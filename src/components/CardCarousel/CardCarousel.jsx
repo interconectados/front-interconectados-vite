@@ -4,9 +4,9 @@ import './CardCarousel.css';
 // Ejemplo de datos para las tarjetas
 const cardData = [
     { id: 1, title: 'Explorar tus emociones', icon: '🌟' }, // Relacionado con el juego
-    { id: 2, title: 'Desarrollar tus habilidades', icon: '💪' }, // Relacionado con coaching
+    { id: 2, title: 'Desarrollar tu potencial', icon: '💪' }, // Relacionado con coaching
     { id: 3, title: 'Crear conexiones profundas', icon: '🔗' }, // Relacionado con el juego
-    { id: 4, title: 'Transformar tu vida', icon: '🧠' }, // Relacionado con coaching
+    { id: 4, title: 'Transformar tus pensamientos', icon: '🧠' }, // Relacionado con coaching
   ];
 
 function CardCarousel() {
@@ -36,7 +36,10 @@ function CardCarousel() {
   };
 
   return (
+    <div className='carousel-cards' ><h2>Te invitamos a:</h2>
     <div className="card-carousel">
+
+
       <div className="card-container">
         {cardData.map((card, index) => (
           <div
@@ -51,6 +54,7 @@ function CardCarousel() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

@@ -9,7 +9,10 @@
     overflow: hidden;
     margin-top: 40px;
   }
-  
+  .carousel-cards h2{
+ text-align: center;
+ margin-top: 2em;
+  }
   .card-container {
     display: flex;
     transition: transform 0.5s ease-in-out;
@@ -78,4 +81,8 @@
       display: none; /* Ocultar los botones de navegación en pantallas más grandes */
     }
   }
-  
+  @media (max-width:680px){
+    .carousel-cards{
+      display: none;
+    }
+  }
