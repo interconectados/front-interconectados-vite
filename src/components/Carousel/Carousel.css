@@ -25,6 +25,7 @@
     width: 100%;
     height: 400px; /* Asegúrate de que coincida con la altura del carousel */
     object-fit: cover;
+    object-position: left;
   }
   
   .text-container {

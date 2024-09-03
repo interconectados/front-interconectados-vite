@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "../components/Carousel/Carousel";
 import CardCarousel from "../components/CardCarousel/CardCarousel";
 import featureImage from "/objt-1.png"; // Ajusta la ruta de la imagen
-import ctaImage from "/logo.png"; // Ajusta la ruta de la imagen
+import ctaImage from "/objt-2.png"; // Ajusta la ruta de la imagen
 
 function Home() {
   const navigate = useNavigate();
 
-  const startGame = () => {
+  const startGame = () => {ß
     navigate("/el-juego");
   };
   return (
@@ -48,7 +48,7 @@ function Home() {
       {/* Productos Destacados */}
       <section className="products">
         <div className="product">
-          <img src="/path-to-image" alt="Juego Interconectados" />
+          <img src="/images/5.svg" alt="Juego Interconectados" />
           <h2>Interconectados: El Juego</h2>
           <p>Crea conexiones significativas mientras te diviertes.</p>
           <button className="product-button " onClick={startGame}>
@@ -56,7 +56,7 @@ function Home() {
           </button>
         </div>
         <div className="product">
-          <img src="/path-to-image" alt="Sesiones de Coaching" />
+          <img src="/images/4.svg" alt="Sesiones de Coaching" />
           <h2>Coaching y Mentoring</h2>
           <p>Sesiones y programas completos donde vos sos el protagonista.</p>
           <button className="product-button">
@@ -71,7 +71,7 @@ function Home() {
       {/* Seccion destacado juego */}
       <section className="section-cta-game">
         <div className="cta-image">
-          <img src={ctaImage} alt="Impacto positivo" />
+          <img src="/images/2.svg" alt="Impacto positivo" />
         </div>
         <div className="cta-content">
           <h2>Coaching GROW</h2>

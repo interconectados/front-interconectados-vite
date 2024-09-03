@@ -62,13 +62,14 @@
     margin: 10px;
 }
   /* Media Queries para Desktop */
-  @media (min-width: 600px) {
+  @media (min-width: 680px) {
     .card-container {
       justify-content: space-between;
+      width: 100%;
     }
   
     .card {
-      min-width: 25%; /* Se muestran 4 cards por pantalla */
+      min-width: 20%; /* Se muestran 4 cards por pantalla */
       flex-shrink: 1;
       transform: none !important;
     }
