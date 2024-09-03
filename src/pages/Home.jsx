@@ -43,7 +43,7 @@ function Home() {
           </button>
         </div>
         <div className="feature-image">
-          <img src={featureImage} alt="Feature" />
+          <img src="/images/7.svg" alt="Feature" />
         </div>
       </section>
 
@@ -80,10 +80,10 @@ function Home() {
           <img src="/images/2.svg" alt="Impacto positivo" />
         </div>
         <div className="cta-content">
-          <h2>Coaching GROW</h2>
+          <h2>Programa GROW 🌱</h2>
           <p>
-            Un programa completo que te ayuda a convertir tus sueños en
-            objetivos a tu alcance.
+            Diseñado para conocerte, expandir tu potencial, establecer objetivos
+            a largo plazo y <strong>lograr tu mejor versión</strong>.
           </p>
           <button className="cta-button">
             <a href="https://drive.google.com/file/d/1r6lqhXaneRY1_04bKEtfutxLRU57sKgE/view">
@@ -92,7 +92,6 @@ function Home() {
           </button>
         </div>
       </section>
-
 
       {/* Sección de Testimonios */}
       <section className="testimonials">
