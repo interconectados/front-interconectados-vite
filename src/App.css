@@ -1,6 +1,7 @@
 .welcome, .category, .game {
   text-align: center;
   padding: 20px;
+  min-height: 70vh;
 }
 
 button {

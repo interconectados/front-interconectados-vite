@@ -1,19 +1,25 @@
 import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import Carousel from "../components/Carousel/Carousel";
 import CardCarousel from "../components/CardCarousel/CardCarousel";
 import featureImage from "/objt-1.png"; // Ajusta la ruta de la imagen
 import ctaImage from "/objt-2.png"; // Ajusta la ruta de la imagen
 
-function WelcomeCoaching() {
+function Home() {
   const navigate = useNavigate();
 
   const startGame = () => {
-    ß;
-    navigate("/el-juego");
+      navigate("/el-juego");
+  };
+
+  const startCoaching = () => {
+    navigate("/coaching");
   };
   return (
     <div className="home">
+      {/* Header */}
+
       <header className="header">
         <div className="logo">
           <img src="/logo.png" alt="logo interconectados" />
@@ -45,27 +51,25 @@ function WelcomeCoaching() {
 
       {/* Productos Destacados */}
       <section className="products">
+       
+        <div className="product">
+          <img src="/images/4.svg" alt="Sesiones de Coaching" />
+          <h2>Coaching y Mentoring</h2>
+          <p>Sesiones y programas completos donde vos sos el protagonista.</p>
+          <button className="product-button" onClick={startCoaching}>
+              Conoce Más
+          </button>
+        </div>
+
         <div className="product">
           <img src="/images/5.svg" alt="Juego Interconectados" />
           <h2>Interconectados: El Juego</h2>
           <p>
             Un juego de preguntas que te ayudarán conocer a lo demás y a vos
             mismo a traves de conversaciones.
-            {/* Si sos un curioso por el ser, el comportamiento humano y las relaciones, te va a encantar */}
           </p>
           <button className="product-button " onClick={startGame}>
             Jugar Ahora
-          </button>
-        </div>
-        <div className="product">
-          <img src="/images/4.svg" alt="Sesiones de Coaching" />
-          <h2>Coaching y Mentoring</h2>
-          <p>Sesiones y programas completos donde vos sos el protagonista.</p>
-          <button className="product-button">
-            <a href="https://sites.google.com/view/interconectados-coaching/inicio">
-              {" "}
-              Conoce Más
-            </a>
           </button>
         </div>
       </section>
@@ -113,4 +117,4 @@ function WelcomeCoaching() {
   );
 }
 
-export default WelcomeCoaching;
+export default Home;

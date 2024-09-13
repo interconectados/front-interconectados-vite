@@ -10,8 +10,11 @@ function Home() {
   const navigate = useNavigate();
 
   const startGame = () => {
-    ß;
-    navigate("/el-juego");
+      navigate("/el-juego");
+  };
+
+  const startCoaching = () => {
+    navigate("/coaching");
   };
   return (
     <div className="home">
@@ -64,11 +67,8 @@ function Home() {
           <img src="/images/4.svg" alt="Sesiones de Coaching" />
           <h2>Coaching y Mentoring</h2>
           <p>Sesiones y programas completos donde vos sos el protagonista.</p>
-          <button className="product-button">
-            <a href="/coaching">
-              {" "}
+          <button className="product-button" onClick={startCoaching}>
               Conoce Más
-            </a>
           </button>
         </div>
       </section>
