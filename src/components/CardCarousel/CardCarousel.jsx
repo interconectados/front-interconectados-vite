@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./CardCarousel.css";
 
 const icon1 = "/icon-1.svg";
-const icon2 = "/icon-2.svg";
 const icon3 = "/icon-3.svg";
 const icon4 = "/icon-4.svg";
 
@@ -10,7 +9,6 @@ const icon4 = "/icon-4.svg";
 const cardData = [
   { id: 1, title: "Agendá una entrevista", icon: "🌟", img: icon4, link: "https://tr.ee/F0QmOmxg_E" }, // Relacionado con el juego
   { id: 2, title: "Mirá todo sobre interconectados", icon: "💪", img: icon3, link: "https://linktr.ee/interconectados.sa"  }, // Relacionado con coaching
-  // { id: 3, title: "", icon: "🔗", img: icon2, link: "#"  }, // Relacionado con el juego
   { id: 4, title: "Envianos un WhatsApp", icon: "🧠", img: icon1, link: "https://api.whatsapp.com/send?phone=541157443471"  }, // Relacionado con coaching
 ];
 
