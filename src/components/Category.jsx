@@ -6,7 +6,7 @@ function Category() {
   const categories = ['Vida', 'Conexión', 'Crecimiento', 'Hábitos', 'Entretenimiento', 'Vínculos'];
 
   const selectCategory = (category) => {
-    navigate(`/el-juego/${category}`);
+    navigate(`/game/${category}`);
   };
 
   return (

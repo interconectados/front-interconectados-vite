@@ -1,12 +1,11 @@
 import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-import Carousel from "../components/Carousel/Carousel";
 import CardCarousel from "../components/CardCarousel/CardCarousel";
 import featureImage from "/objt-1.png"; // Ajusta la ruta de la imagen
 import ctaImage from "/objt-2.png"; // Ajusta la ruta de la imagen
 
-function Home() {
+function WelcomeCoaching() {
   const navigate = useNavigate();
 
   const startGame = () => {
@@ -15,8 +14,6 @@ function Home() {
   };
   return (
     <div className="home">
-      {/* Header */}
-
       <header className="header">
         <div className="logo">
           <img src="/logo.png" alt="logo interconectados" />
@@ -65,7 +62,7 @@ function Home() {
           <h2>Coaching y Mentoring</h2>
           <p>Sesiones y programas completos donde vos sos el protagonista.</p>
           <button className="product-button">
-            <a href="/coaching">
+            <a href="https://sites.google.com/view/interconectados-coaching/inicio">
               {" "}
               Conoce Más
             </a>
@@ -116,4 +113,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default WelcomeCoaching;
