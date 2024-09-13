@@ -110,6 +110,9 @@ section.hero p{
     max-width: 1260px;
     margin: 0 auto;
 }
+.testimonials h3{
+  font-weight: 300;
+}
   
   .testimonial-slider {
     display: flex;
@@ -126,7 +129,7 @@ section.hero p{
   
   /* Footer */
   .footer {
-    background-color: rgba(35,80,99,1);
+    background-color: #6200ea;
     color: white;
     text-align: center;
     padding: 20px;

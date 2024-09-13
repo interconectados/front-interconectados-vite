@@ -1,11 +1,13 @@
 .about-company {
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+
     font-family: Arial, sans-serif;
     color: #2c3e50;
   }
-  
+  .body-about {
+    padding: 14px;
+}
   .about-company h1 {
     text-align: center;
     font-size: 2.5em;

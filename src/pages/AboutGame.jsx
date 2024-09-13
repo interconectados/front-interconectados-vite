@@ -8,13 +8,23 @@ function AboutGame() {
       };
     
   return (
+   <div> {/* Header */}
+   <header className="header">
+     <div className="logo">
+       <img src="/logo.png" alt="logo interconectados" />
+     </div>
+     <nav className="nav"></nav>
+     <button className="cta-button " onClick={startGame}>
+       Jugar ahora
+     </button>
+   </header>
     <div style={
         { padding: "10%"}
     } className="about-game">
     
       <section className="section">
-      <h1>Interconectados - El Juego</h1>
         <h2>¿Cómo se juega?</h2>
+        <p>La idea de este juego es crear conversaciones significativas y profundas con quién desees jugarlo.</p>
         <p>
           Existen diversas formas de disfrutar este juego, y a continuación te presentamos algunas sugerencias. Sin embargo, cada jugador tiene la libertad de elegir cómo quiere vivir la experiencia.
         </p>
@@ -23,8 +33,6 @@ function AboutGame() {
         <h3>Preparación</h3>
         <p>
           Reúne a los participantes en una disposición cómoda para todos.
-        </p>
-        <p>
           Asegúrate de que todos tengan acceso a las preguntas.
         </p>
         <p>
@@ -73,13 +81,10 @@ function AboutGame() {
             <strong>Escucha Activa:</strong> Cuando alguien esté respondiendo, escucha con atención y respeto. ¡Es su momento! Haz preguntas adicionales o pide más detalles para profundizar en la conversación. Todos queremos sentirnos escuchados y valorados.
           </li>
           <li>
-            Participa activamente y disfruta de las historias y experiencias que compartan los demás.
-          </li>
-          <li>
             <strong>Sé honesto:</strong> Las respuestas sinceras crean una conexión más profunda. No tengas miedo de abrirte.
           </li>
           <li>
-            <strong>Sé respetuoso:</strong> Escucha con atención y respeto las respuestas de los demás. Todos merecen ser escuchados sin interrupciones.
+            <strong>Sé respetuoso:</strong> Respeta las respuestas de los demás aún cuando no estés de acuerdo, puede ser un buen momento para abrir tu mirada sobre el mundo.
           </li>
           <li>
             <strong>Diviértete:</strong> El objetivo es disfrutar y conocernos más. ¡Ríe, reflexiona y sobre todo, disfruta del momento! 😄
@@ -90,6 +95,7 @@ function AboutGame() {
             <a href="/el-juego">Jugar</a>
         </button>
       </section>
+    </div>
     </div>
   );
 }

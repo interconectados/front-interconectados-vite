@@ -23,7 +23,9 @@ function Home() {
 
       <header className="header">
         <div className="logo">
+         <a href="/">
           <img src="/logo.png" alt="logo interconectados" />
+          </a>
         </div>
         <nav className="nav"></nav>
         {/* <button className="cta-button " onClick={getMeet}>
