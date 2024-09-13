@@ -9,6 +9,14 @@
     overflow: hidden;
     margin-top: 40px;
   }
+  .carousel-cards{
+    padding: 12px;
+  }
+  img.icons{
+    width: 60px;
+    border-radius: 100px;
+    margin: 6px;
+  }
   .carousel-cards h2{
  text-align: center;
   }
@@ -39,7 +47,16 @@
     font-size: 1em;
     color: #333;
   }
-  
+  .subtitle{
+    text-align: center;
+    font-size: 1em;
+  }
+ .description{
+    text-align: center;
+font-size: 0.8em;
+font-weight: bold;
+  }
+
   .icon {
     font-size: 2.5em;
   }
@@ -82,8 +99,4 @@
       display: none; /* Ocultar los botones de navegación en pantallas más grandes */
     }
   }
-  /* @media (max-width:680px){
-    .carousel-cards{
-      display: none;
-    }
-  } */
+ 

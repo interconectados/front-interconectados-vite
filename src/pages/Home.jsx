@@ -29,8 +29,6 @@ function Home() {
           Jugar ahora
         </button>
       </header>
-      <CardCarousel />
-
       {/* FeatureSection */}
       <section className="feature-section">
         <div className="feature-content">
