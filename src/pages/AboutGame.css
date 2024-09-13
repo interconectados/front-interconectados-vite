@@ -4,3 +4,7 @@
 li{
     margin-bottom: 20px;
 }
+button.cta-button.large {
+    max-width: none;
+    width: 330px;
+}

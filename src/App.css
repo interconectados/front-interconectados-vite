@@ -1,7 +1,7 @@
-.welcome, .category, .game {
+.welcome, .category, .game, .about-game {
   text-align: center;
   padding: 20px;
-  min-height: 70vh;
+  min-height: 76vh;
 }
 
 button {
