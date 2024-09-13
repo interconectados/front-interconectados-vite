@@ -227,7 +227,15 @@ section.hero p{
     height: auto;
     border-radius: 8px;
   }
-  
+  button.cta-button.out{
+    border: solid 1px #6200ea;
+    background: transparent;
+    color: #6200ea !important;
+}
+button.cta-button.out a {
+  color: #6200ea;
+}
+
   /* Estilos específicos para pantallas más grandes */
   @media (min-width: 768px) {
     .section-cta-game {

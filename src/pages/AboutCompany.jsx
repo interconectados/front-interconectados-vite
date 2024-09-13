@@ -46,9 +46,10 @@ function AboutCompany() {
           <li><strong>Revolucionar el Entretenimiento:</strong> Ofrecer una alternativa enriquecedora al entretenimiento convencional, a través de juegos y actividades que no solo diviertan, sino que también eduquen, inspiren y conecten a las personas en niveles más profundos.</li>
           <li><strong>Crear un Legado de Cambio Positivo:</strong> Queremos que "Interconectados" sea recordado como algo que inspiró a las personas a reconectarse consigo mismas, con los demás y con el mundo a su alrededor.</li>
         </ul>
-<button className='btn cta' style={{maxWidth: "600px"}}>
-        <a href="/">Todo sobre Interconectados</a>
+<button className="cta-button" style={{maxWidth: "600px"}}>
+        <a href="https://linktr.ee/interconectados.sa">Todo sobre Interconectados</a>
         </button>
+
       </section>
 
       <footer>

@@ -26,7 +26,7 @@ function Home() {
         </div>
         <nav className="nav"></nav>
         <button className="cta-button " onClick={startGame}>
-          Jugar ahora
+          Agendá una cita
         </button>
       </header>
       {/* FeatureSection */}
