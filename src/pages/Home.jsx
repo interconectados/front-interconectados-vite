@@ -2,6 +2,7 @@ import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header";
+import Mision from "../components/Mision/Mision";
 function Home() {
   const navigate = useNavigate();
 
@@ -12,57 +13,52 @@ function Home() {
   const startCoaching = () => {
     navigate("/coaching");
   };
-
+ 
   const chooseAboutCompany = () => {
     navigate("/acerca-de-interconectados");
+  };
+  const AboutGROW = () => {
+    navigate("/coaching/grow");
   };
 
   return (
     <div className="home">
       {/* Header */}
      <Header/>
-      {/* Productos Destacados */}
-      <section className="products">
-        <div className="product">
-          <img src="/images/5.svg" alt="Juego Interconectados" />
-          <h2>Interconectados: El Juego</h2>
+        {/* FeatureSection */}
+        <section className="feature-section">
+        <div className="feature-content">
+          <h2>Interconectados Coaching</h2>
           <p>
-            Un juego de preguntas que te ayudarán conocer a lo demás y a vos
-            mismo a traves de conversaciones.
-            {/* Si sos un curioso por el ser, el comportamiento humano y las relaciones, te va a encantar */}
-          </p>
-          <button className="product-button " onClick={startGame}>
-            Jugar Ahora
+     Un espacio de expresión y libertad donde podés conocerte, expandir tu potencial, cumplir objetivos y <strong>lograr tu mejor versión</strong>.
+                    </p>
+          <button className="cta-button" onClick={startCoaching}>
+            Más sobre coaching
           </button>
         </div>
-        <div className="product">
-          <img src="/images/4.svg" alt="Sesiones de Coaching" />
-          <h2>Coaching y Mentoring</h2>
-          <p>Sesiones y programas completos donde vos sos el protagonista.</p>
-          <button className="product-button" onClick={startCoaching}>
-              Ver más
-          </button>
+        <div className="feature-image">
+          <img src="/images/2.svg" alt="Feature" />
         </div>
       </section>
 
-      {/* Sección Acerca de... */}
-      <section className="testimonials">
-        <h2>Nuestra Misión</h2>
-        <div className="testimonial">
-          <h3>
-            Inspirar un cambio positivo y conectar a las personas en un nivel
-            más profundo.
-          </h3>
-          <button className="cta-button" onClick={chooseAboutCompany}>
-          Nuestros valores
-          </button>
-          <button className="cta-button out">
-            <a href="https://linktr.ee/interconectados.sa">
-              Redes sociales
-            </a>
+      <section className="feature-section">
+      <div className="feature-image">
+          <img src="/images/5.svg" alt="Feature" />
+        </div>
+        <div className="feature-content 2">
+          <h2>Interconectados El Juego</h2>
+          <p>
+       
+            Un juego de preguntas pensado para generar<strong> conversaciones profundas</strong> que te harán conocer a los demás y a vos mismo de una manera diferente.
+
+          </p>
+          <button className="cta-button" onClick={startGame}>
+            Jugar ahora
           </button>
         </div>
       </section>
+      {/* Sección Acerca de... */}
+      <Mision/>
     </div>
   );
 }

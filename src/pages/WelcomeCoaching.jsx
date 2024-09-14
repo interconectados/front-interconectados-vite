@@ -2,8 +2,10 @@ import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import CardCarousel from "../components/CardCarousel/CardCarousel";
+import Header from "../components/Header/Header";
+import Mision from "../components/Mision/Mision";
 
-function Home() {
+function WelcomeCoaching() {
   const navigate = useNavigate();
 
   const startGame = () => {
@@ -22,52 +24,39 @@ function Home() {
   };
 
   return (
+    <>
+<Header/>
     <div className="home">
-      {/* Header */}
-
-      <header className="header">
-        <div className="logo">
-         <a href="/">
-          <img src="/logo.png" alt="logo interconectados" />
-          </a>
-        </div>
-        <nav className="nav"></nav>
-        <button className="cta-button " onClick={AboutGROW}>
-         Más info
-        </button>
-      </header>
       <CardCarousel />
+ 
       {/* FeatureSection */}
       <section className="feature-section">
         <div className="feature-content">
-          <h2>¿Cuál es tu próximo objetivo?</h2>
+          <h2>Sesiones 1 a 1</h2>
           <p>
-            Te guiamos en el proceso de planificación y obtención de metas
-            profesionales y personales.
+          Un espacio donde te podés expresar libremente y explorar tus vivencias desde una perspectiva constructiva. 
           </p>
           <button className="cta-button" onClick={AboutGROW}>
             Más info
           </button>
         </div>
         <div className="feature-image">
-          <img src="/images/7.svg" alt="Feature" />
+          <img src="/images/4.svg" alt="Feature" />
         </div>
       </section>
- {/* Seccion destacado GROW */}
- <section className="section-cta-game">
-        <div className="cta-image">
-          <img src="/images/2.svg" alt="Impacto positivo" />
+
+      <section className="feature-section">
+      <div className="feature-image">
+          <img src="/images/2.svg" alt="Feature" />
         </div>
-        <div className="cta-content">
+        <div className="feature-content 2">
           <h2>Programa GROW 🌱</h2>
           <p>
             Diseñado para conocerte, expandir tu potencial, establecer objetivos
             a largo plazo y <strong>lograr tu mejor versión</strong>.
           </p>
-          <button className="cta-button">
-            <a href="https://drive.google.com/file/d/1r6lqhXaneRY1_04bKEtfutxLRU57sKgE/view">
-              Conocer más
-            </a>
+          <button className="cta-button" onClick={AboutGROW}>
+            Más info
           </button>
         </div>
       </section>
@@ -75,10 +64,12 @@ function Home() {
       {/* Productos Destacados */}
       <section className="products">
         <div className="product">
-          <img src="/images/4.svg" alt="Sesiones de Coaching" />
-          <h2>Sesiones 1 a 1</h2>
+          <img src="/images/7.svg" alt="Sesiones de Coaching" />
+          <h2>¿Cuál es tu próximo objetivo?</h2>
           <p>
-Un espacio donde te podés expresar libremente y explorar tus vivencias desde una perspectiva constructiva. 
+          Te guiamos en el proceso de planificación y obtención de metas
+            profesionales y personales.
+
           </p>
           <button className="product-button" onClick={startCoaching}>
               Conocé Más
@@ -96,29 +87,10 @@ Un espacio donde te podés expresar libremente y explorar tus vivencias desde un
           </button>
         </div>
       </section>
-
-     
-
-      {/* Sección Acerca de... */}
-      <section className="testimonials">
-        <h2>Nuestra Misión</h2>
-        <div className="testimonial">
-          <h3>
-            Inspirar un cambio positivo y conectar a las personas en un nivel
-            más profundo.
-          </h3>
-          <button className="cta-button" onClick={chooseAboutCompany}>
-          Nuestros valores
-          </button>
-          <button className="cta-button out">
-            <a href="https://linktr.ee/interconectados.sa">
-              Redes sociales
-            </a>
-          </button>
-        </div>
-      </section>
+      <Mision/>
     </div>
+    </>
   );
 }
 
-export default Home;
+export default WelcomeCoaching;

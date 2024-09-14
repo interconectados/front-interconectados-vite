@@ -16,6 +16,10 @@
     transition: all 0.5s ease-in-out;
   }
   
+  .carousel-slide.grow {
+    height: 500px;
+    min-width: 270px;
+  }
   .carousel-slide h2 {
     font-size: 2em;
     margin-bottom: 10px;

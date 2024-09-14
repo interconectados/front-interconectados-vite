@@ -84,7 +84,7 @@ const AboutCarouselGROW = () => {
   return (
     <div className="carousel-container">
       <h2></h2>
-      <div className="carousel-slide">
+      <div className="carousel-slide grow">
         <h2>{slides[currentSlide].title}</h2>
         <p>{slides[currentSlide].description}</p>
         <ul>

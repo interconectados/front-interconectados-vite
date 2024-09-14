@@ -37,9 +37,7 @@ function Game() {
     return (
       <div>
         Cargando pregunta...
-        <div>
-          <button onClick={() => navigate("/el-juego")}>Inicio</button>
-        </div>
+       
       </div>
     );
   }

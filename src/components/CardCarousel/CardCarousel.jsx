@@ -24,7 +24,8 @@ function CardCarousel() {
       <div className="card-carousel">
         <div className="card-container">
           {cardData.map((card, index) => (
-            <div>
+            <div
+            key={index}>
               <a href={card.link}>
               <img src={card.img} alt={card.title} className="icons" />
               </a>

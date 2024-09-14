@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import { useNavigate } from "react-router-dom";
 
-function Home() {
+function Header() {
   const navigate = useNavigate();
 
   const startGame = () => {
@@ -15,7 +15,7 @@ function Home() {
 
 
   return (
-    <div className="home">
+    <div>
       {/* Header */}
       <header className="header">
         <div className="logo">
@@ -24,12 +24,12 @@ function Home() {
           </a>
         </div>
         <nav className="nav"></nav>
-        <button className="cta-button " onClick={startGame}>
+        {/* <button className="cta-button " onClick={startGame}>
           Juego online
-        </button>
+        </button> */}
       </header>
     </div>
   );
 }
 
-export default Home;
+export default Header;

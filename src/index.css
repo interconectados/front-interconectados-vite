@@ -37,7 +37,6 @@ button {
   color: white;
   cursor: pointer;
   transition: border-color 0.25s;
-  width: 300px;
 }
 h1{
   font-size: 2em;

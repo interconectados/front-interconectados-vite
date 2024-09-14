@@ -12,13 +12,16 @@ function Category() {
   return (
     <div>
       <Header/>
+      <h2>Categorías:</h2>
     <div className="category">
-      <h2>Temáticas:</h2>
+
+      <div className='content-buttons'>
       {categories.map((category) => (
         <button key={category} onClick={() => selectCategory(category)}>
           {category}
         </button>
       ))}
+      </div>
     </div>
     </div>
   );
