@@ -16,8 +16,8 @@ function WelcomeCoaching() {
     navigate("/coaching");
   };
  
-  const chooseAboutCompany = () => {
-    navigate("/acerca-de-interconectados");
+  const AboutSesion = () => {
+    navigate("/coaching/sesiones");
   };
   const AboutGROW = () => {
     navigate("/coaching/grow");
@@ -36,7 +36,7 @@ function WelcomeCoaching() {
           <p>
           Un espacio donde te podés expresar libremente y explorar tus vivencias desde una perspectiva constructiva. 
           </p>
-          <button className="cta-button" onClick={AboutGROW}>
+          <button className="cta-button" onClick={AboutSesion}>
             Más info
           </button>
         </div>

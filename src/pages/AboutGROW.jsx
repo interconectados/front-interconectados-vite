@@ -20,27 +20,21 @@ function AboutGROW() {
        </a>
      </div>
      <nav className="nav"></nav>
-     <button className="cta-button " onClick={startGame}>
+     <button className="cta-button ">
        Reservá una sesión
      </button>
    </header>
-    <div style={
-        { padding: "10%"}
-    } className="about-game">
+    <div className="about-game">
      <section>
 <AboutCarouselGROW/>
      </section>
-     <a href="https://calendly.com/interconectados-sa/30min">
-     <button className="cta-button large" onClick={startGame}>
-       Reservá una sesión
-     </button>
-     </a>
-     <a href="https://api.whatsapp.com/send?phone=541157443471">
+     <br /><br />
+     <a href="https://api.whatsapp.com/send?phone=541157443471" target='_blank'>
      <button className="cta-button large">
-
        Contactanos
      </button>
      </a>
+
     </div>
     
     </div>

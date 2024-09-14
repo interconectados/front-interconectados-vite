@@ -9,6 +9,7 @@ import AboutCompany from './pages/AboutCompany';
 import Home from './pages/Home';
 import WelcomeCoaching from './pages/WelcomeCoaching';
 import AboutGROW from './pages/AboutGROW'
+import AboutSesion from './pages/AboutSesions';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/acerca-de-interconectados/juego" element={<AboutGame />} />
         <Route path="/coaching" element={<WelcomeCoaching />} />
         <Route path="/coaching/grow" element={<AboutGROW />} />
+        <Route path="/coaching/sesiones" element={<AboutSesion />} />
       </Routes>
     </Router>
   );
