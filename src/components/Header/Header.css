@@ -1,0 +1,28 @@
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
+  .logo img {
+    max-height: 50px;
+    width: 50px;
+}
+  .nav-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+  }
+  
+  .nav-menu {
+    display: none;
+  }
+  
+  .nav-menu a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+  }
+  

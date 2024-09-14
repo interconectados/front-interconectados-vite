@@ -1,7 +1,7 @@
 import React from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
-
+import Header from "../components/Header/Header";
 function Home() {
   const navigate = useNavigate();
 
@@ -20,15 +20,7 @@ function Home() {
   return (
     <div className="home">
       {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <img src="/logo.png" alt="logo interconectados" />
-        </div>
-        <nav className="nav"></nav>
-        <button className="cta-button " onClick={startGame}>
-          Jugar ahora
-        </button>
-      </header>
+     <Header/>
       {/* Productos Destacados */}
       <section className="products">
         <div className="product">

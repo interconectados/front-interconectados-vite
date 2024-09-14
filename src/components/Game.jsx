@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import questions from "./questionsReflection";
+import Header from "../components/Header/Header";
+
 
 function Game() {
   const { category } = useParams();
@@ -43,6 +45,8 @@ function Game() {
   }
 
   return (
+<div>
+  <Header/>
     <div className="game">
       <div>
         <p>Responde la pregunta en voz alta:</p>
@@ -55,11 +59,7 @@ function Game() {
           </button>
         )}
       </div>
-      <div>
-        <button className="btn out" onClick={() => navigate("/el-juego")}>
-          Inicio
-        </button>
-      </div>
+    </div>
     </div>
   );
 }

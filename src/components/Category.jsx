@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import Header from './Header/Header';
 function Category() {
   const navigate = useNavigate();
   const categories = ['Vida', 'Conexión', 'Crecimiento', 'Hábitos', 'Entretenimiento', 'Vínculos'];
@@ -10,6 +10,8 @@ function Category() {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="category">
       <h2>Temáticas:</h2>
       {categories.map((category) => (
@@ -17,9 +19,7 @@ function Category() {
           {category}
         </button>
       ))}
-       <div className=''>
-        <button className='btn out' onClick={() => navigate('/el-juego')}>Inicio</button>
-      </div>
+    </div>
     </div>
   );
 }

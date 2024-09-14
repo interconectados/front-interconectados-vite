@@ -53,34 +53,8 @@ function Home() {
           <img src="/images/7.svg" alt="Feature" />
         </div>
       </section>
-
-      {/* Productos Destacados */}
-      <section className="products">
-       
-        <div className="product">
-          <img src="/images/4.svg" alt="Sesiones de Coaching" />
-          <h2>Coaching y Mentoring</h2>
-          <p>Sesiones y programas completos donde vos sos el protagonista.</p>
-          <button className="product-button" onClick={startCoaching}>
-              Conocé Más
-          </button>
-        </div>
-
-        <div className="product">
-          <img src="/images/5.svg" alt="Juego Interconectados" />
-          <h2>Interconectados: El Juego</h2>
-          <p>
-            Un juego de preguntas que te ayudarán conocer a lo demás y a vos
-            mismo a traves de conversaciones.
-          </p>
-          <button className="product-button " onClick={startGame}>
-            Jugar Ahora
-          </button>
-        </div>
-      </section>
-
-      {/* Seccion destacado juego */}
-      <section className="section-cta-game">
+ {/* Seccion destacado GROW */}
+ <section className="section-cta-game">
         <div className="cta-image">
           <img src="/images/2.svg" alt="Impacto positivo" />
         </div>
@@ -97,6 +71,33 @@ function Home() {
           </button>
         </div>
       </section>
+
+      {/* Productos Destacados */}
+      <section className="products">
+        <div className="product">
+          <img src="/images/4.svg" alt="Sesiones de Coaching" />
+          <h2>Sesiones 1 a 1</h2>
+          <p>
+Un espacio donde te podés expresar libremente y explorar tus vivencias desde una perspectiva constructiva. 
+          </p>
+          <button className="product-button" onClick={startCoaching}>
+              Conocé Más
+          </button>
+        </div>
+
+        <div className="product">
+          <img src="/images/5.svg" alt="Juego Interconectados" />
+          <h2>Interconectados El Juego</h2>
+          <p>
+            Un juego de preguntas diseñadas para crear conversaciones profundas que te ayudarán conocer a los demás y a vos mismo de una manera diferente.
+          </p>
+          <button className="product-button " onClick={startGame}>
+            Jugar Ahora
+          </button>
+        </div>
+      </section>
+
+     
 
       {/* Sección Acerca de... */}
       <section className="testimonials">
