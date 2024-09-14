@@ -2,43 +2,36 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 import "./AboutGame.css"
-import AboutCarouselGROW from '../components/AboutCarousel/AboutCarouselGROW';
-
+import Header from "../components/Header/Header";
+import CardCarousel from '../components/CardCarousel/CardCarousel';
 
 function AboutGROW() {
   const navigate = useNavigate();
-    const startGame = () => {
-        navigate("/el-juego/categorias");
+    const AboutSesion = () => {
+        navigate("/coaching/sesiones");
       };
     
   return (
     <>
     <Header />
     <h3 className="title">
-      Sesiones 1 a 1 <br /> Construite a traves del lenguaje
+    Programa de Coaching GROW
     </h3>
+    <h4 className="title">Goal - Reality - Options - Will</h4>
     <h4 className="title"></h4>
     {/* FeatureSection */}
     <section className="feature-section">
       <div className="feature-content">
         <h2>
-          ¿Alguna vez te pasó de estar en una situación y no saber cómo
-          resolverla?
+          ¿De qué se trata?
         </h2>
         <p>
-          Hay muchos ejemplos de estas situaciones como una mudanza, una nueva
-          relación, un ascenso, un conflicto relacional, una decisión, una
-          conversación difícil, etc. <br />
-          <br />
-          En respuesta a esto, desde Interconectados Coaching lo que hacemos
-          es brindar un espacio seguro totalmente tuyo donde podés conversar
-          acerca de estas situaciones que te atraviesan y buscar algo
-          diferente.
-          <br />
-          <br />
-          Ese ‘algo diferente’ es hacerte de la capacidad de pensar, sentir y
-          accionar de una forma que te hagan sentir fiel a vos mismo en pos de
-          crecer y mejorar.{" "}
+      El método GROW es una herramienta poderosa diseñada para el establecimiento de metas claras, comprensión de tu situación actual, exploración de diversas estrategias y compromiso con un plan de acción concreto.
+        
+        <br /><br />
+        Este proceso proporciona una guía efectiva para el autodescubrimiento y el logro de objetivos, convirtiéndose en un recurso valioso para tu desarrollo personal y profesional.
+        <br /><br />
+        A través de un enfoque estructurado y orientado a resultados, podrás alcanzar tus objetivos más ambiciosos y vivir una vida con propósito y plenitud. 
         </p>
       </div>
       <div className="feature-image">
@@ -51,26 +44,18 @@ function AboutGROW() {
         <img src="/images/1.svg" alt="Feature" />
       </div>
       <div className="feature-content 2">
-        <h2>¿De qué se trata?</h2>
+        <h2>Destinatarios</h2>
         <p>
-          Es un método conversacional donde ayudamos a las personas a ver las
-          situaciones desde distintas perspectivas. Esto a su vez
-          disponibiliza nuevas opciones de cómo ser y actuar en la vida.
-          <br />
-          <br />
-          Este tipo de coaching es muy completo, con él se pueden trabajar
-          aspectos cotidianos o profundos de la vida.
-          <br />
-          <br />
-          Además, es lo suficientemente flexible para trabajar temas
-          completamente diferentes y, en apariencia, sin relación de una
-          sesión a otra.
+    Este programa está diseñado para cualquier <strong>persona que desee realizar un cambio profundo y sostenible en su vida</strong>, ya sea en el ámbito personal, profesional o ambos.
+        <br /><br />
+        Si estás buscando esto y te considerás listo para trabajar 'de ahora en adelante', ¡escribinos!
         </p>
+        
         <a
           href="https://api.whatsapp.com/send?phone=541157443471"
           target="_blank"
         >
-          <button className="cta-button" onClick={AboutGROW}>
+          <button className="cta-button" onClick={AboutSesion}>
             Reservar cita
           </button>
         </a>
@@ -81,18 +66,17 @@ function AboutGROW() {
 
     <section className="feature-section">
       <div className="feature-content">
-        <h2>Forma de trabajo</h2>
-        <p>
-          Este método se puede realizar perfectamente de forma presencial, por
-          videollamada o mediante una llamada tradicional.
-          <br />
-          <br />
-          Se desarrolla en :
-          <ul>
-            <li>Sesión semanal, quincenal o a convenir.</li>
-            <li>Duración de una hora cada sesión. </li>
-          </ul>
-        </p>
+        <h2>Estructura</h2>
+        <strong>
+      <p>Evaluación de la Realidad Actual.</p>
+      <p>Definición de la Meta a 5-10 Años.</p>
+      <p>Generación y Evaluación de Opciones.</p>
+      <p>Intervenciones de Creencias.</p>
+      <p>Planificación del Plan de Acción.</p>
+      <p>Seguimiento y Adaptación.</p>
+        
+      </strong>
+     
       </div>
       <div className="feature-image">
         <img src="/images/4.svg" alt="Feature" />
@@ -109,6 +93,7 @@ function AboutGROW() {
           El coach asiste en este proceso mediante preguntas y tareas que
           invitan a reflexionar, conocerse y desafiarse en pos del desarrollo
           personal del coachee. El coach te acompaña para:
+          </p>
           <ul>
             <li>
               Reflexionar sobre tus palabras y definir con claridad quién
@@ -122,19 +107,34 @@ function AboutGROW() {
               acciones concretas en corto y largo plazo.
             </li>
           </ul>
-        </p>
+        
         <a
           href="https://api.whatsapp.com/send?phone=541157443471"
           target="_blank"
         >
-          <button className="cta-button" onClick={AboutGROW}>
+          <button className="cta-button" onClick={AboutSesion}>
             Reservar cita
           </button>
         </a>
       </div>
     </section>
 
-    <CardCarousel />
+    <section className="feature-section">
+        <div className="feature-content">
+          <h2>Sesiones 1 a 1</h2>
+          <p>
+Un espacio de expresión, reflexión y aprendizaje.
+          </p>
+          <button className="cta-button" onClick={AboutSesion}>
+              Más sobre Sesiones
+            </button>
+        </div>
+        <div className="feature-image">
+          <img src="/images/4.svg" alt="Feature" />
+        </div>
+        
+      </section>
+    <CardCarousel/>
   </>
   );
 }

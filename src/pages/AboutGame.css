@@ -3,6 +3,7 @@
 }
 li{
     margin-bottom: 20px;
+    text-align: left;
 }
 button.cta-button.large {
     max-width: none;
