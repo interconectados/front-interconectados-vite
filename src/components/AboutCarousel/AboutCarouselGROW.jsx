@@ -58,7 +58,6 @@ const slides = [
       "El proceso es conversacional, destinado a promover el aprendizaje y nuevas posibilidades de acción.",
     ]
   },
-  ,
   {
     title: "Si llegaste hasta acá",
     description: "¡Hablemos!",
