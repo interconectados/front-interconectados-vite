@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 import "./AboutGame.css"
-import AboutCarousel from '../components/AboutCarousel/AboutCarousel';
+import AboutCarousel from '../../components/AboutCarousel/AboutCarousel';
 
 function AboutGame() {
   const navigate = useNavigate();

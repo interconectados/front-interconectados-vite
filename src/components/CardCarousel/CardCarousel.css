@@ -85,7 +85,7 @@ font-weight: bold;
   /* Media Queries para Desktop */
   @media (min-width: 680px) {
     .card-container {
-      justify-content: space-between;
+      justify-content: center;
       width: 100%;
     }
   

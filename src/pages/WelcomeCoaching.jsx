@@ -17,6 +17,10 @@ function Home() {
   const chooseAboutCompany = () => {
     navigate("/acerca-de-interconectados");
   };
+  const AboutGROW = () => {
+    navigate("/coaching/grow");
+  };
+
   return (
     <div className="home">
       {/* Header */}
@@ -28,12 +32,11 @@ function Home() {
           </a>
         </div>
         <nav className="nav"></nav>
-        {/* <button className="cta-button " onClick={getMeet}>
-          Ver todo
-        </button> */}
+        <button className="cta-button " onClick={AboutGROW}>
+         Más info
+        </button>
       </header>
       <CardCarousel />
-
       {/* FeatureSection */}
       <section className="feature-section">
         <div className="feature-content">
@@ -42,8 +45,7 @@ function Home() {
             Te guiamos en el proceso de planificación y obtención de metas
             profesionales y personales.
           </p>
-          <button className="cta-button">
-            <a href=""></a>
+          <button className="cta-button" onClick={AboutGROW}>
             Más info
           </button>
         </div>

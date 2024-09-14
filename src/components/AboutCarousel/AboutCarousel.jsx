@@ -34,7 +34,7 @@ const slides = [
   },
   {
     title: "Modo de Juego",
-    description: "Prepárate para una experiencia única de juego.",
+    description: "",
     bullets: [
       "Respondo Yo: El jugador de turno responde.",
       "Respondo Otro: El jugador de turno elige quién responde.",

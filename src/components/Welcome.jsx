@@ -15,7 +15,7 @@ function Welcome() {
     navigate("/el-juego/category");
   };
   const chooseAboutGame = () => {
-    navigate("/el-juego/acerca-de-interconectados/juego");
+    navigate("/acerca-de-interconectados/juego");
   };
 
   return (
