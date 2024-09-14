@@ -4,12 +4,12 @@ import Welcome from './components/Welcome';
 import Game from './components/Game';
 import Category from './components/Category';
 import './App.css';
-import AboutGame from './pages/About/AboutGame';
+import AboutGame from './pages/AboutGame';
 import WelcomeGame from './pages/WelcomeGame';
-import AboutCompany from './pages/About/AboutCompany';
+import AboutCompany from './pages/AboutCompany';
 import Home from './pages/Home';
 import WelcomeCoaching from './pages/WelcomeCoaching';
-import AboutGROW from './pages/About/AboutGROW'
+import AboutGROW from './pages/AboutGROW'
 
 function App() {
   return (
