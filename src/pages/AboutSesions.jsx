@@ -88,11 +88,12 @@ function AboutSesion() {
             <br />
             <br />
             Se desarrolla en :
+            </p>
             <ul>
               <li>Sesión semanal, quincenal o a convenir.</li>
               <li>Duración de una hora cada sesión. </li>
             </ul>
-          </p>
+          <p>Podés ver más detalles <a  target="_blank" href="https://drive.google.com/file/d/14yQUA4NFIc9aAXNYnusVDHqvZcNSrgp0/view?usp=sharing">acá</a>.</p>
         </div>
         <div className="feature-image">
           <img src="/images/4.svg" alt="Feature" />

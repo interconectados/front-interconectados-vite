@@ -15,7 +15,7 @@ function AboutGame() {
    <header className="header">
      <div className="logo">
        <a href="/">
-       <img src="/logo.png" alt="logo interconectados" />
+       <img src="/logo.svg" alt="logo interconectados" />
        </a>
      </div>
      <nav className="nav"></nav>

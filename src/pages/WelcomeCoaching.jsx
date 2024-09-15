@@ -71,7 +71,7 @@ function WelcomeCoaching() {
             profesionales y personales.
 
           </p>
-          <button className="product-button" onClick={startCoaching}>
+          <button className="product-button" onClick={AboutGROW}>
               Conocé Más
           </button>
         </div>
