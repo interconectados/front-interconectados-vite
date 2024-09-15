@@ -27,7 +27,7 @@ section.hero p{
   
   .promo-button {
     padding: 10px 20px;
-    background-color: #6200ea;
+    background-color: #681c7c;
     color: white;
     border: none;
     border-radius: 5px;
@@ -57,7 +57,7 @@ section.hero p{
   
   .product-button {
     padding: 10px 20px;
-    background-color: #6200ea;
+    background-color: #681c7c;
     color: white;
     border: none;
     border-radius: 5px;
@@ -78,7 +78,7 @@ section.hero p{
   
   /* Footer */
   .footer {
-    background-color: #6200ea;
+    background-color: #7297be;
     color: white;
     text-align: center;
     padding: 20px;
@@ -123,7 +123,7 @@ section.hero p{
   
   .cta-button {
     padding: 10px 20px;
-    background-color: #6200ea;
+    background-color: #681c7c;
     color: white;
     border: none;
     border-radius: 5px;
@@ -162,7 +162,7 @@ section.hero p{
   
   .cta-button {
     padding: 10px 20px;
-    background-color: #6200ea;
+    background-color: #681c7c;
     color: white;
     border: none;
     border-radius: 5px;
@@ -181,12 +181,12 @@ section.hero p{
     border-radius: 8px;
   }
   button.cta-button.out{
-    border: solid 1px #6200ea;
+    border: solid 1px #681c7c;
     background: transparent;
-    color: #6200ea !important;
+    color: #681c7c !important;
 }
 button.cta-button.out a {
-  color: #6200ea;
+  color: #681c7c;
 }
 
   /* Estilos específicos para pantallas más grandes */

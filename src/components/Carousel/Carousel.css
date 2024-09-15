@@ -50,7 +50,7 @@
   
   .cta-button {
     padding: 10px 20px;
-    background-color: #6200ea;
+    background-color: #681c7c;
     color: white;
     border: none;
     border-radius: 5px;
@@ -80,7 +80,7 @@
   }
   
   .dot.active {
-    background-color: #6200ea;
+    background-color: #681c7c;
   }
   
   /* Media Query para Desktop */

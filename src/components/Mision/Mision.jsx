@@ -24,6 +24,8 @@ function Mision() {
           <button className="cta-button" onClick={chooseAboutCompany}>
           Nuestros valores
           </button>
+          <br />
+          <br />
           <a href="https://linktr.ee/interconectados.sa">
           <button className="cta-button out">
               Redes sociales

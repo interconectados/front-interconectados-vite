@@ -33,7 +33,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #6200ea;
+  background-color: #681c7c;
   color: white;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -54,8 +54,8 @@ h2.question {
 }
 button.btn.out {
   background-color: transparent;
-  border: solid 1px #6200ea;
-  color: #6200ea;
+  border: solid 1px #681c7c;
+  color: #681c7c;
   position: absolute;
   right: 45%;
   bottom: 150px;
