@@ -7,11 +7,8 @@ import CardCarousel from "../components/CardCarousel/CardCarousel";
 function AboutSesion() {
   const navigate = useNavigate();
 
-  const AboutSesion = () => {
-    navigate("/coaching/sesiones");
-  };
   const AboutGROW = () => {
-    navigate("/coaching/grow");
+    navigate("/coaching/grow#");
   };
 
   return (
@@ -33,8 +30,8 @@ function AboutSesion() {
             relación, un ascenso, un conflicto relacional, una decisión, una
             conversación difícil, etc. <br />
             <br />
-            En respuesta a esto, desde Interconectados Coaching lo que hacemos
-            es brindar un espacio seguro totalmente tuyo donde podés conversar
+            En respuesta a esto, desde Interconectados Coaching
+            brindamos un espacio seguro totalmente tuyo donde podés conversar
             acerca de estas situaciones que te atraviesan y buscar algo
             diferente.
             <br />
@@ -147,7 +144,7 @@ function AboutSesion() {
             </button>
         </div>
         <div className="feature-image">
-          <img src="/images/4.svg" alt="Feature" />
+          <img src="/images/2.svg" alt="Feature" />
         </div>
         
       </section>

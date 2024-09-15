@@ -92,7 +92,7 @@ section.hero p{
   
   .feature-section {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
     padding: 20px;
     text-align: center;
@@ -213,7 +213,6 @@ button.cta-button.out a {
   
   @media (min-width: 768px) {
     .feature-section {
-      flex-direction: row;
       justify-content: space-between;
       text-align: left;
       padding: 40px;
