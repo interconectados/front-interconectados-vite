@@ -4,7 +4,7 @@ import './AboutCarousel.css';
 const slides = [
   {
     title: "Bienvenido al juego",
-    description: "Explora el poder de la conexión humana a través de este juego interactivo.",
+    description: "Explora el poder de la conexión humana a través de este juego. Es muy simple, cada carta es una pregunta que los jugadores tienen que responder en voz alta, la idea es generar conversaciones para conectar unos con otros.",
     bullets: [
       "Descubre temas profundos para reflexionar.",
       "Comparte tus ideas con otros jugadores.",

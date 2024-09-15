@@ -42,6 +42,9 @@ function Game() {
     );
   }
 
+  const startGame = () => {
+    navigate("/el-juego");
+  };
   return (
 <div>
   <Header/>
@@ -58,6 +61,9 @@ function Game() {
         )}
       </div>
     </div>
+    <button onClick={startGame} style={{}}>
+            Inicio
+          </button>
     </div>
   );
 }
